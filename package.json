@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Sinntaxx/NewHome/issues"
   },
-  "homepage": "https://github.com/Sinntaxx/NewHome#readme"
+  "homepage": "https://github.com/Sinntaxx/NewHome#readme",
+  "dependencies": {
+    "react": "^18.2.0"
+  }
 }
