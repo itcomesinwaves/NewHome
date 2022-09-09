@@ -4,7 +4,7 @@ const db = require('./db/index.js');
 const app = express();
 const path = require('path');
 const PORT = 8080;
-const url = `localhost:${PORT}`;
+const url = `localhost`;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve('client', 'dist')));
@@ -17,5 +17,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`server totally listening @ port:${PORT}`);
+  console.log(`server totally listening @ http://${url}:${PORT}`);
 });
