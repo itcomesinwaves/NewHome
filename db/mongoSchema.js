@@ -1,6 +1,6 @@
 const { Schema } = require('mongoose');
 
-const  userScheme = new Schema({
+const  userSchema = new Schema({
   username: {type: String, unique: true},
   
 });
@@ -34,7 +34,7 @@ const savedAnimalsSchema = new Schema({
 });
 
 module.exports = {
-  userScheme,
+  userSchema,
   animalsSchema,
   postSchema,
   followersSchema,
