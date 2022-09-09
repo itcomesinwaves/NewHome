@@ -1,13 +1,13 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const srcDir = path.resolve(__dirname, 'client')
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
+ const srcDir = path.resolve(__dirname, 'client', 'src', 'index.jsx')
 
 module.exports = {
   mode: "development",
-  entry: path.resolve(srcDir, 'index.jsx'),
+  entry: path.resolve(srcDir),
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'client', 'dist'),
   },
 
   module: {
@@ -30,9 +30,5 @@ module.exports = {
       }
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'client/index.html')
-    })
-  ]
+
 };
