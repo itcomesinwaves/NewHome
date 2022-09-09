@@ -1,6 +1,6 @@
 const { Schema } = require('mongoose');
 
-const  userSchame = new Schema({
+const  userSchema = new Schema({
   username: {type: String, unique: true},
   
 });
@@ -11,7 +11,7 @@ const animalsSchema = new Schema({
   gender: String,
   name: String,
   age: String,
-  temperment: Schema.Types.Mixed,
+  temperament: Schema.Types.Mixed,
   shelterInfo: Schema.Types.Mixed,
   status: Boolean,
 });
@@ -34,7 +34,7 @@ const savedAnimalsSchema = new Schema({
 });
 
 module.exports = {
-  userSchame,
+  userSchema,
   animalsSchema,
   postSchema,
   followersSchema,
