@@ -14,9 +14,9 @@ app.use(express.static(path.resolve('client', 'dist')));
 app.use(express.json());
 
 // const index = '../client/dist/index.html'
-// app.get('/', (req, res) => {
-//   res.render('index');
-// });
+app.get('/', (req, res) => {
+  res.render('index');
+});
 
 app.get('/*', (req, res) => {
   res.sendFile(
