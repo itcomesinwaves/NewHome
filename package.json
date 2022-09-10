@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --watch",
-    "start": "nodemon server/index.js"
+    "start": "nodemon server/index.js",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
