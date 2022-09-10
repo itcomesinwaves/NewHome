@@ -9,7 +9,7 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{js,jsx}": "eslint --fix"
+    "*.{js,jsx}": ["prettier --write", "eslint" ]
   },
   "repository": {
     "type": "git",
@@ -50,6 +50,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
+    "prettier": "2.7.1",
     "webpack": "^5.74.0"
   }
 }
