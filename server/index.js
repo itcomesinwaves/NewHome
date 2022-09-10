@@ -13,6 +13,7 @@ app.use(express.static(path.resolve('client', 'dist')));
 app.use(express.json());
 
 //const index = '../client/dist/index.html'
+var num = 4;
 app.get('/', (req, res) => {
   res.render('index');
 });
