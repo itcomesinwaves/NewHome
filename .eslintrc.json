@@ -1,3 +1,9 @@
 {
-  "extends": ["airbnb", "airbnb/hooks"]
+  "extends": ["eslint:recommended", "airbnb", "airbnb/hooks"],
+  "rules": {
+    "no-unused-vars": [
+      "error",
+      { "vars": "local", "args": "after-used", "ignoreRestSiblings": false }
+    ]
+  }
 }
