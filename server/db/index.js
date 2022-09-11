@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const models = require('./models/index.js');
 
 const FIELD = './index.js';
 const password = process.env.DB_PASS;
