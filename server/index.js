@@ -4,6 +4,9 @@ const express = require('express');
 // const axios = require('axios');
 const path = require('path');
 require('./db/index.js');
+const {
+  user, pets, api, feed,
+} = require('./routes');
 
 const app = express();
 const PORT = 8080;
