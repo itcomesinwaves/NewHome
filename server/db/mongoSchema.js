@@ -4,7 +4,7 @@ const userSchema = new Schema({
   username: { type: String, unique: true },
 });
 
-const animalsSchema = new Schema({
+const petSchema = new Schema({
   species: String,
   breed: String,
   gender: String,
@@ -18,7 +18,7 @@ const animalsSchema = new Schema({
 const postSchema = new Schema({
   message: String,
   image: String,
-  animalId: String,
+  petId: String,
   date: { type: Date, default: Date.now },
 });
 
@@ -27,15 +27,15 @@ const followersSchema = new Schema({
   postId: String,
 });
 
-const savedAnimalsSchema = new Schema({
+const savedPetSchema = new Schema({
   UserId: String,
-  animalId: String,
+  petId: String,
 });
 
 module.exports = {
   userSchema,
-  animalsSchema,
+  petSchema,
   postSchema,
   followersSchema,
-  savedAnimalsSchema,
+  savedPetSchema,
 };
