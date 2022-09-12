@@ -1,35 +1,58 @@
 const express = require('express');
 const axios = require('axios');
 
-const { API_AUTH, API_KEY, API_SECRET } = process.env;
+const { API_KEY, API_SECRET } = process.env;
 
 /*
   handles api request and db request
+
+  helper function to get api page, if fail then helper to get api auth
+  then run helper function to get api page.
 */
 
 const feed = express.Router();
 const Post = require('../db/models/Post.js');
 
+// GET API page
 feed.get('/api', (req, res) => {
+  getPage()
+    .then((page) => res.send(page))
+    .catch((err) => {
+      if (err.response.status === 401) {
+        getApiAuth()
+          .then(() => getPage())
+          .then((page) => {
+            res.send(page);
+          })
+          .catch((err) => {
+            console.log(err);
+            res.sendStatus(404);
+          });
+      } else {
+        res.sendStatus(err.status);
+      }
+    });
+});
+
+// Helper Functions
+
+const getPage = () => new Promise((res, rej) => {
   const config = {
     method: 'get',
     url: 'https://api.petfinder.com/v2/animals',
     headers: {
-      Authorization: API_AUTH,
+      Authorization: process.env.API_AUTH,
     },
   };
 
   axios(config)
     .then((response) => {
-      res.send(JSON.stringify(response.data));
+      res(JSON.stringify(response.data));
     })
-    .catch((error) => {
-      console.log(error);
-      res.sendStatus(404);
-    });
+    .catch((err) => rej(err));
 });
 
-feed.get('/api/key', (req, res) => {
+const getApiAuth = () => new Promise((res, rej) => {
   const data = JSON.stringify({
     grant_type: 'client_credentials',
     client_id: API_KEY,
@@ -47,12 +70,10 @@ feed.get('/api/key', (req, res) => {
 
   axios(config)
     .then((response) => {
-      res.send(JSON.stringify(response.data));
+      process.env.API_AUTH = `Bearer ${response.data.access_token}`;
+      return res();
     })
-    .catch((error) => {
-      console.log(error);
-      res.sendStatus(404);
-    });
+    .catch((err) => rej(err));
 });
 
 module.exports = feed;
