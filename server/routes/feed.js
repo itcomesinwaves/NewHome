@@ -47,6 +47,7 @@ feed.get('/api/key', (req, res) => {
 
   axios(config)
     .then((response) => {
+      process.env.API_AUTH = `Bearer ${response.data.access_token}`;
       res.send(JSON.stringify(response.data));
     })
     .catch((error) => {
