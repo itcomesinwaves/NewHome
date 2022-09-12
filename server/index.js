@@ -4,9 +4,7 @@ const express = require('express');
 // const axios = require('axios');
 const path = require('path');
 require('./db/index.js');
-const {
-  user, pets, api, feed,
-} = require('./routes');
+const { user, pet, feed } = require('./routes');
 
 const app = express();
 const PORT = 8080;
@@ -16,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve('client', 'dist')));
 app.use(express.json());
 
+app.use('/feed', feed);
 // const index = '../client/dist/index.html'
 app.get('/', (req, res) => {
   res.render('index');
