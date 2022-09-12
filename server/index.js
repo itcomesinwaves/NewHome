@@ -1,4 +1,6 @@
 require('dotenv').config();
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oidc');
 
 const express = require('express');
 // const axios = require('axios');
@@ -13,8 +15,20 @@ const url = 'localhost';
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve('client', 'dist')));
 app.use(express.json());
-
 app.use('/feed', feed);
+app.use('/user', user);
+
+
+passport.use(new GoogleStrategy({
+  clientID: process.env['GOOGLE_CLIENT_ID'],
+  clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
+  callbackURL: process.env['GOOGLE_CALLBACK_URL']
+},
+async (accessToken, refreshToken, profile, done) => {
+  console.log('user profile is: ', profile);
+} 
+));
+
 // const index = '../client/dist/index.html'
 app.get('/', (req, res) => {
   res.render('index');
