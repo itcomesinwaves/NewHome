@@ -11,5 +11,6 @@
       "jsx": true
     }
   },
-  "rules": {"import/extensions": ["error", "always", {"ignorePackages": true}]}
+  "rules": {"import/extensions": ["warn", "always", {"ignorePackages": true}], "no-unused-vars": ["warn", { "vars": "local",      "args": "after-used", "ignoreRestSiblings": false }]
+  }
 }
