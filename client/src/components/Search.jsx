@@ -1,5 +1,5 @@
 import react from 'react';
 
-function search() {}
+function Search() {}
 
-export default search;
+export default Search;
