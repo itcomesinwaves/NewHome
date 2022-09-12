@@ -5,7 +5,7 @@ function App() {
   return (
     <div>
       <nav>
-        <Link to="/profile">Profile</Link>
+        <Link to="/profile">Profile</Link> 
       </nav>
       Howdy
     </div>
