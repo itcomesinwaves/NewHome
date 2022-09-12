@@ -1,18 +1,19 @@
 const { Schema } = require('mongoose');
 
+// change to true once auth is done
 const userSchema = new Schema({
   username: { type: String, unique: true },
   email: {
     type: String,
-    required: [true, 'email required'],
-    unique: [true, "email already registered"],
+    required: [false, 'email required'],
+    unique: [true, 'email already registered'],
   },
   firstName: String,
   lastName: String,
   password: String,
   profilePhoto: String,
-  source: { type: String, required: [true, "source not specified"] },
-  lastVisited: { type: Date, default: new Date() }
+  source: { type: String, required: [false, 'source not specified'] },
+  lastVisited: { type: Date, default: new Date() },
 });
 
 const petSchema = new Schema({
@@ -23,7 +24,8 @@ const petSchema = new Schema({
   age: String,
   temperament: Schema.Types.Mixed,
   shelterInfo: Schema.Types.Mixed,
-  status: Boolean,
+  adopted: Boolean,
+  userId: String,
 });
 
 const postSchema = new Schema({
@@ -35,7 +37,7 @@ const postSchema = new Schema({
 
 const followersSchema = new Schema({
   userId: String,
-  postId: String,
+  petId: String,
 });
 
 const savedPetSchema = new Schema({
