@@ -37,10 +37,8 @@ function Search() {
         console.log(JSON.stringify(response.data));
       })
       .catch((error) => {
-        console.log(error);
+        alert(`${error.response.data} / Invalid Breed`);
       });
-
-    console.log(searchBy);
   };
 
   const hairUpdate = (event) => {
