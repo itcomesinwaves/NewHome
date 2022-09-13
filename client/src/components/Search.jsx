@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
 function Search() {
-  const [value, setVal] = useState(() => '');
+  const [breed, setVal] = useState(() => '');
   const [hairLength, setHairLength] = useState(() => '');
+  const [type, setType] = useState(() => '');
 
   const breedUpdate = (event) => {
     setVal(event.target.value);
@@ -10,22 +11,32 @@ function Search() {
 
   const submit = (event) => {
     event.preventDefault();
-    console.log(value, event);
+    console.log(breed.toLocaleLowerCase(), hairLength, type);
   };
 
   const hairUpdate = (event) => {
-    console.log(event);
+    setHairLength(event.target.value);
+  };
+
+  const typeUpdate = (event) => {
+    setType(event.target.value);
   };
 
   return (
     <div id="search">
       <form onSubmit={submit}>
         Breed:
-        <input type="text" value={value} onChange={breedUpdate} />
-        <select hairlength={hairLength} onChange={hairUpdate}>
+        <input type="text" value={breed} onChange={breedUpdate} />
+        <select value={hairLength} onChange={hairUpdate}>
+          <option value="">Hair length</option>
           <option value="short">Short</option>
           <option value="medium">Medium</option>
           <option value="long">Long</option>
+        </select>
+        <select value={type} onChange={typeUpdate}>
+          <option value="">Type </option>
+          <option value="Cat">Cat</option>
+          <option value="Dog">Dog</option>
         </select>
         <input type="submit" value="Submit" />
       </form>
