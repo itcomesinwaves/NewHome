@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button } from '@material-ui/core';
+import axios from 'axios';
 
 function AdoptedPet() {
   const [story, setStory] = useState('');
@@ -15,6 +16,10 @@ function AdoptedPet() {
       onSubmit={(e) => {
 			  e.preventDefault();
 			  console.log(`Title: ${title} \n Story: ${story}`);
+			  axios
+			    .post('/adoptionStory', { post: { title, story } })
+			    .then(() => console.log('success'))
+			    .catch((err) => console.error(err));
       }}
     >
       <TextField
