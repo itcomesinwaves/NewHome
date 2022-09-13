@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import FeedEntry from './FeedEntry.jsx';
 
 
 function HomeFeed() {
@@ -28,7 +29,7 @@ function HomeFeed() {
 
   return (
     <>
-      <h3>{ console.log(animals[0].age) }</h3>
+      <FeedEntry animalData={ this.animals[0] }/>
     </>
   )
 }

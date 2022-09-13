@@ -20,7 +20,22 @@ function Search() {
       age,
       gender,
     };
-    console.log(searchBy);
+    const config = {
+      method: 'post',
+      url: 'http://localhost:8080/feed/api/search',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: searchBy,
+    };
+
+    // axios(config)
+    //   .then((response) => {
+    //     console.log(JSON.stringify(response.data));
+    //   })
+    //   .catch((error) => {
+    //     alert(`${error.response.data} / Invalid Breed`);
+    //   });
   };
 
   const hairUpdate = (event) => {
@@ -67,7 +82,9 @@ function Search() {
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>
-        <input type="submit" value="Submit" />
+        <Button variant="contained" type="submit">
+          Submit
+        </Button>
       </form>
     </div>
   );
