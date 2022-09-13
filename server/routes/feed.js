@@ -34,6 +34,24 @@ feed.get('/api', (req, res) => {
     });
 });
 
+// Handle Search
+feed.post('/api/search', (req, res) => {
+  const {
+    species, breed, gender, age, hairLength,
+  } = req.body;
+
+  // getting all options for search
+  const searchString = 'https://api.petfinder.com/v2/animals?';
+  const speciesStr = species.length ? `type=${species}` : species;
+  const breedStr = breed.length ? `breed=${breed}` : breed;
+  const genderStr = gender.length ? `gender=${gender}` : gender;
+  const ageStr = age.length ? `age=${age}` : age;
+  const hairLengthStr = hairLength.length ? `coat=${hairLength}` : hairLength;
+  console.log(speciesStr, breedStr, genderStr, ageStr, hairLengthStr);
+
+  res.sendStatus(201);
+});
+
 // Helper Functions
 
 const getPage = () => new Promise((res, rej) => {
