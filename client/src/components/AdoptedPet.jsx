@@ -5,14 +5,18 @@ import axios from 'axios';
 function AdoptedPet() {
   const [message, setMessage] = useState('');
   const [title, setTitle] = useState('');
+  const [images, setImages] = useState([]);
 
   return (
     <Box
       component="form"
       id="post-form"
       sx={{
-			  '& .MuiTextField-root': { m: 16, width: '30ch' },
+			  '& .MuiTextField-root': { width: '30ch' },
 			  display: 'inline-block',
+			  m: 2,
+			  ml: 4,
+			  'box-sizing': 'border-box',
       }}
       onSubmit={(e) => {
 			  e.preventDefault();
@@ -37,6 +41,7 @@ function AdoptedPet() {
         onChange={(e) => setTitle(e.target.value)}
       />
       <br />
+      <br />
       <TextField
         id="message"
         label="Message"
@@ -47,6 +52,36 @@ function AdoptedPet() {
         mb={2}
         onChange={(e) => setMessage(e.target.value)}
       />
+      <br />
+      <br />
+      <label htmlFor="image-upload">
+        <input
+          accept="image/*"
+          id="image-upload"
+          multiple
+          type="file"
+          style={{ display: 'none' }}
+          onChange={(e) => {
+					  const files = Array.from(e.target.files);
+					  console.log(files);
+					  files.forEach((f, i) => setImages([...images, URL.createObjectURL(f)]));
+          }}
+        />
+        <Button variant="outlined" component="span">
+          Upload Image
+        </Button>
+      </label>
+      <br />
+      {console.log(images)}
+      {images.map((image) => (
+        <div key={JSON.stringify(image)}>
+          <br />
+          <img src={image} height="200" alt="" />
+          {' '}
+          <br />
+        </div>
+      ))}
+      <br />
       <br />
       <br />
       <Button
