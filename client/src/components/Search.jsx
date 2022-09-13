@@ -52,20 +52,20 @@ function Search() {
         </select>
         <select value={species} onChange={speciesUpdate}>
           <option value="">Species</option>
-          <option value="Cat">Cat</option>
-          <option value="Dog">Dog</option>
+          <option value="cat">Cat</option>
+          <option value="dog">Dog</option>
         </select>
         <select value={age} onChange={ageUpdate}>
           <option value="">Age</option>
-          <option value="Baby">Baby</option>
-          <option value="Young">Young</option>
-          <option value="Adult">Adult</option>
-          <option value="Senior">Senior</option>
+          <option value="baby">Baby</option>
+          <option value="young">Young</option>
+          <option value="adult">Adult</option>
+          <option value="senior">Senior</option>
         </select>
         <select value={gender} onChange={genderUpdate}>
           <option value="">Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
         </select>
         <input type="submit" value="Submit" />
       </form>
