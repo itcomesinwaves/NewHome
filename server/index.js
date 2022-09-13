@@ -7,6 +7,7 @@ const express = require('express');
 const path = require('path');
 require('./db/index.js');
 const { user, pet, feed } = require('./routes');
+const Post = require('./db/models/Post');
 
 const app = express();
 const PORT = 8080;
@@ -47,8 +48,12 @@ app.get('/*', (req, res) => {
   );
 });
 
-app.post('/AdoptionStory', (req, res) => {
+// Placeholder endpoint for adoption posts from the client
+app.post('/AdoptionMessage', (req, res) => {
   console.log(req.body);
+  Post.create(req.body.post)
+    .then(() => console.log('success'))
+    .catch((err) => console.error(err));
   res.sendStatus(200);
 });
 

@@ -3,7 +3,7 @@ import { Box, TextField, Button } from '@material-ui/core';
 import axios from 'axios';
 
 function AdoptedPet() {
-  const [story, setStory] = useState('');
+  const [message, setMessage] = useState('');
   const [title, setTitle] = useState('');
 
   return (
@@ -15,9 +15,9 @@ function AdoptedPet() {
       }}
       onSubmit={(e) => {
 			  e.preventDefault();
-			  console.log(`Title: ${title} \n Story: ${story}`);
+			  console.log(`Title: ${title} \n Message: ${message}`);
 			  axios
-			    .post('/adoptionStory', { post: { title, story } })
+			    .post('/adoptionMessage', { post: { title, message } })
 			    .then(() => console.log('success'))
 			    .catch((err) => console.error(err));
       }}
@@ -32,14 +32,14 @@ function AdoptedPet() {
       />
       <br />
       <TextField
-        id="Story"
-        label="Story"
+        id="message"
+        label="Message"
         variant="standard"
         multiline
         maxRows={5}
         minRows={3}
         mb={2}
-        onChange={(e) => setStory(e.target.value)}
+        onChange={(e) => setMessage(e.target.value)}
       />
       <br />
       <br />
