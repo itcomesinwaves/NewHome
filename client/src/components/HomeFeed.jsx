@@ -1,26 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useState } from 'react';
+
 
 function HomeFeed() {
-  const [animals, getAnimals] = useState([]);
+  const [animals, setAnimals] = useState([]);
+  const [fetchedAnimals, setFetchedAnimals] = useState(false);
 
   const getAllAnimals = function() {
-    axios.get(('/api')
+    axios.get('/feed/api')
+      .then(({ data }) => {
+        setAnimals(data)
+        console.log('animals state →', animals);
+        console.log('data →', data);
+      })
       .then(() => {
-        setAnimals()
+        setFetchedAnimals(true);
       })
       .catch((err) => {
         console.error(err);
-      }))
+      })
   }
 
-useEffect(getAllAnimals);
+  useEffect(() => {
+    getAllAnimals();
+  }, [fetchedAnimals]);
 
 
   return (
     <>
-      <h3>Welcome home Darth Maul ....</h3>
+      <h3>{ console.log(animals[0].age) }</h3>
     </>
   )
 }
