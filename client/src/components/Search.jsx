@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Button } from '@material-ui/core';
 
 function Search() {
   const [breed, setVal] = useState(() => '');
@@ -32,15 +33,13 @@ function Search() {
       data: searchBy,
     };
 
-    axios(config)
-      .then((response) => {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    console.log(searchBy);
+    // axios(config)
+    //   .then((response) => {
+    //     console.log(JSON.stringify(response.data));
+    //   })
+    //   .catch((error) => {
+    //     alert(`${error.response.data} / Invalid Breed`);
+    //   });
   };
 
   const hairUpdate = (event) => {
@@ -97,7 +96,9 @@ function Search() {
           <option value="large">Large</option>
           <option value="xlarge">X-Large</option>
         </select>
-        <input type="submit" value="Submit" />
+        <Button variant="contained" type="submit">
+          Submit
+        </Button>
       </form>
     </div>
   );
