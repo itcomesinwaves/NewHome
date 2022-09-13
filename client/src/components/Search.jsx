@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function Search() {
   const [breed, setVal] = useState(() => '');
@@ -6,6 +7,7 @@ function Search() {
   const [species, setSpecies] = useState(() => '');
   const [age, setAge] = useState(() => '');
   const [gender, setGender] = useState(() => '');
+  const [size, setSize] = useState(() => '');
 
   const breedUpdate = (event) => {
     setVal(event.target.value);
@@ -19,7 +21,25 @@ function Search() {
       species,
       age,
       gender,
+      size,
     };
+    const config = {
+      method: 'post',
+      url: 'http://localhost:8080/feed/api/search',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: searchBy,
+    };
+
+    axios(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     console.log(searchBy);
   };
 
@@ -37,6 +57,9 @@ function Search() {
 
   const genderUpdate = (event) => {
     setGender(event.target.value);
+  };
+  const sizeUpdate = (event) => {
+    setSize(event.target.value);
   };
 
   return (
@@ -66,6 +89,13 @@ function Search() {
           <option value="">Gender</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
+        </select>
+        <select value={size} onChange={sizeUpdate}>
+          <option value="">Size</option>
+          <option value="small">Small</option>
+          <option value="medium">Medium</option>
+          <option value="large">Large</option>
+          <option value="xlarge">X-Large</option>
         </select>
         <input type="submit" value="Submit" />
       </form>

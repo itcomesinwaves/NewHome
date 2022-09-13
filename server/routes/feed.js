@@ -41,7 +41,7 @@ feed.post('/api/search', (req, res) => {
   } = req.body;
 
   // getting all options for search
-  const searchString = 'https://api.petfinder.com/v2/animals?';
+  let searchString = 'https://api.petfinder.com/v2/animals?';
   const queryStrArr = [
     species.length ? `type=${species}` : species,
     breed.length ? `breed=${breed}` : breed,
@@ -49,12 +49,12 @@ feed.post('/api/search', (req, res) => {
     age.length ? `age=${age}` : age,
     hairLength.length ? `coat=${hairLength}` : hairLength,
   ];
-  search(
-    searchString.concat(
-      '',
-      queryStrArr.filter((str) => str.length !== 0).join('&'),
-    ),
-  )
+
+  searchString = searchString.concat(
+    '',
+    queryStrArr.filter((str) => str.length !== 0).join('&'),
+  );
+  search(searchString)
     .then((animals) => {
       res.status(201).send(JSON.stringify(animals));
     })
