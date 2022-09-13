@@ -29,6 +29,7 @@ const petSchema = new Schema({
 });
 
 const postSchema = new Schema({
+  title: String,
   message: String,
   image: String,
   petId: String,

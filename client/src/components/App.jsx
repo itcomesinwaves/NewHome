@@ -7,6 +7,7 @@ function App() {
       <nav>
         <Link to="/profile">Profile</Link>
         <Link to="/Search">Search</Link>
+        <Link to="/AdoptedPet">AdoptedPet</Link>
       </nav>
       Howdy
     </div>
