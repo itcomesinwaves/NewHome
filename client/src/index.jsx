@@ -5,6 +5,7 @@ import App from './components/App.jsx';
 import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
 import HomeFeed from './components/HomeFeed.jsx';
+import Search from './components/Search.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('app'));
 root.render(
