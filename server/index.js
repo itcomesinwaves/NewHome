@@ -7,6 +7,7 @@ const express = require('express');
 const path = require('path');
 require('./db/index.js');
 const { user, pet, feed } = require('./routes');
+const Post = require('./db/models/Post');
 
 const app = express();
 const PORT = 8080;
@@ -18,16 +19,18 @@ app.use(express.json());
 app.use('/feed', feed);
 app.use('/user', user);
 
-
-passport.use(new GoogleStrategy({
-  clientID: process.env['GOOGLE_CLIENT_ID'],
-  clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
-  callbackURL: process.env['GOOGLE_CALLBACK_URL']
-},
-async (accessToken, refreshToken, profile, done) => {
-  console.log('user profile is: ', profile);
-} 
-));
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.GOOGLE_CALLBACK_URL,
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      console.log('user profile is: ', profile);
+    },
+  ),
+);
 
 // const index = '../client/dist/index.html'
 app.get('/', (req, res) => {
@@ -43,6 +46,15 @@ app.get('/*', (req, res) => {
       }
     },
   );
+});
+
+// Placeholder endpoint for adoption posts from the client
+app.post('/AdoptionMessage', (req, res) => {
+  console.log(req.body);
+  Post.create(req.body.post)
+    .then(() => console.log('success'))
+    .catch((err) => console.error(err));
+  res.sendStatus(200);
 });
 
 app.listen(PORT, () => {

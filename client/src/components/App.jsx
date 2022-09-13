@@ -9,6 +9,7 @@ function App() {
         <Link to="/Search">Search</Link>
         <Link to="/home">Home</Link>
         <Link to="/login">Login</Link>
+        <Link to="/AdoptedPet">AdoptedPet</Link>
       </nav>
       Howdy
     </div>
