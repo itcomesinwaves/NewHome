@@ -1,30 +1,31 @@
 import React, { useState } from 'react';
-import { Box, TextField, Button } from '@material-ui/core';
+import {
+  Box, TextField, Button, Card, CardMedia,
+} from '@material-ui/core';
 import axios from 'axios';
 
 function AdoptedPet() {
   const [message, setMessage] = useState('');
   const [title, setTitle] = useState('');
-  const [images, setImages] = useState([]);
+  const [image, setImage] = useState('');
 
   return (
     <Box
       component="form"
       id="post-form"
       sx={{
-			  '& .MuiTextField-root': { width: '30ch' },
+			  '& .MuiTextField-root': { width: '280px' },
 			  display: 'inline-block',
 			  m: 2,
 			  ml: 4,
-			  'box-sizing': 'border-box',
+			  border: '2px solid',
+			  maxWidth: '280px',
       }}
       onSubmit={(e) => {
 			  e.preventDefault();
-			  console.log(`Title: ${title} \n Message: ${message}`);
 			  axios
-			    .post('/adoptionMessage', { post: { title, message } })
+			    .post('/adoptionMessage', { post: { title, message, image } })
 			    .then(() => {
-			      console.log('success');
 			      setTitle('');
 			      setMessage('');
 			      document.getElementById('post-form').reset();
@@ -58,13 +59,11 @@ function AdoptedPet() {
         <input
           accept="image/*"
           id="image-upload"
-          multiple
+          multiple={false}
           type="file"
           style={{ display: 'none' }}
           onChange={(e) => {
-					  const files = Array.from(e.target.files);
-					  console.log(files);
-					  files.forEach((f, i) => setImages([...images, URL.createObjectURL(f)]));
+					  setImage(URL.createObjectURL(e.target.files[0]));
           }}
         />
         <Button variant="outlined" component="span">
@@ -72,15 +71,10 @@ function AdoptedPet() {
         </Button>
       </label>
       <br />
-      {console.log(images)}
-      {images.map((image) => (
-        <div key={JSON.stringify(image)}>
-          <br />
-          <img src={image} height="200" alt="" />
-          {' '}
-          <br />
-        </div>
-      ))}
+      <br />
+      <Card>
+        <CardMedia component="img" src={image} image={image} alt="" />
+      </Card>
       <br />
       <br />
       <br />
