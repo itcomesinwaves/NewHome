@@ -9,6 +9,7 @@ function AdoptedPet() {
   return (
     <Box
       component="form"
+      id="post-form"
       sx={{
 			  '& .MuiTextField-root': { m: 16, width: '30ch' },
 			  display: 'inline-block',
@@ -18,7 +19,12 @@ function AdoptedPet() {
 			  console.log(`Title: ${title} \n Message: ${message}`);
 			  axios
 			    .post('/adoptionMessage', { post: { title, message } })
-			    .then(() => console.log('success'))
+			    .then(() => {
+			      console.log('success');
+			      setTitle('');
+			      setMessage('');
+			      document.getElementById('post-form').reset();
+			    })
 			    .catch((err) => console.error(err));
       }}
     >
