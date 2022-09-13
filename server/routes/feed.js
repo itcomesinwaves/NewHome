@@ -42,12 +42,15 @@ feed.post('/api/search', (req, res) => {
 
   // getting all options for search
   const searchString = 'https://api.petfinder.com/v2/animals?';
-  const speciesStr = species.length ? `type=${species}` : species;
-  const breedStr = breed.length ? `breed=${breed}` : breed;
-  const genderStr = gender.length ? `gender=${gender}` : gender;
-  const ageStr = age.length ? `age=${age}` : age;
-  const hairLengthStr = hairLength.length ? `coat=${hairLength}` : hairLength;
-  console.log(speciesStr, breedStr, genderStr, ageStr, hairLengthStr);
+
+  const queryStrArr = [
+    species.length ? `type=${species}` : species,
+    breed.length ? `breed=${breed}` : breed,
+    gender.length ? `gender=${gender}` : gender,
+    age.length ? `age=${age}` : age,
+    hairLength.length ? `coat=${hairLength}` : hairLength,
+  ];
+  console.log(queryStrArr);
 
   res.sendStatus(201);
 });
