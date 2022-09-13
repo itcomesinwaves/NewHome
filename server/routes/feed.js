@@ -59,7 +59,6 @@ feed.post('/api/search', (req, res) => {
       res.status(201).send(JSON.stringify(animals));
     })
     .catch((err) => {
-      console.log(err);
       res.sendStatus(err.response.status);
     });
 });
