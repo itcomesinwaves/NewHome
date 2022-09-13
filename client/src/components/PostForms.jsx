@@ -4,7 +4,7 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 
-function AdoptedPet() {
+function PostForms() {
   const [message, setMessage] = useState('');
   const [title, setTitle] = useState('');
   const [image, setImage] = useState('');
@@ -18,7 +18,7 @@ function AdoptedPet() {
 			  display: 'inline-block',
 			  m: 2,
 			  ml: 4,
-			  border: '2px solid',
+			  // border: '2px solid',
 			  maxWidth: '280px',
       }}
       onSubmit={(e) => {
@@ -90,4 +90,4 @@ function AdoptedPet() {
   );
 }
 
-export default AdoptedPet;
+export default PostForms;
