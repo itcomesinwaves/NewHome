@@ -42,7 +42,6 @@ feed.post('/api/search', (req, res) => {
 
   // getting all options for search
   const searchString = 'https://api.petfinder.com/v2/animals?';
-
   const queryStrArr = [
     species.length ? `type=${species}` : species,
     breed.length ? `breed=${breed}` : breed,
@@ -50,13 +49,24 @@ feed.post('/api/search', (req, res) => {
     age.length ? `age=${age}` : age,
     hairLength.length ? `coat=${hairLength}` : hairLength,
   ];
-  console.log(queryStrArr);
-
-  res.sendStatus(201);
+  search(
+    searchString.concat(
+      '',
+      queryStrArr.filter((str) => str.length !== 0).join('&'),
+    ),
+  )
+    .then((animals) => {
+      res.status(201).send(JSON.stringify(animals));
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(err.response.status);
+    });
 });
 
 // Helper Functions
 
+// Gets basic pet page (no search params)
 const getPage = () => new Promise((res, rej) => {
   const config = {
     method: 'get',
@@ -73,6 +83,7 @@ const getPage = () => new Promise((res, rej) => {
     .catch((err) => rej(err));
 });
 
+// Gets auth token
 const getApiAuth = () => new Promise((res, rej) => {
   const data = JSON.stringify({
     grant_type: 'client_credentials',
@@ -94,6 +105,20 @@ const getApiAuth = () => new Promise((res, rej) => {
       process.env.API_AUTH = `Bearer ${response.data.access_token}`;
       return res();
     })
+    .catch((err) => rej(err));
+});
+
+const search = (searchString) => new Promise((res, rej) => {
+  const config = {
+    method: 'get',
+    url: searchString,
+    headers: {
+      Authorization: process.env.API_AUTH,
+    },
+  };
+
+  axios(config)
+    .then((response) => res(response.data))
     .catch((err) => rej(err));
 });
 
