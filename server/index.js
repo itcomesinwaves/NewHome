@@ -1,6 +1,6 @@
 require('dotenv').config();
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oidc');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const express = require('express');
 // const axios = require('axios');
@@ -8,6 +8,7 @@ const path = require('path');
 require('./db/index.js');
 const { user, pet, feed } = require('./routes');
 const Post = require('./db/models/Post');
+const User = require('./db/models/User');
 
 const app = express();
 const PORT = 8080;
@@ -26,9 +27,23 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
-    async (accessToken, refreshToken, profile, done) => {
-      console.log('user profile is: ', profile);
-    },
+    ((accessToken, profile, cb) => {
+      User.find({ googleId: profile.id })
+        .then((user) => {
+          if (user) {
+            cb(null, user);
+          } else {
+            User.create({ googleId: profile.id })
+              .then((user) => cb(null, user))
+              .catch((err) => {
+                console.error(err);
+              });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }),
   ),
 );
 
@@ -56,6 +71,23 @@ app.post('/AdoptionMessage', (req, res) => {
     .catch((err) => console.error(err));
   res.sendStatus(200);
 });
+
+// Login start
+app.get(
+  '/user/auth/google',
+  passport.authenticate('google', { scope: ['profile'] }),
+);
+
+// Login Success
+app.get(
+  '/user/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  (req, res) => {
+    // Successful authentication, redirect home.
+    const userID = req.user.id;
+    res.redirect(`/id=${userID}`);
+  },
+);
 
 app.listen(PORT, () => {
   console.log(`server totally listening @ http://${url}:${PORT}`);

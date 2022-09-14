@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { Button } from '@material-ui/core';
 
 function Search() {
   const [breed, setVal] = useState(() => '');
@@ -6,11 +8,10 @@ function Search() {
   const [species, setSpecies] = useState(() => '');
   const [age, setAge] = useState(() => '');
   const [gender, setGender] = useState(() => '');
-
+  const [size, setSize] = useState(() => '');
   const breedUpdate = (event) => {
     setVal(event.target.value);
   };
-
   const submit = (event) => {
     event.preventDefault();
     const searchBy = {
@@ -19,6 +20,7 @@ function Search() {
       species,
       age,
       gender,
+      size,
     };
     const config = {
       method: 'post',
@@ -28,7 +30,6 @@ function Search() {
       },
       data: searchBy,
     };
-
     // axios(config)
     //   .then((response) => {
     //     console.log(JSON.stringify(response.data));
@@ -37,23 +38,21 @@ function Search() {
     //     alert(`${error.response.data} / Invalid Breed`);
     //   });
   };
-
   const hairUpdate = (event) => {
     setHairLength(event.target.value);
   };
-
   const speciesUpdate = (event) => {
     setSpecies(event.target.value);
   };
-
   const ageUpdate = (event) => {
     setAge(event.target.value);
   };
-
   const genderUpdate = (event) => {
     setGender(event.target.value);
   };
-
+  const sizeUpdate = (event) => {
+    setSize(event.target.value);
+  };
   return (
     <div id="search">
       <form onSubmit={submit}>
@@ -67,20 +66,27 @@ function Search() {
         </select>
         <select value={species} onChange={speciesUpdate}>
           <option value="">Species</option>
-          <option value="Cat">Cat</option>
-          <option value="Dog">Dog</option>
+          <option value="cat">Cat</option>
+          <option value="dog">Dog</option>
         </select>
         <select value={age} onChange={ageUpdate}>
           <option value="">Age</option>
-          <option value="Baby">Baby</option>
-          <option value="Young">Young</option>
-          <option value="Adult">Adult</option>
-          <option value="Senior">Senior</option>
+          <option value="baby">Baby</option>
+          <option value="young">Young</option>
+          <option value="adult">Adult</option>
+          <option value="senior">Senior</option>
         </select>
         <select value={gender} onChange={genderUpdate}>
           <option value="">Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+        <select value={size} onChange={sizeUpdate}>
+          <option value="">Size</option>
+          <option value="small">Small</option>
+          <option value="medium">Medium</option>
+          <option value="large">Large</option>
+          <option value="xlarge">X-Large</option>
         </select>
         <Button variant="contained" type="submit">
           Submit
@@ -89,5 +95,4 @@ function Search() {
     </div>
   );
 }
-
 export default Search;

@@ -6,7 +6,7 @@ import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
 import HomeFeed from './components/HomeFeed.jsx';
 import Search from './components/Search.jsx';
-import AdoptedPet from './components/AdoptedPet.jsx';
+import PostForms from './components/PostForms.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('app'));
 root.render(
@@ -17,7 +17,7 @@ root.render(
       <Route path="login" element={<Login />} />
       <Route path="search" element={<Search />} />
       <Route path="home" element={<HomeFeed />} />
-      <Route path="adoptedpet" element={<AdoptedPet />} />
+      <Route path="postforms" element={<PostForms />} />
     </Routes>
   </BrowserRouter>,
 );
