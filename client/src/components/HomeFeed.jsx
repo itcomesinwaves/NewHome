@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FeedEntry from './FeedEntry.jsx';
 
-
 function HomeFeed() {
   const [animals, setAnimals] = useState([]);
   const [fetchedAnimals, setFetchedAnimals] = useState(false);
 
-  const getAllAnimals = function() {
-    axios.get('/feed/api')
+  const getAllAnimals = function () {
+    axios
+      .get('/feed/api')
       .then(({ data }) => {
-        setAnimals(data)
+        setAnimals(data);
         console.log('animals state →', animals);
         console.log('data →', data);
       })
@@ -19,18 +19,21 @@ function HomeFeed() {
       })
       .catch((err) => {
         console.error(err);
-      })
-  }
+      });
+  };
 
   useEffect(() => {
     getAllAnimals();
   }, [fetchedAnimals]);
 
-
   return (
     <>
-      <FeedEntry animalData={ this.animals[0] }/>
+      <h1>Welcome to NewHome</h1>
+      <p>Where you can give those little sonsofbitches a new dang ole home</p>
+      <FeedEntry animalData={animals} />
+      <FeedEntry animalData={animals} />
+      <FeedEntry animalData={animals} />
     </>
-  )
+  );
 }
 export default HomeFeed;

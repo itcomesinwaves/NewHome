@@ -1,35 +1,31 @@
-// import React from 'react';
-// // import Card from '@mui/material/Card';
-// import CardActions from '@mui/material/CardActions';
-// import CardContent from '@mui/material/CardContent';
-// import CardMedia from '@mui/material/CardMedia';
-// import Button from '@mui/material/Button';
-// import Typography from '@mui/material/Typography';
-// import { Card } from '@mui/material';
+import React from 'react';
+import {
+  Card, CardActions, CardContent, CardMedia, Button, Typography,
+} from '@material-ui/core';
 
-// function FeedEntry(props) {
-//   return (
-//     <Card sx={{ maxWidth: 345 }}>
-//       <CardMedia
-//         component="img"
-//         height="140"
-//         image="/static/images/cards/contemplative-reptile.jpg"
-//         alt="green iguana"
-//       />
-//       <CardContent>
-//         <Typography gutterBottom variant="h5" component="div">
-//           Lizard
-//         </Typography>
-//         <Typography variant="body2" color="text.secondary">
-//           Lizards are a widespread group of squamate reptiles, with over 6,000
-//           species, ranging across all continents except Antarctica
-//         </Typography>
-//       </CardContent>
-//       <CardActions>
-//         <Button size="small">Share</Button>
-//         <Button size="small">Learn More</Button>
-//       </CardActions>
-//     </Card>
-//   );
-// }
-// export default FeedEntry;
+function FeedEntry(props) {
+  return (
+    <Card sx={{ maxWidth: 345 }}>
+      <CardMedia
+        component="img"
+        height="140"
+        image="https://upload.wikimedia.org/wikipedia/commons/3/3f/Anole_Lizard_Hilo_Hawaii_edit_wizard.jpg"
+        alt="card image"
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          Lizard
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          This lizard literally has magickal powers, and will GG you into Oblivian, yet, he still
+          doesnt have a cozy spot to rest his head, FIX THAT NOW!
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small">follow</Button>
+        <Button size="small">adopt</Button>
+      </CardActions>
+    </Card>
+  );
+}
+export default FeedEntry;
