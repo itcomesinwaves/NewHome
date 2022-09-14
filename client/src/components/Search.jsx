@@ -9,11 +9,9 @@ function Search() {
   const [age, setAge] = useState(() => '');
   const [gender, setGender] = useState(() => '');
   const [size, setSize] = useState(() => '');
-
   const breedUpdate = (event) => {
     setVal(event.target.value);
   };
-
   const submit = (event) => {
     event.preventDefault();
     const searchBy = {
@@ -32,7 +30,6 @@ function Search() {
       },
       data: searchBy,
     };
-
     // axios(config)
     //   .then((response) => {
     //     console.log(JSON.stringify(response.data));
@@ -41,26 +38,21 @@ function Search() {
     //     alert(`${error.response.data} / Invalid Breed`);
     //   });
   };
-
   const hairUpdate = (event) => {
     setHairLength(event.target.value);
   };
-
   const speciesUpdate = (event) => {
     setSpecies(event.target.value);
   };
-
   const ageUpdate = (event) => {
     setAge(event.target.value);
   };
-
   const genderUpdate = (event) => {
     setGender(event.target.value);
   };
   const sizeUpdate = (event) => {
     setSize(event.target.value);
   };
-
   return (
     <div id="search">
       <form onSubmit={submit}>
@@ -103,5 +95,4 @@ function Search() {
     </div>
   );
 }
-
 export default Search;
