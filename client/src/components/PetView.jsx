@@ -22,7 +22,6 @@ const pet = {
   adopted: false,
   image:
 		'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/57334144/1/?bust=1663026743&width=300',
-  userId: 'myID',
 };
 
 function PetView() {
@@ -92,7 +91,9 @@ function PetView() {
       </p>
       <h3>I&apos;m</h3>
       <ul>
-        {pet.temperament.map((tag) => <li key={`${pet.id}${pet.name}`}>{tag}</li>)}
+        {pet.temperament.map((tag) => (
+          <li key={`${tag}${pet.name}`}>{tag}</li>
+        ))}
       </ul>
       {onAdoptionStatus()}
     </div>
