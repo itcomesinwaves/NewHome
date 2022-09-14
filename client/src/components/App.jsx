@@ -7,6 +7,8 @@ function App() {
       <nav>
         <Link to="/profile">Profile</Link>
         <Link to="/Search">Search</Link>
+        <Link to="/home">Home</Link>
+        <Link to="/login">Login</Link>
         <Link to="/PostForm">PostForm</Link>
       </nav>
       Howdy
