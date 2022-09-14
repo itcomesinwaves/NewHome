@@ -5,7 +5,7 @@ import {
 
 function FeedEntry(props) {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card display="inline-block" sx={{ maxWidth: 280 }}>
       <CardMedia
         component="img"
         height="140"
