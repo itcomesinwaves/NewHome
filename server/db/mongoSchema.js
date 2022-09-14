@@ -8,6 +8,7 @@ const userSchema = new Schema({
     required: [false, 'email required'],
     unique: [true, 'email already registered'],
   },
+  googleID: String,
   firstName: String,
   lastName: String,
   password: String,
@@ -29,6 +30,7 @@ const petSchema = new Schema({
 });
 
 const postSchema = new Schema({
+  title: String,
   message: String,
   image: String,
   petId: String,
