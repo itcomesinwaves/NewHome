@@ -1,6 +1,6 @@
 require('dotenv').config();
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+// const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const express = require('express');
 // const axios = require('axios');
@@ -20,32 +20,32 @@ app.use(express.json());
 app.use('/feed', feed);
 app.use('/user', user);
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.GOOGLE_CALLBACK_URL,
-    },
-    ((accessToken, profile, cb) => {
-      User.find({ googleId: profile.id })
-        .then((user) => {
-          if (user) {
-            cb(null, user);
-          } else {
-            User.create({ googleId: profile.id })
-              .then((user) => cb(null, user))
-              .catch((err) => {
-                console.error(err);
-              });
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }),
-  ),
-);
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientID: process.env.GOOGLE_CLIENT_ID,
+//       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+//       callbackURL: process.env.GOOGLE_CALLBACK_URL,
+//     },
+//     ((accessToken, profile, cb) => {
+//       User.find({ googleId: profile.id })
+//         .then((user) => {
+//           if (user) {
+//             cb(null, user);
+//           } else {
+//             User.create({ googleId: profile.id })
+//               .then((user) => cb(null, user))
+//               .catch((err) => {
+//                 console.error(err);
+//               });
+//           }
+//         })
+//         .catch((err) => {
+//           console.error(err);
+//         });
+//     }),
+//   ),
+// );
 
 // const index = '../client/dist/index.html'
 app.get('/', (req, res) => {
