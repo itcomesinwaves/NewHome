@@ -29,10 +29,15 @@ function HomeFeed() {
   return (
     <>
       <h1>Welcome to NewHome</h1>
-      <p>Where you can give those little sonsofbitches a new dang ole home</p>
+      <p>Where you can give those little sonsofguns a new dang ole home</p>
       <FeedEntry animalData={animals} />
+      <br />
+
       <FeedEntry animalData={animals} />
+      <br />
+
       <FeedEntry animalData={animals} />
+      <br />
     </>
   );
 }

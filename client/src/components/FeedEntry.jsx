@@ -22,8 +22,8 @@ function FeedEntry(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">follow</Button>
-        <Button size="small">adopt</Button>
+        <Button size="small">view more</Button>
+        <Button size="small">save for later</Button>
       </CardActions>
     </Card>
   );
