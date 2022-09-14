@@ -1,22 +1,25 @@
+// Imports/Dependencies
 require('dotenv').config();
+require('./db/index.js');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-
 const express = require('express');
-// const axios = require('axios');
+const session = require('express-session');
 const path = require('path');
-require('./db/index.js');
 const { user, pet, feed } = require('./routes');
 const Post = require('./db/models/Post');
 const User = require('./db/models/User');
 
+// Generating application and setting url
 const app = express();
 const PORT = 8080;
 const url = 'localhost';
 
+// Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve('client', 'dist')));
 app.use(express.json());
+app.use(session({}));
 app.use('/feed', feed);
 app.use('/user', user);
 
@@ -27,7 +30,7 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
-    ((accessToken, profile, cb) => {
+    (accessToken, profile, cb) => {
       User.find({ googleId: profile.id })
         .then((user) => {
           if (user) {
@@ -43,7 +46,7 @@ passport.use(
         .catch((err) => {
           console.error(err);
         });
-    }),
+    },
   ),
 );
 
