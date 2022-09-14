@@ -2,7 +2,7 @@
 require('dotenv').config();
 require('./db/index.js');
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
@@ -19,9 +19,22 @@ const url = 'localhost';
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve('client', 'dist')));
 app.use(express.json());
-app.use(session({}));
+app.use(
+  session({
+    secret: process.env.GOOGLE_CLIENT_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  }),
+);
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('/feed', feed);
 app.use('/user', user);
+
+const authUser = (request, accessToken, refreshToken, profile, done) => {
+  console.log('hi authUser');
+  return done(null, profile);
+};
 
 passport.use(
   new GoogleStrategy(
@@ -30,32 +43,86 @@ passport.use(
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
-    (accessToken, profile, cb) => {
-      User.find({ googleId: profile.id })
-        .then((user) => {
-          if (user) {
-            cb(null, user);
-          } else {
-            User.create({ googleId: profile.id })
-              .then((user) => cb(null, user))
-              .catch((err) => {
-                console.error(err);
-              });
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    },
+    authUser,
   ),
 );
+
+passport.serializeUser((user, done) => {
+  console.log('\n--------> Serialize User:');
+  // console.log(user);
+  // The USER object is the "authenticated user" from the done() in authUser function.
+  // serializeUser() will attach this user to "req.session.passport.user.{user}", so that
+  // it is tied to the session object for each session.
+
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  console.log('\n--------- Deserialized User:');
+  // console.log(user);
+  // This is the {user} that was saved in req.session.passport.user.{user} in the
+  // serializationUser()
+  // deserializeUser will attach this {user} to the "req.user.{user}", so that it
+  // can be used anywhere in the App.
+
+  done(null, user);
+});
 
 // const index = '../client/dist/index.html'
 app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.get('/*', (req, res) => {
+// Placeholder endpoint for adoption posts from the client
+app.post('/AdoptionMessage', (req, res) => {
+  // console.log(req.body);
+  Post.create(req.body.post)
+    .then(() => console.log('success'))
+    .catch((err) => console.error(err));
+  res.sendStatus(200);
+});
+/*
+let count = 1;
+const showlogs = (req, res, next) => {
+	console.log('\n==============================');
+	console.log(`------------>  ${count++}`);
+
+	console.log(`\n req.session.passport -------> `);
+	console.log(req.session.passport);
+
+	console.log(`\n req.user -------> `);
+	console.log(req.user);
+
+	console.log('\n Session and Cookie');
+	console.log(`req.session.id -------> ${req.session.id}`);
+	console.log(`req.session.cookie -------> `);
+	console.log(req.session.cookie);
+
+	console.log('===========================================\n');
+
+	next();
+};
+
+app.use(showlogs);
+*/
+// Login start
+app.get(
+  '/auth/google',
+  passport.authenticate('google', { scope: ['email', 'profile'] }),
+);
+
+// Login Success
+app.get(
+  '/auth/google/callback',
+  passport.authenticate('google', {
+    successRedirect: '/profile',
+    failureRedirect: '/login',
+  }),
+);
+
+app.get('/login', (req, res) => {
+  console.log('hi');
+  console.log(req.user);
   res.sendFile(
     path.resolve(__dirname, '..', 'client', 'dist', 'index.html'),
     (data, err) => {
@@ -66,31 +133,37 @@ app.get('/*', (req, res) => {
   );
 });
 
-// Placeholder endpoint for adoption posts from the client
-app.post('/AdoptionMessage', (req, res) => {
-  console.log(req.body);
-  Post.create(req.body.post)
-    .then(() => console.log('success'))
-    .catch((err) => console.error(err));
-  res.sendStatus(200);
+// Use the req.isAuthenticated() function to check if user is Authenticated
+const checkAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+  return null;
+};
+
+app.get('/profile', checkAuthenticated, (req, res) => {
+  console.log('hi profile');
 });
 
-// Login start
-app.get(
-  '/user/auth/google',
-  passport.authenticate('google', { scope: ['profile'] }),
-);
+// Define the Logout
+app.post('/logout', (req, res) => {
+  req.logOut();
+  res.redirect('/login');
+  console.log('-------> User Logged out');
+});
 
-// Login Success
-app.get(
-  '/user/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  (req, res) => {
-    // Successful authentication, redirect home.
-    const userID = req.user.id;
-    res.redirect(`/id=${userID}`);
-  },
-);
+app.get('/*', (req, res) => {
+  console.log('hi');
+  res.sendFile(
+    path.resolve(__dirname, '..', 'client', 'dist', 'index.html'),
+    (data, err) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+    },
+  );
+});
 
 app.listen(PORT, () => {
   console.log(`server totally listening @ http://${url}:${PORT}`);
