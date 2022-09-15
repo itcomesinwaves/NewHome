@@ -12,11 +12,13 @@
     }
   },
   "rules": {
-    "import/extensions": ["warn", "always", {"ignorePackages": true}], "no-unused-vars": ["warn", { "vars": "local", "args": "after-used", "ignoreRestSiblings": false }],
+    "import/extensions": ["warn", "always", {"ignorePackages": true}], 
+    "no-unused-vars": ["warn", { "vars": "local", "args": "after-used", "ignoreRestSiblings": false }],
     "no-use-before-define": ["off"],
     "no-shadow": ["off"],
     "react/no-unknown-property": ["off"],
     "no-tabs": ["off"],
-    "no-mixed-spaces-and-tabs": ["off"]
+    "no-mixed-spaces-and-tabs": ["off"],
+    "react/forbid-prop-types": ["off"]
   }
 }
