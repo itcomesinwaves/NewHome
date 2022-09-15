@@ -11,7 +11,7 @@ import {
   createTheme,
   colors,
   withStyles,
-} from '@material-ui/core';
+} from '@mui/material';
 import FeedEntry from './FeedEntry.jsx';
 
 const theme = createTheme({
@@ -78,11 +78,11 @@ function Search() {
   const renderPets = () => (
     <Box
       sx={{
-				  maxWidth: 700,
-				  maxHeight: 700,
-				  '& .MuiTextField-root': { width: '280px' },
-				  diplay: 'inline-block',
-				  m: 'auto',
+			  maxWidth: 700,
+			  maxHeight: 700,
+			  '& .MuiTextField-root': { width: '280px' },
+			  diplay: 'inline-block',
+			  m: 'auto',
       }}
     >
       {pets.map((pet) => (
