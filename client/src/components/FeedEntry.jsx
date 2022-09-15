@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Card,
@@ -8,10 +8,20 @@ import {
   Button,
   Typography,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 function FeedEntry({ animalsData }) {
   // get rid of conditional rendering here and create a single card instance with dynamic data
   // this won't render until animals data is defined
+  // navigate hook to render petview
+  const navigate = useNavigate();
+
+  // on click render individual petview
+  const handleEntryClick = () => {
+    console.log('clicked on', animalsData.name);
+    // navigate tag to render petview
+    return navigate('/petview', { state: { animalsData } });
+  };
 
   return (
     <Card>
@@ -35,7 +45,9 @@ function FeedEntry({ animalsData }) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">view more</Button>
+        <Button size="small" id="viewpet" onClick={handleEntryClick}>
+          view more
+        </Button>
         <Button size="small">save for later</Button>
       </CardActions>
     </Card>

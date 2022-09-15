@@ -107,6 +107,7 @@ const getApiAuth = () => new Promise((res, rej) => {
     .catch((err) => rej(err));
 });
 
+// searches the Api with strict params
 const search = (searchString) => new Promise((res, rej) => {
   const config = {
     method: 'get',
