@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
 function Search() {
   const [breed, setVal] = useState(() => '');

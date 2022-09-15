@@ -1,7 +1,12 @@
 import React from 'react';
 import {
-  Card, CardActions, CardContent, CardMedia, Button, Typography,
-} from '@material-ui/core';
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography,
+} from '@mui/material';
 
 function FeedEntry(props) {
   return (
@@ -17,8 +22,9 @@ function FeedEntry(props) {
           Lizard
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          This lizard literally has magickal powers, and will GG you into Oblivian, yet, he still
-          doesnt have a cozy spot to rest his head, FIX THAT NOW!
+          This lizard literally has magickal powers, and will GG you into
+          Oblivian, yet, he still doesnt have a cozy spot to rest his head, FIX
+          THAT NOW!
         </Typography>
       </CardContent>
       <CardActions>
