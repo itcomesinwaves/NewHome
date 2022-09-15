@@ -12,7 +12,8 @@ const userSchema = new Schema({
   firstName: String,
   lastName: String,
   password: String,
-  profilePhoto: String,
+  image: String,
+  imageType: String,
   source: { type: String, required: [false, 'source not specified'] },
   lastVisited: { type: Date, default: new Date() },
 });
@@ -33,6 +34,7 @@ const postSchema = new Schema({
   title: String,
   message: String,
   image: String,
+  imageType: String,
   petId: String,
   date: { type: Date, default: Date.now },
 });
