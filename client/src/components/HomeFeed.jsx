@@ -38,7 +38,7 @@ function HomeFeed() {
   // loading feed
   const loadingFeed = () => {
     if (animals.length) {
-      console.log('single animal obj', animals[0]);
+      // console.log('single animal obj', animals[0]);
       return animals.map((animal) => (
         <div key={JSON.stringify(animal)}>
           <FeedEntry animalsData={animal} />
