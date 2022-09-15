@@ -7,7 +7,36 @@ import {
   InputLabel,
   Box,
   TextField,
+  ThemeProvider,
+  createTheme,
+  colors,
 } from '@material-ui/core';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#B7D5E6',
+      light: '#B7C4CF',
+      contrastText: '#375E3D',
+    },
+    secondary: {
+      main: '#EEE3CB',
+      dark: '#967E76',
+    },
+  },
+});
+
+const styles = {
+  '&.MuiButton-root': {
+    border: '2px black solid',
+  },
+  '&.MuiButton-text': {
+    color: theme.palette.primary.contrastText,
+  },
+  '&.MuiButton-contained': {
+    color: theme.palette.primary.light,
+  },
+};
 
 function Search() {
   const [breed, setVal] = useState(() => '');
@@ -70,71 +99,82 @@ function Search() {
 
   return (
     <div id="search">
-      <Box
-        component="form"
-        onSubmit={submit}
-        sx={{
-				  display: 'inline-block',
-				  maxWidth: '500px',
-				  minWidth: '280px',
-				  '& .MuiTextField-root': { width: '280px' },
-        }}
-      >
-        <TextField
-          label="breed"
-          type="text"
-          value={breed}
-          onChange={breedUpdate}
-        />
-        <InputLabel id="Hair-Length">Hair Length</InputLabel>
-        <Select
-          labelId="Hair-Length"
-          label="Hair length"
-          value={hairLength}
-          onChange={hairUpdate}
+      <ThemeProvider theme={theme}>
+        <Box
+          component="form"
+          onSubmit={submit}
+          sx={{
+					  display: 'inline-block',
+					  maxWidth: '500px',
+					  minWidth: '280px',
+					  '& .MuiTextField-root': { width: '280px' },
+					  bgcolor: 'primary.main',
+          }}
         >
-          <MenuItem value="short">Short</MenuItem>
-          <MenuItem value="medium">Medium</MenuItem>
-          <MenuItem value="long">Long</MenuItem>
-        </Select>
-        <InputLabel id="Species">Species</InputLabel>
-        <Select
-          labelId="Species"
-          label="Species"
-          value={species}
-          onChange={speciesUpdate}
-        >
-          <MenuItem value="cat">Cat</MenuItem>
-          <MenuItem value="dog">Dog</MenuItem>
-        </Select>
-        <InputLabel id="Age">Age</InputLabel>
-        <Select labelId="Age" label="Age" value={age} onChange={ageUpdate}>
-          <MenuItem value="baby">Baby</MenuItem>
-          <MenuItem value="young">Young</MenuItem>
-          <MenuItem value="adult">Adult</MenuItem>
-          <MenuItem value="senior">Senior</MenuItem>
-        </Select>
-        <InputLabel id="Gender">Gender</InputLabel>
-        <Select
-          labelId="Gender"
-          label="Gender"
-          value={gender}
-          onChange={genderUpdate}
-        >
-          <MenuItem value="male">Male</MenuItem>
-          <MenuItem value="female">Female</MenuItem>
-        </Select>
-        <InputLabel id="Size">Size</InputLabel>
-        <Select labelId="Size" label="Size" value={size} onChange={sizeUpdate}>
-          <MenuItem value="small">Small</MenuItem>
-          <MenuItem value="medium">Medium</MenuItem>
-          <MenuItem value="large">Large</MenuItem>
-          <MenuItem value="xlarge">X-Large</MenuItem>
-        </Select>
-        <Button variant="contained" type="submit" color="primary">
-          Submit
-        </Button>
-      </Box>
+          <TextField
+            label="breed"
+            type="text"
+            value={breed}
+            onChange={breedUpdate}
+            InputLabelProps={{
+						  style: { color: 'primary.contrastText' },
+            }}
+          />
+          <InputLabel id="Hair-Length">Hair Length</InputLabel>
+          <Select
+            labelId="Hair-Length"
+            label="Hair length"
+            value={hairLength}
+            onChange={hairUpdate}
+          >
+            <MenuItem value="short">Short</MenuItem>
+            <MenuItem value="medium">Medium</MenuItem>
+            <MenuItem value="long">Long</MenuItem>
+          </Select>
+          <InputLabel id="Species">Species</InputLabel>
+          <Select
+            labelId="Species"
+            label="Species"
+            value={species}
+            onChange={speciesUpdate}
+          >
+            <MenuItem value="cat">Cat</MenuItem>
+            <MenuItem value="dog">Dog</MenuItem>
+          </Select>
+          <InputLabel id="Age">Age</InputLabel>
+          <Select labelId="Age" label="Age" value={age} onChange={ageUpdate}>
+            <MenuItem value="baby">Baby</MenuItem>
+            <MenuItem value="young">Young</MenuItem>
+            <MenuItem value="adult">Adult</MenuItem>
+            <MenuItem value="senior">Senior</MenuItem>
+          </Select>
+          <InputLabel id="Gender">Gender</InputLabel>
+          <Select
+            labelId="Gender"
+            label="Gender"
+            value={gender}
+            onChange={genderUpdate}
+          >
+            <MenuItem value="male">Male</MenuItem>
+            <MenuItem value="female">Female</MenuItem>
+          </Select>
+          <InputLabel id="Size">Size</InputLabel>
+          <Select
+            labelId="Size"
+            label="Size"
+            value={size}
+            onChange={sizeUpdate}
+          >
+            <MenuItem value="small">Small</MenuItem>
+            <MenuItem value="medium">Medium</MenuItem>
+            <MenuItem value="large">Large</MenuItem>
+            <MenuItem value="xlarge">X-Large</MenuItem>
+          </Select>
+          <Button variant="contained" type="submit" sx={styles}>
+            Submit
+          </Button>
+        </Box>
+      </ThemeProvider>
     </div>
   );
 }
