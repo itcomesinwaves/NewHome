@@ -7,7 +7,7 @@ import {
   CardMedia,
   Button,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 
 function FeedEntry({ animalsData }) {
   // get rid of conditional rendering here and create a single card instance with dynamic data

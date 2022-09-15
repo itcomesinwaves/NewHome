@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Box } from '@material-ui/core';
+import { Box } from '@mui/material';
 import FeedEntry from './FeedEntry.jsx';
 import Loading from './Loading.jsx';
 
@@ -46,9 +46,7 @@ function HomeFeed() {
         </div>
       ));
     }
-    return (
-      <Loading />
-    );
+    return <Loading />;
   };
 
   return (
