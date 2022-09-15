@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import FeedEntry from './FeedEntry.jsx';
 import Loading from './Loading.jsx';
+import App from './App.jsx';
 
 function HomeFeed() {
   const [animals, setAnimals] = useState([]);
@@ -59,7 +60,10 @@ function HomeFeed() {
 			  m: 'auto',
       }}
     >
-      <h1>Welcome to NewHome</h1>
+      <App />
+      <Typography gutterBottom variant="h1" component="div">
+        Welcome to NewHome
+      </Typography>
       <p>Where you can give those little sonsofguns a new dang ole home</p>
       {loadingFeed()}
     </Box>
