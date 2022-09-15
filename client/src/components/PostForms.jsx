@@ -7,7 +7,9 @@ import axios from 'axios';
 function PostForms() {
   const [message, setMessage] = useState('');
   const [title, setTitle] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState({});
+  const [imageUrl, setImageUrl] = useState('');
+  let signedUrl = '';
 
   return (
     <Box
@@ -24,13 +26,40 @@ function PostForms() {
       onSubmit={(e) => {
 			  e.preventDefault();
 			  axios
-			    .post('/adoptionMessage', { post: { title, message, image } })
+			    .post('/imageUrl', {
+			      filename: image.name,
+			      filetype: image.type,
+			    })
+			    .then((result) => {
+			      signedUrl = result.data;
+
+			      const options = {
+			        headers: {
+			          'Content-Type': image.type,
+			        },
+			      };
+
+			      return axios.put(signedUrl, image, options);
+			    })
+			    .then((result) => axios.post('/adoptionMessage', {
+			        post: {
+			          title,
+			          message,
+			          image: image.name,
+			          imageType: image.type,
+			        },
+			      }))
 			    .then(() => {
 			      setTitle('');
 			      setMessage('');
+			      setImage({});
+			      // setImageUrl(`data:image/gif;base64,${encode(data.data.Body.data)}`);
+			      setImageUrl('');
 			      document.getElementById('post-form').reset();
 			    })
-			    .catch((err) => console.error(err));
+			    .catch((err) => {
+			      console.error(err);
+			    });
       }}
     >
       <TextField
@@ -63,7 +92,8 @@ function PostForms() {
           type="file"
           style={{ display: 'none' }}
           onChange={(e) => {
-					  setImage(URL.createObjectURL(e.target.files[0]));
+					  setImageUrl(URL.createObjectURL(e.target.files[0]));
+					  setImage(e.target.files[0]);
           }}
         />
         <Button variant="outlined" component="span">
@@ -73,7 +103,7 @@ function PostForms() {
       <br />
       <br />
       <Card>
-        <CardMedia component="img" src={image} image={image} alt="" />
+        <CardMedia component="img" image={imageUrl} alt="" />
       </Card>
       <br />
       <br />

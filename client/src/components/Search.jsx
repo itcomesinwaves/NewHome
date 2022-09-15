@@ -11,7 +11,7 @@ import {
   createTheme,
   Grid,
 } from '@mui/material';
-import FeedEntry from './FeedEntry.jsx';
+import Adoption from './Adoption.jsx';
 
 const theme = createTheme({
   palette: {
@@ -78,7 +78,7 @@ function Search() {
       }}
     >
       {pets.map((pet) => (
-        <FeedEntry animalsData={pet} />
+        <Adoption animalsData={pet} />
       ))}
     </Box>
   );
@@ -109,10 +109,13 @@ function Search() {
           component="form"
           onSubmit={submit}
           container
-          spacing={2}
+          rowSpacing={1}
+          columnSpacing={3}
 					// Styling
           sx={{
-					  maxWidth: 500,
+					  width: 600,
+					  height: 280,
+					  maxWidth: 600,
 					  maxHeight: 400,
 					  '& .MuiTextField-root': { width: '280px' },
 					  diplay: 'inline-block',
@@ -120,15 +123,17 @@ function Search() {
 					  backgroundColor: 'secondary.dark',
           }}
         >
-          <TextField
-            label="breed"
-            type="text"
-            value={breed}
-            onChange={breedUpdate}
-            InputLabelProps={{
-						  style: { color: 'primary.contrastText' },
-            }}
-          />
+          <Grid item>
+            <TextField
+              label="breed"
+              type="text"
+              value={breed}
+              onChange={breedUpdate}
+              InputLabelProps={{
+							  style: { color: 'primary.contrastText' },
+              }}
+            />
+          </Grid>
           <Grid item>
             <InputLabel id="Hair-Length">Hair Length</InputLabel>
             <Select
@@ -137,6 +142,7 @@ function Search() {
               value={hairLength}
               onChange={hairUpdate}
               sx={{
+							  width: 125,
 							  maxWidth: 200,
               }}
             >
@@ -153,6 +159,7 @@ function Search() {
               value={species}
               onChange={speciesUpdate}
               sx={{
+							  width: 125,
 							  maxWidth: 200,
               }}
             >
@@ -168,6 +175,7 @@ function Search() {
               value={age}
               onChange={ageUpdate}
               sx={{
+							  width: 125,
 							  maxWidth: 200,
               }}
             >
@@ -184,6 +192,10 @@ function Search() {
               label="Gender"
               value={gender}
               onChange={genderUpdate}
+              sx={{
+							  width: 125,
+							  maxWidth: 200,
+              }}
             >
               <MenuItem value="male">Male</MenuItem>
               <MenuItem value="female">Female</MenuItem>
@@ -197,6 +209,7 @@ function Search() {
               value={size}
               onChange={sizeUpdate}
               sx={{
+							  width: 125,
 							  maxWidth: 200,
               }}
             >
@@ -206,15 +219,19 @@ function Search() {
               <MenuItem value="xlarge">X-Large</MenuItem>
             </Select>
           </Grid>
-          <Button
-            variant="contained"
-            type="submit"
-            sx={{
-						  backgroundColor: 'primary.light',
-            }}
-          >
-            Submit
-          </Button>
+          <Grid item>
+            <Button
+              variant="contained"
+              type="submit"
+              sx={{
+							  maxWidth: 100,
+							  maxHeight: 100,
+							  backgroundColor: 'primary.light',
+              }}
+            >
+              Submit
+            </Button>
+          </Grid>
         </Grid>
       </ThemeProvider>
       {submitted ? renderPets() : <div />}
