@@ -7,7 +7,7 @@ import {
   CardMedia,
   Button,
   Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 function FeedEntry({ animalsData }) {

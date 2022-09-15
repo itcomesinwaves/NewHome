@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {
   Box, TextField, Button, Card, CardMedia,
-} from '@material-ui/core';
+} from '@mui/material';
 import axios from 'axios';
 
 function PostForms() {
