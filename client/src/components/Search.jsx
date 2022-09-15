@@ -11,7 +11,7 @@ import {
   createTheme,
   Grid,
 } from '@mui/material';
-import FeedEntry from './FeedEntry.jsx';
+import Adoption from './Adoption.jsx';
 
 const theme = createTheme({
   palette: {
@@ -78,7 +78,7 @@ function Search() {
       }}
     >
       {pets.map((pet) => (
-        <FeedEntry animalsData={pet} />
+        <Adoption animalsData={pet} />
       ))}
     </Box>
   );
