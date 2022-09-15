@@ -38,6 +38,7 @@ function PetView(props) {
   const handleSavePet = (e) => {
     // check if user is logged in, and button id;
     if (!loggedIn) {
+      // direct a user to log in to save/follow pets
       window.alert('Please sign up/login');
     } else if (e.target.id === 'save') {
       // axios request for favoriting a pet
@@ -46,7 +47,6 @@ function PetView(props) {
       // axios request for following a pet story
       console.log('testing follow request');
     }
-    // alert user that the pet has been saved
   };
 
   // conditional rendering based on pet adoption status
@@ -74,6 +74,13 @@ function PetView(props) {
     // render save button
   };
 
+  const hasPhoto = () => {
+    if (animal.photos.length) {
+      return animal.photos[0].medium;
+    }
+    return pet.image;
+  };
+
   return (
     <div>
       <h1>
@@ -81,7 +88,7 @@ function PetView(props) {
         {' '}
         says hello
       </h1>
-      <img src={animal.photos[0].medium || pet.image} alt="img here" />
+      <img src={hasPhoto()} alt="img here" />
       <h3>About me:</h3>
       <p>{`Species: ${animal.species}`}</p>
       <p>{`Breed: ${animal.breeds.primary}`}</p>
