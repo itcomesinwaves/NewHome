@@ -31,7 +31,8 @@ function PetView(props) {
 
   // state from feed component
   const { state } = useLocation();
-  console.log('state from feed', state);
+  const animal = state.animalsData;
+  console.log('pet from feed', animal);
 
   // function to save/follow a pet
   const handleSavePet = (e) => {
@@ -76,24 +77,15 @@ function PetView(props) {
   return (
     <div>
       <h1>
-        {pet.name}
+        {animal.name}
         {' '}
         says hello
       </h1>
       <img src={pet.image} alt="img here" />
       <h3>About me:</h3>
-      <p>
-        Species:
-        {pet.species}
-      </p>
-      <p>
-        Breed:
-        {pet.breed}
-      </p>
-      <p>
-        Age:
-        {pet.age}
-      </p>
+      <p>{`Species: ${animal.species}`}</p>
+      <p>{`Breed: ${animal.breeds.primary}`}</p>
+      <p>{`Age: ${animal.age}`}</p>
       <h3>I&apos;m</h3>
       <ul>
         {pet.temperament.map((tag) => (
