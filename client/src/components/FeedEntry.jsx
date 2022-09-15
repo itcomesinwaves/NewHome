@@ -13,6 +13,11 @@ function FeedEntry({ animalsData }) {
   // get rid of conditional rendering here and create a single card instance with dynamic data
   // this won't render until animals data is defined
 
+  // on click render individual petview
+  const handleEntryClick = () => {
+    console.log('clicked on', animalsData.name);
+  };
+
   return (
     <Card>
       <CardMedia
@@ -35,7 +40,9 @@ function FeedEntry({ animalsData }) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">view more</Button>
+        <Button size="small" id="viewpet" onClick={handleEntryClick}>
+          view more
+        </Button>
         <Button size="small">save for later</Button>
       </CardActions>
     </Card>

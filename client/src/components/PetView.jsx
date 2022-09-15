@@ -24,9 +24,12 @@ const pet = {
 		'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/57334144/1/?bust=1663026743&width=300',
 };
 
-function PetView() {
+function PetView(props) {
   // isloggedin
   const [loggedIn, setLoggedIn] = useState(false);
+
+  // check props passed to component
+  console.log('props from feed', props);
 
   // function to save/follow a pet
   const handleSavePet = (e) => {
