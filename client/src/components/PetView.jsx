@@ -52,26 +52,26 @@ function PetView(props) {
   // conditional rendering based on pet adoption status
   const onAdoptionStatus = () => {
     // if pet === adopted render follow button, render adoption stories
-    if (pet.adopted) {
+    if (animal.status === 'adoptable') {
       // render follow button and pet stories
       return (
         <input
           type="button"
-          id="follow"
-          value="follow"
+          id="save"
+          value="save"
           onClick={(e) => handleSavePet(e)}
         />
       );
     }
-    // render save button
     return (
       <input
         type="button"
-        id="save"
-        value="save"
+        id="follow"
+        value="follow"
         onClick={(e) => handleSavePet(e)}
       />
     );
+    // render save button
   };
 
   return (
@@ -81,11 +81,12 @@ function PetView(props) {
         {' '}
         says hello
       </h1>
-      <img src={pet.image} alt="img here" />
+      <img src={animal.photos[0].medium || pet.image} alt="img here" />
       <h3>About me:</h3>
       <p>{`Species: ${animal.species}`}</p>
       <p>{`Breed: ${animal.breeds.primary}`}</p>
       <p>{`Age: ${animal.age}`}</p>
+      <p>{`Gender: ${animal.gender}`}</p>
       <h3>I&apos;m</h3>
       <ul>
         {pet.temperament.map((tag) => (
