@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Box, CssBaseline, Container } from '@mui/material';
+import {
+  Box, CssBaseline, Container, Typography,
+} from '@mui/material';
 // import CssBaseline from '@mui/material/CssBaseline';
 // import Container from '@mui/material/Container';
 import Adoption from './Adoption.jsx';
@@ -56,7 +58,7 @@ function AdoptionFeed() {
       <Container fixed>
         <Box
           sx={{
-					  bgcolor: '#cfe8fc',
+					  bgcolor: '#DAF7A6',
 					  height: '985vh',
           }}
         >
@@ -79,10 +81,9 @@ function AdoptionFeed() {
               }}
             >
               Welcome to NewHome
-              {' '}
-              <p>
+              <Typography color="#228B22" sx={{ variant: 'subtitle1' }}>
                 Where you can give those little sonsofguns a new dang ole home
-              </p>
+              </Typography>
             </h1>
             {loadingFeed()}
           </Box>
