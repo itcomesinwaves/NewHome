@@ -7,6 +7,7 @@ import {
 // import Container from '@mui/material/Container';
 import Adoption from './Adoption.jsx';
 import Loading from './Loading.jsx';
+import styles from '../styles.jsx';
 
 function AdoptionFeed() {
   const [animals, setAnimals] = useState([]);
@@ -54,11 +55,11 @@ function AdoptionFeed() {
   };
 
   return (
-    <CssBaseline>
+    <CssBaseline sx={styles}>
       <Container fixed>
         <Box
           sx={{
-					  bgcolor: '#DAF7A6',
+					  bgcolor: '#DAF7A6', // #DAF7A6
 					  height: '985vh',
           }}
         >
