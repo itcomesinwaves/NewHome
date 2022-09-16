@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate, Navigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import { Button } from '@mui/material';
-
+import { UserContext } from '../UserContext.jsx';
 // get user data using axios from google and display it on
 // this page as a restricted page
 // err takes user to login page
 function Profile() {
-  const [profile, setProfile] = useState({});
+  const { user, setUser } = useContext(UserContext);
   const [haveUser, setHaveUser] = useState(false);
-  const [clicked, setClicked] = useState(false);
+
   const navigate = useNavigate();
   useEffect(() => {
     axios
       .get('/proAuth')
       .then(({ data }) => {
         console.log('data from proAuth', data);
-        setProfile(data);
+        setUser(data);
         return data;
       })
       .then((data) => {
@@ -38,8 +38,9 @@ function Profile() {
         return navigate('/login');
       });
   }, [haveUser, navigate]); // return data stringified and stored in state as 'profile'-
+
   const Logout = () => {
-    setProfile({});
+    setUser(null);
     axios
       .get('/logout')
       .then((data) => {
@@ -50,27 +51,24 @@ function Profile() {
         console.log(err);
       });
   };
-
+  if (user === null) {
+    return <h3>Must Sign In</h3>;
+  }
   return (
     <Box
       sx={{
-				  width: 350,
-				  height: 100,
-				  backgroundColor: 'primary.light',
-				  '&:hover': {
-				    backgroundColor: 'primary.main',
-				    opacity: [0.9, 0.8, 0.7],
-				  },
+			  width: 350,
+			  height: 100,
+			  backgroundColor: 'primary.light',
+			  '&:hover': {
+			    backgroundColor: 'primary.main',
+			    opacity: [0.9, 0.8, 0.7],
+			  },
       }}
     >
-      <h1>{`Welcome back...${profile.given_name}`}</h1>
+      <h1>{`Welcome back...${user.given_name}`}</h1>
       <p>
-        <img
-          src={profile.picture}
-          width={350}
-          height={350}
-          alt="am-broke"
-        />
+        <img src={user.picture} width={350} height={350} alt="am-broke" />
       </p>
 
       <Button size="small" href="/login" onClick={Logout}>
