@@ -2,9 +2,11 @@ const { Schema } = require('mongoose');
 
 // change to true once auth is done
 const userSchema = new Schema({
-  username: { type: String, unique: true },
   email: String,
-  googleID: String,
+  googleID: {
+    type: String,
+    unique: true,
+  },
   firstName: String,
   lastName: String,
   password: String,
@@ -41,7 +43,7 @@ const followersSchema = new Schema({
 });
 
 const savedPetSchema = new Schema({
-  UserId: String,
+  userId: String,
   petId: String,
 });
 
