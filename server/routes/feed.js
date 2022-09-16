@@ -34,6 +34,16 @@ feed.get('/api', (req, res) => {
     });
 });
 
+feed.get('/posts', (req, res) => {
+  Post.find({})
+    .then((posts) => {
+      res.status(200).send(posts);
+    })
+    .catch(() => {
+      res.sendStatus(500);
+    });
+});
+
 // Handle Search
 feed.post('/api/search', (req, res) => {
   const {

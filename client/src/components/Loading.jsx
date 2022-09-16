@@ -4,9 +4,11 @@ import LinearProgress from '@mui/material/LinearProgress';
 
 function Loading() {
   return (
-    <Stack sx={{ width: '100%', color: 'grey.500' }} spacing={2}>
-      <LinearProgress color="error" />
-    </Stack>
+    <div>
+      <Stack sx={{ width: '100%', color: 'grey.500' }} spacing={2}>
+        <LinearProgress color="inherit" />
+      </Stack>
+    </div>
   );
 }
 
