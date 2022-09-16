@@ -1,7 +1,23 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
+// axios get to get the authenticated page from the
+// isAuthenticated route in the server then navigates to the react page 'profile'
+// if err goes to the login page
 function App() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    // axios
+    // 	.get('/isAuthenticated')
+    // 	.then(() => {
+    // 		//navigate('/profile')
+    // 	})
+    // 	.catch((err) => {
+    // 		console.error(err);
+    // 		//return navigate('/login');
+    // 	});
+  });
   return (
     <div>
       <nav>
