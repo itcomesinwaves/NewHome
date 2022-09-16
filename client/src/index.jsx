@@ -14,14 +14,15 @@ const root = ReactDOM.createRoot(document.getElementById('app'));
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="profile" element={<Profile />} />
-      <Route path="login" element={<Login />} />
-      <Route path="search" element={<Search />} />
-      <Route path="home" element={<AdoptionFeed />} />
-      <Route path="postfeed" element={<PostFeed />} />
-      <Route path="postforms" element={<PostForms />} />
-      <Route path="petview" element={<PetView />} />
+      <Route path="/" element={<App />}>
+        <Route path="profile" element={<Profile />} />
+        <Route path="login" element={<Login />} />
+        <Route path="search" element={<Search />} />
+        <Route path="home" element={<AdoptionFeed />} />
+        <Route path="postfeed" element={<PostFeed />} />
+        <Route path="postforms" element={<PostForms />} />
+        <Route path="petview" element={<PetView />} />
+      </Route>
     </Routes>
   </BrowserRouter>,
 );

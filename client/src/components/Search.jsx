@@ -73,7 +73,7 @@ function Search() {
 			  borderRadius: '10px',
 			  width: 900,
 			  '& .MuiTextField-root': { width: '280px' },
-			  diplay: 'inline-block',
+			  display: 'inline-block',
 			  m: 'auto',
 			  backgroundColor: 'primary.main',
       }}

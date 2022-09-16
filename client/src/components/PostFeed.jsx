@@ -60,7 +60,6 @@ function PostFeed() {
 			  m: 'auto',
       }}
     >
-      <App />
       <Typography gutterBottom variant="h1" component="div">
         Welcome to NewHome
       </Typography>

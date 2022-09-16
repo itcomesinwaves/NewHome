@@ -1,12 +1,17 @@
 import axios from 'axios';
-import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import {
+  Link, useNavigate, Outlet, useLocation,
+} from 'react-router-dom';
+import { Box, Tabs, Tab } from '@mui/material';
 
 // axios get to get the authenticated page from the
 // isAuthenticated route in the server then navigates to the react page 'profile'
 // if err goes to the login page
 function App() {
   const navigate = useNavigate();
+  const location = useLocation().pathname;
+  const [value, setVal] = useState(() => location);
   useEffect(() => {
     // axios
     // 	.get('/isAuthenticated')
@@ -18,18 +23,29 @@ function App() {
     // 		//return navigate('/login');
     // 	});
   });
+
+  const handleChange = (event, newValue) => {
+    setVal(newValue);
+    navigate(newValue);
+  };
   return (
-    <div>
-      <nav>
-        <Link to="/profile">Profile</Link>
-        <Link to="/Search">Search</Link>
-        <Link to="/home">Home</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/PostForms">PostForms</Link>
-        <Link to="/PostFeed">PostFeed</Link>
-      </nav>
-      Howdy
-    </div>
+    <Box>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        aria-label="secondary tabs example"
+        centered
+      >
+        <Tab value="/profile" label="Profile" />
+        <Tab value="/search" label="Search" />
+        <Tab value="/home" label="Home" />
+        <Tab value="/login" label="Login" />
+        <Tab value="/postForms" label="PostForms" />
+        <Tab value="/postFeed" label="PostFeed" />
+      </Tabs>
+      <br />
+      <Outlet />
+    </Box>
   );
 }
 
