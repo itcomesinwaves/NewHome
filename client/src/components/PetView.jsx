@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 // example pet object to render for mvp
 const pet = {
@@ -24,9 +25,13 @@ const pet = {
 		'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/57334144/1/?bust=1663026743&width=300',
 };
 
-function PetView() {
+function PetView(props) {
   // isloggedin
   const [loggedIn, setLoggedIn] = useState(false);
+
+  // state from feed component
+  const { state } = useLocation();
+  console.log('state from feed', state);
 
   // function to save/follow a pet
   const handleSavePet = (e) => {

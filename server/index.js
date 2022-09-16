@@ -5,11 +5,11 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const express = require('express');
 const session = require('express-session');
+const aws = require('aws-sdk');
 const path = require('path');
-const { json } = require('express');
 const { user, pet, feed } = require('./routes');
-const Post = require('./db/models/Post.js');
-const User = require('./db/models/User.js');
+const Post = require('./db/models/Post');
+const User = require('./db/models/User');
 
 // Generating application and setting url
 const app = express();
@@ -32,11 +32,12 @@ app.use(passport.session());
 app.use('/feed', feed);
 app.use('/user', user);
 
-const authUser = (request, accessToken, refreshToken, profile, done) => {
-  console.log('hi authUser');
+aws.config.update({
+  accessKeyId: process.env.STORJ_API_KEY,
+  secretAccessKey: process.env.STORJ_API_SECRET,
+});
 
-  return done(null, profile);
-};
+const authUser = (request, accessToken, refreshToken, profile, done) => done(null, profile);
 
 passport.use(
   new GoogleStrategy(
@@ -81,6 +82,19 @@ app.post('/AdoptionMessage', (req, res) => {
   Post.create(req.body.post)
     .then(() => console.log('success'))
     .catch((err) => console.error(err));
+  // const endpoint = new aws.Endpoint(process.env.STORJ_API_URL);
+  // const s3 = new aws.S3({ endpoint });
+  // console.log(req.body.post.image);
+  // s3.getObject({Bucket: 'new-home-bucket', Key: req.body.post.image}, (err, data) => {
+  //   if (err) {
+  //     console.error(err);
+  //     res.sendStatus(500)
+  //   }
+  //   else {
+  //     console.log(data);
+  //     res.status(200).send(data)
+  //   }
+  // })
   res.sendStatus(200);
 });
 /*
@@ -123,7 +137,6 @@ app.get(
 );
 // this is the page that gets called up on browser refresh with the google button for auth
 app.get('/login', (req, res) => {
-  console.log('hiiiii');
   console.log(req.user);
   res.sendFile(
     path.resolve(__dirname, '..', 'client', 'dist', 'index.html'),
@@ -143,10 +156,33 @@ const checkAuthenticated = (req, res, next) => {
   res.redirect('/login');
   return null;
 };
+
 // this also keeps running/getting called in the console. check on it
 app.get('/proAuth', checkAuthenticated, (req, res) => {
   console.log('hi profile');
   return res.json(req.user);
+});
+
+app.post('/imageUrl', (req, res) => {
+  const { filename, filetype } = req.body;
+  const endpoint = new aws.Endpoint(process.env.STORJ_API_URL);
+  const s3 = new aws.S3({ endpoint });
+  const params = {
+    Bucket: 'new-home-bucket',
+    Expires: 60,
+    Key: filename,
+    ContentType: filetype,
+  };
+
+  s3.getSignedUrl('putObject', params, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(400);
+    } else {
+      console.log(data);
+      res.status(200).send(data);
+    }
+  });
 });
 // create /isAuthenticated path for logged in status and data to pass to react side
 app.get('/isAuthenticated', (req, res) => {
@@ -165,7 +201,6 @@ app.post('/logout', (req, res) => {
 });
 // wildcard-catch-all
 app.get('/*', (req, res) => {
-  console.log('hi');
   res.sendFile(
     path.resolve(__dirname, '..', 'client', 'dist', 'index.html'),
     (data, err) => {
