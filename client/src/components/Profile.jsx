@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import { Button } from '@mui/material';
 
 // get user data using axios from google and display it on
 // this page as a restricted page
@@ -8,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 function Profile() {
   const [profile, setProfile] = useState({});
   const [haveUser, setHaveUser] = useState(false);
+  const [clicked, setClicked] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     axios
@@ -35,8 +38,46 @@ function Profile() {
         return navigate('/login');
       });
   }, [haveUser, navigate]); // return data stringified and stored in state as 'profile'-
-  // the number 2 is just so the data can be spaced out a little to make it readable
-  return <h1>{`welcome back..${profile.given_name}`}</h1>;
+  const Logout = () => {
+    setProfile({});
+    axios
+      .get('/logout')
+      .then((data) => {
+        console.log('this is data from logout req', data);
+      })
+      .then(() => navigate('/login'))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  return (
+    <Box
+      sx={{
+				  width: 350,
+				  height: 100,
+				  backgroundColor: 'primary.light',
+				  '&:hover': {
+				    backgroundColor: 'primary.main',
+				    opacity: [0.9, 0.8, 0.7],
+				  },
+      }}
+    >
+      <h1>{`Welcome back...${profile.given_name}`}</h1>
+      <p>
+        <img
+          src={profile.picture}
+          width={350}
+          height={350}
+          alt="am-broke"
+        />
+      </p>
+
+      <Button size="small" href="/login" onClick={Logout}>
+        logout
+      </Button>
+    </Box>
+  );
 }
 // JSON.stringify(profile, null, 2)
 export default Profile;

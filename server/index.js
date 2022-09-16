@@ -136,7 +136,7 @@ app.get(
 app.get(
   '/auth/google/callback',
   passport.authenticate('google', {
-    successRedirect: '/',
+    successRedirect: '/home',
     failureRedirect: '/login',
   }),
 );
@@ -199,10 +199,25 @@ app.get('/isAuthenticated', (req, res) => {
 });
 // create a route in react for button to connect/call this /logout endpoint
 // Define the Logout
-app.post('/logout', (req, res) => {
-  req.logOut();
-  res.redirect('/login');
-  console.log('-------> User Logged out');
+// app.post('/logout', (req, res) => {
+// 	req.logOut();
+// 	res.redirect('/login');
+// 	console.log('-------> User Logged out');
+// });
+app.get('/logout', (req, res) => {
+  if (req.session) {
+    req.session.destroy((err) => {
+      if (err) {
+        res.status(400).send('Unable to log out');
+      } else {
+        console.log('am i logged out here????');
+        res.status(200).send('logged out worked');
+      }
+    });
+  } else {
+    console.log('whats going on here???');
+    res.end();
+  }
 });
 // wildcard-catch-all
 app.get('/*', (req, res) => {
