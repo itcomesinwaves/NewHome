@@ -26,6 +26,7 @@ function App() {
         <Link to="/home">Home</Link>
         <Link to="/login">Login</Link>
         <Link to="/PostForms">PostForms</Link>
+        <Link to="/PostFeed">PostFeed</Link>
       </nav>
       Howdy
     </div>

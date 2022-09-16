@@ -1,48 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Box, Typography } from '@mui/material';
-import Adoption from './Adoption.jsx';
+import Post from './Post.jsx';
 import Loading from './Loading.jsx';
 import App from './App.jsx';
 
 function PostFeed() {
-  const [animals, setAnimals] = useState([]);
-  const [fetchedAnimals, setFetchedAnimals] = useState(false);
+  const [posts, setPosts] = useState([]);
+  const [rendered, setRendered] = useState(false);
   useEffect(() => {
     axios
-      .get('/feed/api')
-      .then(({ data }) => {
-        setAnimals(data.animals);
+      .get('/feed/posts')
+      .then(({ data: posts }) => {
+        console.log(posts);
+        setPosts(posts);
       })
       .then(() => {
-        setFetchedAnimals(true);
+        setRendered(true);
       })
       .catch((err) => {
         console.error(err);
       });
-  }, [fetchedAnimals]);
+  }, [rendered]);
 
-  const updateAnimals = () => {
+  const updatePosts = () => {
     setTimeout(() => {
       axios
-        .get('/feed/api')
+        .get('/feed/posts')
         .then(({ data }) => {
-          setAnimals(data.animals);
+          setPosts(data.posts);
         })
         .catch((err) => {
           console.error(err);
         });
     }, 6000000);
   };
-  updateAnimals();
+  updatePosts();
 
   // loading feed
   const loadingFeed = () => {
-    if (animals.length) {
-      // console.log('single animal obj', animals[0]);
-      return animals.map((animal) => (
-        <div key={JSON.stringify(animal)}>
-          <Adoption animalsData={animal} />
+    if (posts.length) {
+      return posts.map((post) => (
+        <div key={JSON.stringify(post)}>
+          <Post post={post} />
           <br />
         </div>
       ));
@@ -70,15 +70,3 @@ function PostFeed() {
   );
 }
 export default PostFeed;
-
-// figure out loading functionalitiy
-// put mapping through instances of entries in this function
-//  <Adoption animalsData={animals[0]} /> <br></br>
-// if animalsData (exists) return the <Adoption />
-// else if if doesn't render loading animation from material UI
-// useEffect(() => {
-//   const getAllAnimals = function () {
-
-//     getAllAnimals();
-
-//   }, [animals]);

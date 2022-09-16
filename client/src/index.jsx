@@ -5,6 +5,7 @@ import App from './components/App.jsx';
 import Profile from './components/Profile.jsx';
 import Login from './components/Login.jsx';
 import AdoptionFeed from './components/AdoptionFeed.jsx';
+import PostFeed from './components/PostFeed.jsx';
 import Search from './components/Search.jsx';
 import PostForms from './components/PostForms.jsx';
 import PetView from './components/PetView.jsx';
@@ -18,6 +19,7 @@ root.render(
       <Route path="login" element={<Login />} />
       <Route path="search" element={<Search />} />
       <Route path="home" element={<AdoptionFeed />} />
+      <Route path="postfeed" element={<PostFeed />} />
       <Route path="postforms" element={<PostForms />} />
       <Route path="petview" element={<PetView />} />
     </Routes>
