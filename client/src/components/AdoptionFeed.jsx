@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Box } from '@mui/material';
+import { Box, CssBaseline, Container } from '@mui/material';
+// import CssBaseline from '@mui/material/CssBaseline';
+// import Container from '@mui/material/Container';
 import Adoption from './Adoption.jsx';
 import Loading from './Loading.jsx';
 
@@ -50,19 +52,32 @@ function AdoptionFeed() {
   };
 
   return (
-    <Box
-      sx={{
-			  maxWidth: 700,
-			  maxHeight: 700,
-			  '& .MuiTextField-root': { width: '280px' },
-			  diplay: 'inline-block',
-			  m: 'auto',
-      }}
-    >
-      <h1>Welcome to NewHome</h1>
-      <p>Where you can give those little sonsofguns a new dang ole home</p>
-      {loadingFeed()}
-    </Box>
+    <CssBaseline>
+      <Container fixed>
+        <Box
+          sx={{
+					  bgcolor: '#cfe8fc',
+					  height: '780vh',
+          }}
+        >
+          <Box
+            sx={{
+						  maxWidth: 700,
+						  maxHeight: 700,
+						  '& .MuiTextField-root': { width: '280px' },
+						  diplay: 'inline-block',
+						  m: 'auto',
+            }}
+          >
+            <h1>Welcome to NewHome</h1>
+            <p>
+              Where you can give those little sonsofguns a new dang ole home
+            </p>
+            {loadingFeed()}
+          </Box>
+        </Box>
+      </Container>
+    </CssBaseline>
   );
 }
 export default AdoptionFeed;
