@@ -1,6 +1,5 @@
 import React from 'react';
-import Stack from '@mui/material/Stack';
-import LinearProgress from '@mui/material/LinearProgress';
+import { Stack, LinearProgress } from '@mui/material';
 
 function Loading() {
   return (
