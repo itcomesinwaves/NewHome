@@ -9,20 +9,24 @@ import PostFeed from './components/PostFeed.jsx';
 import Search from './components/Search.jsx';
 import PostForms from './components/PostForms.jsx';
 import PetView from './components/PetView.jsx';
+import { userContext, UserContextProvider } from './UserContext.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('app'));
 root.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />}>
-        <Route path="profile" element={<Profile />} />
-        <Route path="login" element={<Login />} />
-        <Route path="search" element={<Search />} />
-        <Route path="home" element={<AdoptionFeed />} />
-        <Route path="postfeed" element={<PostFeed />} />
-        <Route path="postforms" element={<PostForms />} />
-        <Route path="petview" element={<PetView />} />
-      </Route>
-    </Routes>
-  </BrowserRouter>,
+  <UserContextProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route path="profile" element={<Profile />} />
+          <Route path="login" element={<Login />} />
+          <Route path="search" element={<Search />} />
+          <Route path="home" element={<AdoptionFeed />} />
+          <Route path="postfeed" element={<PostFeed />} />
+          <Route path="postforms" element={<PostForms />} />
+          <Route path="petview" element={<PetView />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+    ,
+  </UserContextProvider>,
 );
