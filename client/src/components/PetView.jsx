@@ -74,6 +74,7 @@ function PetView(props) {
     // render save button
   };
 
+  // render pet photo or a generic photo
   const hasPhoto = () => {
     if (animal.photos.length) {
       return animal.photos[0].medium;
@@ -81,25 +82,30 @@ function PetView(props) {
     return pet.image;
   };
 
+  // render pet tags, or generic statement
+  const hasTags = () => {
+    if (animal.tags.length) {
+      return (
+        <ul>
+          {animal.tags.map((tag) => (
+            <li key={`${tag}${pet.name}`}>{tag}</li>
+          ))}
+        </ul>
+      );
+    }
+    return <p>I&apos;m looking for a new crib with chill people</p>;
+  };
   return (
     <div>
-      <h1>
-        {animal.name}
-        {' '}
-        says hello
-      </h1>
+      <h1>{`${animal.name} would like to say hello!`}</h1>
       <img src={hasPhoto()} alt="img here" />
-      <h3>About me:</h3>
       <p>{`Species: ${animal.species}`}</p>
       <p>{`Breed: ${animal.breeds.primary}`}</p>
       <p>{`Age: ${animal.age}`}</p>
       <p>{`Gender: ${animal.gender}`}</p>
-      <h3>I&apos;m</h3>
-      <ul>
-        {pet.temperament.map((tag) => (
-          <li key={`${tag}${pet.name}`}>{tag}</li>
-        ))}
-      </ul>
+      <h3>About me:</h3>
+      <p>{animal.description}</p>
+      {hasTags()}
       {onAdoptionStatus()}
     </div>
   );
