@@ -19,7 +19,7 @@ function Profile() {
       .then((data) => {
         setHaveUser(true);
         return axios.post('/user', {
-          googleId: data.id,
+          googleId: data.googleId,
           firstName: data.name.givenName,
           lastName: data.name.familyName,
           profilePhoto: null,
