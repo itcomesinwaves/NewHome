@@ -31,12 +31,14 @@ function PetView(props) {
 
   // state from feed component
   const { state } = useLocation();
-  console.log('state from feed', state);
+  const animal = state.animalsData;
+  console.log('pet from feed', animal);
 
   // function to save/follow a pet
   const handleSavePet = (e) => {
     // check if user is logged in, and button id;
     if (!loggedIn) {
+      // direct a user to log in to save/follow pets
       window.alert('Please sign up/login');
     } else if (e.target.id === 'save') {
       // axios request for favoriting a pet
@@ -45,61 +47,65 @@ function PetView(props) {
       // axios request for following a pet story
       console.log('testing follow request');
     }
-    // alert user that the pet has been saved
   };
 
   // conditional rendering based on pet adoption status
   const onAdoptionStatus = () => {
     // if pet === adopted render follow button, render adoption stories
-    if (pet.adopted) {
+    if (animal.status === 'adoptable') {
       // render follow button and pet stories
       return (
         <input
           type="button"
-          id="follow"
-          value="follow"
+          id="save"
+          value="save"
           onClick={(e) => handleSavePet(e)}
         />
       );
     }
-    // render save button
     return (
       <input
         type="button"
-        id="save"
-        value="save"
+        id="follow"
+        value="follow"
         onClick={(e) => handleSavePet(e)}
       />
     );
+    // render save button
   };
 
+  // render pet photo or a generic photo
+  const hasPhoto = () => {
+    if (animal.photos.length) {
+      return animal.photos[0].medium;
+    }
+    return pet.image;
+  };
+
+  // render pet tags, or generic statement
+  const hasTags = () => {
+    if (animal.tags.length) {
+      return (
+        <ul>
+          {animal.tags.map((tag) => (
+            <li key={`${tag}${pet.name}`}>{tag}</li>
+          ))}
+        </ul>
+      );
+    }
+    return <p>I&apos;m looking for a new crib with chill people</p>;
+  };
   return (
     <div>
-      <h1>
-        {pet.name}
-        {' '}
-        says hello
-      </h1>
-      <img src={pet.image} alt="img here" />
+      <h1>{`${animal.name} would like to say hello!`}</h1>
+      <img src={hasPhoto()} alt="img here" />
+      <p>{`Species: ${animal.species}`}</p>
+      <p>{`Breed: ${animal.breeds.primary}`}</p>
+      <p>{`Age: ${animal.age}`}</p>
+      <p>{`Gender: ${animal.gender}`}</p>
       <h3>About me:</h3>
-      <p>
-        Species:
-        {pet.species}
-      </p>
-      <p>
-        Breed:
-        {pet.breed}
-      </p>
-      <p>
-        Age:
-        {pet.age}
-      </p>
-      <h3>I&apos;m</h3>
-      <ul>
-        {pet.temperament.map((tag) => (
-          <li key={`${tag}${pet.name}`}>{tag}</li>
-        ))}
-      </ul>
+      <p>{animal.description}</p>
+      {hasTags()}
       {onAdoptionStatus()}
     </div>
   );
