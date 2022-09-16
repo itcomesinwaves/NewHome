@@ -57,13 +57,13 @@ function AdoptionFeed() {
         <Box
           sx={{
 					  bgcolor: '#cfe8fc',
-					  height: '780vh',
+					  height: '985vh',
           }}
         >
           <Box
             sx={{
 						  maxWidth: 700,
-						  maxHeight: 700,
+						  maxHeight: 1200,
 						  '& .MuiTextField-root': { width: '280px' },
 						  diplay: 'inline-block',
 						  m: 'auto',
