@@ -9,7 +9,7 @@ import PostFeed from './components/PostFeed.jsx';
 import Search from './components/Search.jsx';
 import PostForms from './components/PostForms.jsx';
 import PetView from './components/PetView.jsx';
-import { UserContext, UserContextProvider } from './UserContext.jsx';
+import { UserContextProvider } from './UserContext.jsx';
 
 const root = ReactDOM.createRoot(document.getElementById('app'));
 root.render(
