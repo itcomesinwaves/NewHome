@@ -58,12 +58,11 @@ function Adoption({ animalsData }) {
         >
           view more
         </Button>
-        <IconButton aria-label="add to favorites">
+        <IconButton aria-label="add to favorites" onClick={handleSaveClick}>
           <FavoriteIcon
             style={{ backgroundColor: '#FCFFE7', color: '#DEA057' }}
             size="small"
             id="savepet"
-            onClick={handleSaveClick}
           />
         </IconButton>
       </CardActions>
