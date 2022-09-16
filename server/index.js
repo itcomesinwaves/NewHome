@@ -217,5 +217,5 @@ app.get('/*', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`server totally listening @ http://${url}:${PORT}`);
+  console.log(`server totally listening @ http://${url}:${PORT}/home`);
 });
