@@ -70,16 +70,26 @@ function Search() {
   const renderPets = () => (
     <Box
       sx={{
-			  maxWidth: 700,
-			  maxHeight: 700,
+			  borderRadius: '10px',
+			  width: 900,
 			  '& .MuiTextField-root': { width: '280px' },
 			  diplay: 'inline-block',
 			  m: 'auto',
+			  backgroundColor: 'primary.main',
       }}
     >
-      {pets.map((pet) => (
-        <Adoption animalsData={pet} />
-      ))}
+      <Box
+        sx={{
+				  maxWidth: 700,
+				  '& .MuiTextField-root': { width: '280px' },
+				  diplay: 'inline-block',
+				  m: 'auto',
+        }}
+      >
+        {pets.map((pet) => (
+          <Adoption animalsData={pet} />
+        ))}
+      </Box>
     </Box>
   );
   const submitUpdate = () => {
@@ -113,6 +123,9 @@ function Search() {
           columnSpacing={3}
 					// Styling
           sx={{
+					  borderStyle: 'solid',
+					  borderWidth: '1px',
+					  borderRadius: '10px',
 					  width: 600,
 					  height: 280,
 					  maxWidth: 600,
@@ -120,7 +133,7 @@ function Search() {
 					  '& .MuiTextField-root': { width: '280px' },
 					  diplay: 'inline-block',
 					  m: 'auto',
-					  backgroundColor: 'secondary.dark',
+					  backgroundColor: 'white',
           }}
         >
           <Grid item>
@@ -233,8 +246,9 @@ function Search() {
             </Button>
           </Grid>
         </Grid>
+
+        {submitted ? renderPets() : <div />}
       </ThemeProvider>
-      {submitted ? renderPets() : <div />}
     </div>
   );
 }
