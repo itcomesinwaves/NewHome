@@ -69,10 +69,21 @@ function AdoptionFeed() {
 						  m: 'auto',
             }}
           >
-            <h1>Welcome to NewHome</h1>
-            <p>
-              Where you can give those little sonsofguns a new dang ole home
-            </p>
+            <h1
+              style={{
+							  color: 'black',
+							  border: '5px solid black',
+							  letterSpacing: '5px',
+							  padding: '10px',
+							  textAlign: 'center',
+              }}
+            >
+              Welcome to NewHome
+              {' '}
+              <p>
+                Where you can give those little sonsofguns a new dang ole home
+              </p>
+            </h1>
             {loadingFeed()}
           </Box>
         </Box>
