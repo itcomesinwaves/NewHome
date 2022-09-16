@@ -57,22 +57,33 @@ function AdoptionFeed() {
         <Box
           sx={{
 					  bgcolor: '#cfe8fc',
-					  height: '780vh',
+					  height: '985vh',
           }}
         >
           <Box
             sx={{
 						  maxWidth: 700,
-						  maxHeight: 700,
+						  maxHeight: 1200,
 						  '& .MuiTextField-root': { width: '280px' },
 						  diplay: 'inline-block',
 						  m: 'auto',
             }}
           >
-            <h1>Welcome to NewHome</h1>
-            <p>
-              Where you can give those little sonsofguns a new dang ole home
-            </p>
+            <h1
+              style={{
+							  color: 'black',
+							  border: '5px solid black',
+							  letterSpacing: '5px',
+							  padding: '10px',
+							  textAlign: 'center',
+              }}
+            >
+              Welcome to NewHome
+              {' '}
+              <p>
+                Where you can give those little sonsofguns a new dang ole home
+              </p>
+            </h1>
             {loadingFeed()}
           </Box>
         </Box>
