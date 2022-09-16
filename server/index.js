@@ -82,21 +82,26 @@ app.post('/AdoptionMessage', (req, res) => {
   Post.create(req.body.post)
     .then(() => console.log('success'))
     .catch((err) => console.error(err));
-  // const endpoint = new aws.Endpoint(process.env.STORJ_API_URL);
-  // const s3 = new aws.S3({ endpoint });
-  // console.log(req.body.post.image);
-  // s3.getObject({Bucket: 'new-home-bucket', Key: req.body.post.image}, (err, data) => {
-  //   if (err) {
-  //     console.error(err);
-  //     res.sendStatus(500)
-  //   }
-  //   else {
-  //     console.log(data);
-  //     res.status(200).send(data)
-  //   }
-  // })
+
   res.sendStatus(200);
 });
+
+app.post('/image', (req, res) => {
+  const endpoint = new aws.Endpoint(process.env.STORJ_API_URL);
+  const s3 = new aws.S3({ endpoint });
+  s3.getObject(
+    { Bucket: 'new-home-bucket', Key: req.body.post.image },
+    (err, data) => {
+      if (err) {
+        console.error(err);
+        res.sendStatus(500);
+      } else {
+        res.status(200).send(data);
+      }
+    },
+  );
+});
+
 /*
 let count = 1;
 const showlogs = (req, res, next) => {

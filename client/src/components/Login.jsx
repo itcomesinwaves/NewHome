@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 function Login() {
   const [clicked, setClicked] = useState(false);
   return (
     <div>
       {clicked ? (
-        <Redirect to="/profile" />
+        <Navigate to="/profile" />
       ) : (
         <>
           <h1>Sign in</h1>
