@@ -4,6 +4,7 @@ import {
   Link, useNavigate, Outlet, useLocation,
 } from 'react-router-dom';
 import { Box, Tabs, Tab } from '@mui/material';
+import styles from '../styles.jsx';
 
 // axios get to get the authenticated page from the
 // isAuthenticated route in the server then navigates to the react page 'profile'
@@ -29,16 +30,16 @@ function App() {
     navigate(newValue);
   };
   return (
-    <Box>
+    <Box sx={styles}>
       <Tabs
         value={value}
         onChange={handleChange}
         aria-label="secondary tabs example"
         centered
       >
-        <Tab value="/profile" label="Profile" />
+        <Tab value="/profile" label="Profile" sx={styles['.MuiTab-root']} />
         <Tab value="/search" label="Search" />
-        <Tab value="/home" label="Home" />
+        <Tab value="/home" label="Home" sx={styles} />
         <Tab value="/login" label="Login" />
         <Tab value="/postForms" label="PostForms" />
         <Tab value="/postFeed" label="PostFeed" />
