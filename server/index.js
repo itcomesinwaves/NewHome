@@ -34,6 +34,7 @@ app.use('/user', user);
 
 const authUser = (request, accessToken, refreshToken, profile, done) => {
   console.log('hi authUser');
+
   return done(null, profile);
 };
 
