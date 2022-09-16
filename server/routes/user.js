@@ -9,7 +9,7 @@ user.post('/', (req, res) => {
   const saveUser = async () => {
     try {
       // find the user in our database
-      let user = await User.findOne({ googleId: req.body.googleId });
+      let user = await User.findOne({ googleID: req.body.googleID });
 
       if (user) {
         // If user present in our database.

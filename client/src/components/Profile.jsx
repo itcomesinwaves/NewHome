@@ -13,13 +13,14 @@ function Profile() {
     axios
       .get('/proAuth')
       .then(({ data }) => {
+        console.log('data from proAuth', data);
         setProfile(data);
         return data;
       })
       .then((data) => {
         setHaveUser(true);
         return axios.post('/user', {
-          googleId: data.googleId,
+          googleID: data.id,
           firstName: data.name.givenName,
           lastName: data.name.familyName,
           profilePhoto: null,
