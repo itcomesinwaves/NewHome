@@ -8,13 +8,15 @@ import { Link, useNavigate } from 'react-router-dom';
 function App() {
   const navigate = useNavigate();
   useEffect(() => {
-    axios
-      .get('/isAuthenticated')
-      .then(() => navigate('/profile'))
-      .catch((err) => {
-        console.error(err);
-        return navigate('/login');
-      });
+    // axios
+    // 	.get('/isAuthenticated')
+    // 	.then(() => {
+    // 		//navigate('/profile')
+    // 	})
+    // 	.catch((err) => {
+    // 		console.error(err);
+    // 		//return navigate('/login');
+    // 	});
   });
   return (
     <div>
