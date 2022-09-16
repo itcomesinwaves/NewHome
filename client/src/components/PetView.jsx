@@ -1,38 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import { UserContext } from '../UserContext.jsx';
 
 // example pet object to render for mvp
-const pet = {
-  species: 'Cat',
-  breed: 'Calico',
-  gender: 'Female',
-  size: 'Medium',
-  coat: 'short',
-  name: 'Bonnie',
-  age: 'Adult',
-  temperament: ['Friendly', 'Gentle', 'Affectionate'],
-  shelterInfo: {
-    email: 'adoptions@centralfallsanimals.org',
-    address: {
-      city: 'Central Falls',
-      state: 'RI',
-      postcode: '02863',
-    },
-  },
-  adopted: false,
-  image:
-		'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/57334144/1/?bust=1663026743&width=300',
-};
+// const pet = {
+//   species: 'Cat',
+//   breed: 'Calico',
+//   gender: 'Female',
+//   size: 'Medium',
+//   coat: 'short',
+//   name: 'Bonnie',
+//   age: 'Adult',
+//   temperament: ['Friendly', 'Gentle', 'Affectionate'],
+//   shelterInfo: {
+//     email: 'adoptions@centralfallsanimals.org',
+//     address: {
+//       city: 'Central Falls',
+//       state: 'RI',
+//       postcode: '02863',
+//     },
+//   },
+//   adopted: false,
+//   image:
+// 		'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/57334144/1/?bust=1663026743&width=300',
+// };
+
+const image =	'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/57334144/1/?bust=1663026743&width=300';
 
 function PetView(props) {
   // isloggedin
-  const [loggedIn, setLoggedIn] = useState(false);
-
+  const [loggedIn, setLoggedIn] = useState(true);
+  const { user } = useContext(UserContext);
   // state from feed component
   const { state } = useLocation();
   const animal = state.animalsData;
-  console.log('pet from feed', animal);
 
   // function to save/follow a pet
   const handleSavePet = (e) => {
@@ -42,7 +44,7 @@ function PetView(props) {
       window.alert('Please sign up/login');
     } else if (e.target.id === 'save') {
       // axios request for favoriting a pet
-      console.log('testing save request');
+      console.log('testing context', user);
     } else {
       // axios request for following a pet story
       console.log('testing follow request');
@@ -79,7 +81,7 @@ function PetView(props) {
     if (animal.photos.length) {
       return animal.photos[0].medium;
     }
-    return pet.image;
+    return image;
   };
 
   // render pet tags, or generic statement
@@ -88,7 +90,7 @@ function PetView(props) {
       return (
         <ul>
           {animal.tags.map((tag) => (
-            <li key={`${tag}${pet.name}`}>{tag}</li>
+            <li key={`${tag}${animal.name}`}>{tag}</li>
           ))}
         </ul>
       );
