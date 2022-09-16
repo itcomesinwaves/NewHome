@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-function FeedEntry({ animalsData }) {
+function Adoption({ animalsData }) {
   // get rid of conditional rendering here and create a single card instance with dynamic data
   // this won't render until animals data is defined
   // navigate hook to render petview
@@ -54,10 +54,10 @@ function FeedEntry({ animalsData }) {
   );
   // }
 }
-FeedEntry.propTypes = {
+Adoption.propTypes = {
   animalsData: PropTypes.object.isRequired,
 };
-export default FeedEntry;
+export default Adoption;
 
 //   if (!animalsData) {
 //   return (

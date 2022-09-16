@@ -25,41 +25,59 @@ function PostForms() {
       }}
       onSubmit={(e) => {
 			  e.preventDefault();
-			  axios
-			    .post('/imageUrl', {
-			      filename: image.name,
-			      filetype: image.type,
-			    })
-			    .then((result) => {
-			      signedUrl = result.data;
+			  return image.name
+			    ? axios
+			      .post('/imageUrl', {
+			        filename: image.name,
+			        filetype: image.type,
+			      })
+			      .then((result) => {
+			        signedUrl = result.data;
 
-			      const options = {
-			        headers: {
-			          'Content-Type': image.type,
-			        },
-			      };
+			        const options = {
+			          headers: {
+			            'Content-Type': image.type,
+			          },
+			        };
 
-			      return axios.put(signedUrl, image, options);
-			    })
-			    .then((result) => axios.post('/adoptionMessage', {
+			        return axios.put(signedUrl, image, options);
+			      })
+			      .then((result) => axios.post('/adoptionMessage', {
+			          post: {
+			            title,
+			            message,
+			            image: image.name,
+			            imageType: image.type,
+			          },
+			        }))
+			      .then(() => {
+			        setTitle('');
+			        setMessage('');
+			        setImage({});
+			        document.getElementById('post-form').reset();
+			      })
+			      .catch((err) => {
+			        console.error(err);
+			      })
+			    : axios
+			      .post('/adoptionMessage', {
 			        post: {
 			          title,
 			          message,
 			          image: image.name,
 			          imageType: image.type,
 			        },
-			      }))
-			    .then(() => {
-			      setTitle('');
-			      setMessage('');
-			      setImage({});
-			      // setImageUrl(`data:image/gif;base64,${encode(data.data.Body.data)}`);
-			      setImageUrl('');
-			      document.getElementById('post-form').reset();
-			    })
-			    .catch((err) => {
-			      console.error(err);
-			    });
+			      })
+			      .then(() => {
+			        setTitle('');
+			        setMessage('');
+			        setImage({});
+			        setImageUrl('');
+			        document.getElementById('post-form').reset();
+			      })
+			      .catch((err) => {
+			        console.error(err);
+			      });
       }}
     >
       <TextField

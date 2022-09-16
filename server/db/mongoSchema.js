@@ -3,11 +3,7 @@ const { Schema } = require('mongoose');
 // change to true once auth is done
 const userSchema = new Schema({
   username: { type: String, unique: true },
-  email: {
-    type: String,
-    required: [false, 'email required'],
-    unique: [true, 'email already registered'],
-  },
+  email: String,
   googleID: String,
   firstName: String,
   lastName: String,

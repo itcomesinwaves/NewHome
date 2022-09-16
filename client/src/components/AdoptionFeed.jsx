@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Box } from '@mui/material';
-import FeedEntry from './FeedEntry.jsx';
+import { Box, CssBaseline, Container } from '@mui/material';
+// import CssBaseline from '@mui/material/CssBaseline';
+// import Container from '@mui/material/Container';
+import Adoption from './Adoption.jsx';
 import Loading from './Loading.jsx';
 
-function HomeFeed() {
+function AdoptionFeed() {
   const [animals, setAnimals] = useState([]);
   const [fetchedAnimals, setFetchedAnimals] = useState(false);
   useEffect(() => {
@@ -41,7 +43,7 @@ function HomeFeed() {
       // console.log('single animal obj', animals[0]);
       return animals.map((animal) => (
         <div key={JSON.stringify(animal)}>
-          <FeedEntry animalsData={animal} />
+          <Adoption animalsData={animal} />
           <br />
         </div>
       ));
@@ -50,27 +52,40 @@ function HomeFeed() {
   };
 
   return (
-    <Box
-      sx={{
-			  maxWidth: 700,
-			  maxHeight: 700,
-			  '& .MuiTextField-root': { width: '280px' },
-			  diplay: 'inline-block',
-			  m: 'auto',
-      }}
-    >
-      <h1>Welcome to NewHome</h1>
-      <p>Where you can give those little sonsofguns a new dang ole home</p>
-      {loadingFeed()}
-    </Box>
+    <CssBaseline>
+      <Container fixed>
+        <Box
+          sx={{
+					  bgcolor: '#cfe8fc',
+					  height: '780vh',
+          }}
+        >
+          <Box
+            sx={{
+						  maxWidth: 700,
+						  maxHeight: 700,
+						  '& .MuiTextField-root': { width: '280px' },
+						  diplay: 'inline-block',
+						  m: 'auto',
+            }}
+          >
+            <h1>Welcome to NewHome</h1>
+            <p>
+              Where you can give those little sonsofguns a new dang ole home
+            </p>
+            {loadingFeed()}
+          </Box>
+        </Box>
+      </Container>
+    </CssBaseline>
   );
 }
-export default HomeFeed;
+export default AdoptionFeed;
 
 // figure out loading functionalitiy
 // put mapping through instances of entries in this function
-//  <FeedEntry animalsData={animals[0]} /> <br></br>
-// if animalsData (exists) return the <FeedEntry />
+//  <Adoption animalsData={animals[0]} /> <br></br>
+// if animalsData (exists) return the <Adoption />
 // else if if doesn't render loading animation from material UI
 // useEffect(() => {
 //   const getAllAnimals = function () {
