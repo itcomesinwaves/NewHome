@@ -27,7 +27,7 @@ function UserContextProvider({ children }) {
 }
 // user object and functionality to set the user
 UserContextProvider.propTypes = {
-  children: PropTypes.array.isRequired,
+  children: PropTypes.any.isRequired,
 };
 
 export { UserContext, UserContextProvider };
