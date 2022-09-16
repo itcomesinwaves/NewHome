@@ -59,7 +59,7 @@ passport.serializeUser((user, done) => {
 
   done(null, user);
 });
-
+// deserialize user keeps running, in the console, should probably do something about it
 passport.deserializeUser((user, done) => {
   console.log('\n--------- Deserialized User:');
   // console.log(user);
@@ -131,16 +131,16 @@ app.get(
   '/auth/google',
   passport.authenticate('google', { scope: ['email', 'profile'] }),
 );
-
+// on success redirects to '/' which is our login page in react
 // Login Success
 app.get(
   '/auth/google/callback',
   passport.authenticate('google', {
-    successRedirect: '/profile',
+    successRedirect: '/',
     failureRedirect: '/login',
   }),
 );
-
+// this is the page that gets called up on browser refresh with the google button for auth
 app.get('/login', (req, res) => {
   console.log(req.user);
   res.sendFile(
@@ -152,7 +152,7 @@ app.get('/login', (req, res) => {
     },
   );
 });
-
+// can use this to check status on every page request as needed
 // Use the req.isAuthenticated() function to check if user is Authenticated
 const checkAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -162,7 +162,11 @@ const checkAuthenticated = (req, res, next) => {
   return null;
 };
 
-app.get('/profile', checkAuthenticated, (req, res) => {});
+// this also keeps running/getting called in the console. check on it
+app.get('/proAuth', checkAuthenticated, (req, res) => {
+  console.log('hi profile');
+  return res.json(req.user);
+});
 
 app.post('/imageUrl', (req, res) => {
   const { filename, filetype } = req.body;
@@ -185,14 +189,22 @@ app.post('/imageUrl', (req, res) => {
     }
   });
 });
-
+// create /isAuthenticated path for logged in status and data to pass to react side
+app.get('/isAuthenticated', (req, res) => {
+  if (req.isAuthenticated()) {
+    console.log('testing hereeeeeeeee', req.isAuthenticated());
+    return res.sendStatus(200);
+  }
+  return res.sendStatus(401);
+});
+// create a route in react for button to connect/call this /logout endpoint
 // Define the Logout
 app.post('/logout', (req, res) => {
   req.logOut();
   res.redirect('/login');
   console.log('-------> User Logged out');
 });
-
+// wildcard-catch-all
 app.get('/*', (req, res) => {
   res.sendFile(
     path.resolve(__dirname, '..', 'client', 'dist', 'index.html'),

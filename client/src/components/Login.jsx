@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 
+// page that opens when refreshed/initialized
+// goes to the google auth page to give user option to sign in with their google account
 function Login() {
   const [clicked, setClicked] = useState(false);
   return (
