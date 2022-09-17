@@ -10,10 +10,12 @@ import {
   ThemeProvider,
   createTheme,
   Grid,
+  Autocomplete,
 } from '@mui/material';
 import Adoption from './Adoption.jsx';
 import styles from '../styles.jsx';
 import { UserContext } from '../UserContext.jsx';
+import { breeds } from '../breeds.js';
 
 const theme = createTheme({
   palette: {
@@ -38,10 +40,8 @@ function Search() {
   const [gender, setGender] = useState(() => (search ? search.gender : ''));
   const [size, setSize] = useState(() => (search ? search.size : ''));
   const [submitted, setSubmit] = useState(() => false);
-  const [pets, setPets] = useState(() => []);
-  const breedUpdate = (event) => {
-    setVal(event.target.value);
-  };
+  const [pets, setPets] = useState([]);
+
   const submit = (event) => {
     event.preventDefault();
     const searchBy = {
@@ -52,6 +52,7 @@ function Search() {
       gender,
       size,
     };
+    setSearch(searchBy);
     console.log(search);
     const config = {
       method: 'post',
@@ -95,6 +96,9 @@ function Search() {
       </Box>
     </Box>
   );
+  const breedUpdate = (event, value) => {
+    setVal(value);
+  };
   const submitUpdate = () => {
     setSubmit(!submitted);
   };
@@ -127,14 +131,20 @@ function Search() {
         sx={styles}
       >
         <Grid item>
-          <TextField
-            label="breed"
-            type="text"
+          <Autocomplete
             value={breed}
             onChange={breedUpdate}
-            InputLabelProps={{
-						  style: { color: 'primary.contrastText' },
-            }}
+            options={breeds}
+            renderInput={(breeds) => (
+              <TextField
+                {...breeds}
+                label="breed"
+                type="text"
+                InputLabelProps={{
+									  style: { color: 'primary.contrastText' },
+                }}
+              />
+            )}
           />
         </Grid>
         <Grid item>
