@@ -13,21 +13,16 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation().pathname;
   const [value, setVal] = useState(() => location);
-  useEffect(() => {
-    // axios
-    // 	.get('/isAuthenticated')
-    // 	.then(() => {
-    // 		//navigate('/profile')
-    // 	})
-    // 	.catch((err) => {
-    // 		console.error(err);
-    // 		//return navigate('/login');
-    // 	});
-  });
 
   const handleChange = (event, newValue) => {
     setVal(newValue);
     navigate(newValue);
+  };
+  const handleClick = (e) => {
+    if (useLocation.pathname !== e.target.id) {
+      setVal(e.target.id);
+      navigate(e.target.id);
+    }
   };
   return (
     <Box sx={styles}>
@@ -37,12 +32,32 @@ function App() {
         aria-label="secondary tabs example"
         centered
       >
-        <Tab value="/profile" label="Profile" sx={styles['.MuiTab-root']} />
-        <Tab value="/search" label="Search" />
-        <Tab value="/home" label="Home" sx={styles} />
-        <Tab value="/login" label="Login" />
-        <Tab value="/postForms" label="PostForms" />
-        <Tab value="/postFeed" label="PostFeed" />
+        <Tab
+          value="/profile"
+          label="Profile"
+          onClick={handleClick}
+          id="/profile"
+        />
+        <Tab
+          value="/search"
+          label="Search"
+          onClick={handleClick}
+          id="/search"
+        />
+        <Tab value="/home" label="Home" onClick={handleClick} id="/home" />
+        <Tab value="/login" label="Login" onClick={handleClick} id="/login" />
+        <Tab
+          value="/postForms"
+          label="PostForms"
+          onClick={handleClick}
+          id="/postForms"
+        />
+        <Tab
+          value="/postFeed"
+          label="PostFeed"
+          onClick={handleClick}
+          id="/postFeed"
+        />
       </Tabs>
       <br />
       <Outlet />
