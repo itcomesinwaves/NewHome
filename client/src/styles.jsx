@@ -92,6 +92,8 @@ const styles = {
   '& .MuiLinearProgress-root': {},
   '& .MuiTextField-root': {},
   '& .MuiGrid-root': {},
+  '& .MuiGrid-container': {},
+  '& .MuiGrid-item': {},
   '& .MuiInputLabel-root': {},
   '& .MuiSelect-select-root': {},
   '& .MuiMenuItem-root': {},

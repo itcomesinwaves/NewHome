@@ -12,6 +12,7 @@ import {
   Grid,
 } from '@mui/material';
 import Adoption from './Adoption.jsx';
+import styles from '../styles.jsx';
 
 const theme = createTheme({
   palette: {
@@ -130,9 +131,9 @@ function Search() {
 					  height: 280,
 					  maxWidth: 600,
 					  maxHeight: 400,
-					  '& .MuiTextField-root': { width: '280px' },
-					  diplay: 'inline-block',
 					  m: 'auto',
+					  '& .MuiTextField-root': { width: '280px' },
+					  display: 'inline-block',
 					  backgroundColor: 'white',
           }}
         >
