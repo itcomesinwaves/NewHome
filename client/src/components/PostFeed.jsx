@@ -3,8 +3,6 @@ import axios from 'axios';
 import { Box, Typography } from '@mui/material';
 import Post from './Post.jsx';
 import Loading from './Loading.jsx';
-import App from './App.jsx';
-import styles from '../styles.jsx';
 
 function PostFeed() {
   const [posts, setPosts] = useState([]);
@@ -30,6 +28,7 @@ function PostFeed() {
         .get('/feed/posts')
         .then(({ data }) => {
           setPosts(data.posts);
+          updatePosts();
         })
         .catch((err) => {
           console.error(err);
@@ -53,10 +52,7 @@ function PostFeed() {
 
   return (
     <Box>
-      <Typography gutterBottom variant="h1" component="div">
-        Welcome to NewHome
-      </Typography>
-      <p>Where you can give those little sonsofguns a new dang ole home</p>
+      <Typography variant="h3">Adoption Stories</Typography>
       {loadingFeed()}
     </Box>
   );
