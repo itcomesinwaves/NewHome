@@ -17,14 +17,18 @@ const userSchema = new Schema({
 });
 
 const petSchema = new Schema({
+  petId: {
+    type: Number,
+    unique: true,
+  },
   species: String,
   breed: String,
   gender: String,
   name: String,
   age: String,
-  temperament: Schema.Types.Mixed,
+  tags: Schema.Types.Mixed,
   shelterInfo: Schema.Types.Mixed,
-  adopted: Boolean,
+  adopted: String,
   userId: String,
 });
 

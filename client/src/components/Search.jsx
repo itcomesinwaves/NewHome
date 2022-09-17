@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import {
   Button,
@@ -10,9 +10,12 @@ import {
   ThemeProvider,
   createTheme,
   Grid,
+  Autocomplete,
 } from '@mui/material';
 import Adoption from './Adoption.jsx';
 import styles from '../styles.jsx';
+import { UserContext } from '../UserContext.jsx';
+import { breeds } from '../breeds.js';
 
 const theme = createTheme({
   palette: {
@@ -29,17 +32,16 @@ const theme = createTheme({
 });
 
 function Search() {
-  const [breed, setVal] = useState(() => '');
-  const [hairLength, setHairLength] = useState(() => '');
-  const [species, setSpecies] = useState(() => '');
-  const [age, setAge] = useState(() => '');
-  const [gender, setGender] = useState(() => '');
-  const [size, setSize] = useState(() => '');
+  const { search, setSearch } = useContext(UserContext);
+  const [breed, setVal] = useState(() => (search ? search.breed : ''));
+  const [hairLength, setHairLength] = useState(() => (search ? search.hairLength : ''));
+  const [species, setSpecies] = useState(() => (search ? search.species : ''));
+  const [age, setAge] = useState(() => (search ? search.age : ''));
+  const [gender, setGender] = useState(() => (search ? search.gender : ''));
+  const [size, setSize] = useState(() => (search ? search.size : ''));
   const [submitted, setSubmit] = useState(() => false);
-  const [pets, setPets] = useState(() => []);
-  const breedUpdate = (event) => {
-    setVal(event.target.value);
-  };
+  const [pets, setPets] = useState([]);
+
   const submit = (event) => {
     event.preventDefault();
     const searchBy = {
@@ -50,6 +52,8 @@ function Search() {
       gender,
       size,
     };
+    setSearch(searchBy);
+    console.log(search);
     const config = {
       method: 'post',
       url: 'http://localhost:8080/feed/api/search',
@@ -70,28 +74,25 @@ function Search() {
       });
   };
   const renderPets = () => (
-    <Box
-      sx={{
-			  borderRadius: '10px',
-			  width: 900,
-			  '& .MuiTextField-root': { width: '280px' },
-			  m: 'auto',
-			  backgroundColor: 'primary.main',
-      }}
+    <Grid
+      container
+      xs={8}
+      xl={8}
+      direction="column"
+      justifyContent="center"
+      alignItems="center"
+      rowSpacing={8}
     >
-      <Box
-        sx={{
-				  maxWidth: 700,
-				  '& .MuiTextField-root': { width: '280px' },
-				  m: 'auto',
-        }}
-      >
-        {pets.map((pet) => (
-          <Adoption animalsData={pet} />
-        ))}
-      </Box>
-    </Box>
+      {pets.map((animal) => (
+        <Grid item key={JSON.stringify(animal)} xs={6} xl={6}>
+          <Adoption animalsData={animal} />
+        </Grid>
+      ))}
+    </Grid>
   );
+  const breedUpdate = (event, value) => {
+    setVal(value);
+  };
   const submitUpdate = () => {
     setSubmit(!submitted);
   };
@@ -113,28 +114,34 @@ function Search() {
 
   // what renders the component
   return (
-    <ThemeProvider theme={theme}>
+    <Box>
       <Grid
         component="form"
         onSubmit={submit}
         container
-        rowSpacing={1}
-        columnSpacing={3}
-				// Styling
-        sx={styles}
+        spacing={2}
+        xs={6}
+        sx={{ mb: '20px' }}
       >
-        <Grid item>
-          <TextField
-            label="breed"
-            type="text"
+        <Grid item xs={12}>
+          <Autocomplete
             value={breed}
             onChange={breedUpdate}
-            InputLabelProps={{
-						  style: { color: 'primary.contrastText' },
-            }}
+            options={breeds}
+            sx={{ width: '20vw' /* mx: 'auto' to center breed field input */ }}
+            renderInput={(breeds) => (
+              <TextField
+                {...breeds}
+                label="Breed"
+                type="text"
+                InputLabelProps={{
+								  style: { color: 'primary.contrastText' },
+                }}
+              />
+            )}
           />
         </Grid>
-        <Grid item>
+        <Grid item xs={4}>
           <InputLabel id="Hair-Length">Hair Length</InputLabel>
           <Select
             labelId="Hair-Length"
@@ -147,7 +154,7 @@ function Search() {
             <MenuItem value="long">Long</MenuItem>
           </Select>
         </Grid>
-        <Grid item>
+        <Grid item xs={4}>
           <InputLabel id="Species">Species</InputLabel>
           <Select
             labelId="Species"
@@ -159,7 +166,7 @@ function Search() {
             <MenuItem value="dog">Dog</MenuItem>
           </Select>
         </Grid>
-        <Grid item>
+        <Grid item xs={4}>
           <InputLabel id="Age">Age</InputLabel>
           <Select labelId="Age" label="Age" value={age} onChange={ageUpdate}>
             <MenuItem value="baby">Baby</MenuItem>
@@ -168,7 +175,7 @@ function Search() {
             <MenuItem value="senior">Senior</MenuItem>
           </Select>
         </Grid>
-        <Grid item>
+        <Grid item xs={4}>
           <InputLabel id="Gender">Gender</InputLabel>
           <Select
             labelId="Gender"
@@ -180,7 +187,7 @@ function Search() {
             <MenuItem value="female">Female</MenuItem>
           </Select>
         </Grid>
-        <Grid item>
+        <Grid item xs={4}>
           <InputLabel id="Size">Size</InputLabel>
           <Select
             labelId="Size"
@@ -194,14 +201,14 @@ function Search() {
             <MenuItem value="xlarge">X-Large</MenuItem>
           </Select>
         </Grid>
-        <Grid item>
+        <Grid item xs={12}>
           <Button variant="contained" type="submit">
             Submit
           </Button>
         </Grid>
       </Grid>
       {submitted ? renderPets() : <div />}
-    </ThemeProvider>
+    </Box>
   );
 }
 export default Search;

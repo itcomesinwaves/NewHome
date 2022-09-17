@@ -20,6 +20,9 @@
     "no-tabs": ["off"],
     "no-mixed-spaces-and-tabs": ["off"],
     "react/forbid-prop-types": ["off"],
-    "react-hooks/exhaustive-deps": ["off"]
+    "react-hooks/exhaustive-deps": ["off"],
+    "consistent-return": ["off"],
+    "react/jsx-props-no-spreading": ["off"],
+    "no-underscore-dangle": ["off"]
   }
 }
