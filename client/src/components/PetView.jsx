@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { UserContext } from '../UserContext.jsx';
@@ -30,8 +30,9 @@ const image =	'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/57334144/1/?bust
 
 function PetView(props) {
   // isloggedin
-  const [loggedIn, setLoggedIn] = useState(true);
   const { user } = useContext(UserContext);
+  const [loggedIn, setLoggedIn] = useState(false);
+
   // state from feed component
   const { state } = useLocation();
   const animal = state.animalsData;
@@ -44,12 +45,36 @@ function PetView(props) {
       window.alert('Please sign up/login');
     } else if (e.target.id === 'save') {
       // axios request for favoriting a pet
-      console.log('testing context', user);
+      console.log('the animal object to save', animal);
+      axios
+        .post('/pet/savePet', {
+          species: animal.species,
+          breed: animal.breeds.primary,
+          gender: animal.gender,
+          name: animal.name,
+          age: animal.age,
+          tags: animal.tags,
+          shelterInfo: {
+            address: animal.contact.address,
+            email: animal.contact.email,
+            phone: animal.contact.phone,
+          },
+          adopted: animal.status,
+          userId: null,
+        })
+        .then((data) => {
+          console.log('data from pet/savePet', data);
+        })
+        .catch((err) => {
+          console.error('error on /pet/savePet req', err);
+        });
     } else {
       // axios request for following a pet story
       console.log('testing follow request');
     }
   };
+
+  // if user is an object re-render as logged in
 
   // conditional rendering based on pet adoption status
   const onAdoptionStatus = () => {
@@ -97,6 +122,12 @@ function PetView(props) {
     }
     return <p>I&apos;m looking for a new crib with chill people</p>;
   };
+
+  useEffect(() => {
+    if (user !== null) {
+      setLoggedIn(true);
+    }
+  }, [loggedIn]);
   return (
     <div>
       <h1>{`${animal.name} would like to say hello!`}</h1>
