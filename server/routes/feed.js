@@ -44,6 +44,10 @@ feed.get('/posts', (req, res) => {
     });
 });
 
+feed.post('/post/pet', (req, res) => {
+  console.log(req.body);
+});
+
 // Handle Search
 feed.post('/api/search', (req, res) => {
   const {

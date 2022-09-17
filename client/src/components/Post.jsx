@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Card,
-  CardActions,
   CardContent,
   CardMedia,
+  CardActions,
   Button,
   Typography,
 } from '@mui/material';
@@ -18,6 +18,26 @@ function toBase64(arr) {
 function Post({ post }) {
   const [image, setImage] = useState('');
   const [rendered, setRendered] = useState(false);
+  // navigate hook to render petview
+  const navigate = useNavigate();
+
+  // on click render individual petview
+  const handleEntryClick = () => {
+    const config = {
+      method: 'post',
+      url: 'http://localhost:8080/feed/post/pet',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: { _id: post.petId },
+    };
+    axios(config)
+      .then((pet) => navigate('/petview', { state: { animalsData: pet } }))
+      .catch((err) => {
+        console.error(err);
+      });
+    // navigate tag to render petview
+  };
   useEffect(() => {
     if (post.image) {
       axios
@@ -42,15 +62,14 @@ function Post({ post }) {
     }
   }, [rendered]);
   return (
-    <Card>
-      <CardMedia
-        component="img"
-        height="400"
-        width="400"
-        image={image}
-        alt="card image"
-      />
-      <CardContent>
+    <Card raised sx={{ width: '40vw' }}>
+      {(() => {
+			  if (image) {
+			    return <CardMedia component="img" image={image} alt="" />;
+			  }
+      })()}
+
+      <CardContent style={{ backgroundColor: '#E3C770' }}>
         <Typography gutterBottom variant="h5" component="div">
           {post.title}
         </Typography>
@@ -58,6 +77,16 @@ function Post({ post }) {
           {post.message}
         </Typography>
       </CardContent>
+      <CardActions style={{ backgroundColor: '#A64B2A' }}>
+        <Button
+          style={{ backgroundColor: '#FCFFE7', color: '#DEA057' }}
+          size="small"
+          id="viewpet"
+          onClick={handleEntryClick}
+        >
+          view pet
+        </Button>
+      </CardActions>
     </Card>
   );
 }
