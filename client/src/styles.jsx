@@ -98,9 +98,10 @@ const styles = {
 
   // & .Mui-selected styles the currently selected tab of a tabs group
   '& .MuiTabs-root': {
-    '& .Mui-selected': {
-      color: 'red',
-    },
+    bgcolor: theme.palette.secondary.dark,
+    'border-radius': '5px',
+    ml: '20px',
+    mr: '20px',
   },
 
   // color is for text color
@@ -108,7 +109,7 @@ const styles = {
   // backgroundColor is for background color
   '& .MuiTab-root': {
     color: 'black',
-    bgcolor: 'green',
+    bgcolor: theme.palette.primary.light,
     border: '2px solid black',
     borderRadius: '10px',
     ml: '20px',
@@ -116,10 +117,7 @@ const styles = {
     mt: '10px',
     mb: '20px',
     '&:hover': {
-      color: 'yellow',
-    },
-    '&:active': {
-      color: 'orange',
+      color: theme.palette.primary.contrastText,
     },
   },
   '.MuiBox-root': {},
