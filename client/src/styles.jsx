@@ -124,8 +124,9 @@ const styles = {
   '& .MuiTabs-root': {
     bgcolor: theme.palette.secondary.dark,
     'border-radius': '5px',
-    ml: '20px',
-    mr: '20px',
+    // m: 'auto',
+    // 'margin-left': 'auto', 'margin-right': 'auto',
+    display: 'inline-flex',
   },
 
   // color is for text color
@@ -136,10 +137,8 @@ const styles = {
     bgcolor: theme.palette.primary.light,
     border: '2px solid black',
     borderRadius: '10px',
-    ml: '20px',
-    mr: '20px',
-    mt: '10px',
-    mb: '20px',
+    mx: '20px',
+    my: '10px',
     '&:hover': {
       color: theme.palette.primary.contrastText,
     },
