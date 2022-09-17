@@ -10,6 +10,7 @@ function UserContextProvider({ children }) {
   const [savedList, setSavedList] = useState(null);
   const [postList, setPostList] = useState(null);
 
+  const [search, setSearch] = useState(null);
   const userValue = useMemo(
     () => ({
       user,
@@ -18,8 +19,10 @@ function UserContextProvider({ children }) {
       setSavedList,
       postList,
       setPostList,
+      search,
+      setSearch,
     }),
-    [user, savedList, postList],
+    [user, savedList, postList, search],
   );
   return (
     <UserContext.Provider value={userValue}>{children}</UserContext.Provider>
