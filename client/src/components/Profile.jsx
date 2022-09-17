@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate, Navigate } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import { Button } from '@mui/material';
+import { Box, Card, Button } from '@mui/material';
 import { UserContext } from '../UserContext.jsx';
 // get user data using axios from google and display it on
 // this page as a restricted page
@@ -57,11 +56,7 @@ function Profile() {
   return (
     <Box
       sx={{
-			  width: 350,
-			  height: 100,
-			  backgroundColor: 'primary.light',
 			  '&:hover': {
-			    backgroundColor: 'primary.main',
 			    opacity: [0.9, 0.8, 0.7],
 			  },
       }}
