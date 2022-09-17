@@ -31,6 +31,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/feed', feed);
 app.use('/user', user);
+app.use('/pet', pet);
 
 aws.config.update({
   accessKeyId: process.env.STORJ_API_KEY,
