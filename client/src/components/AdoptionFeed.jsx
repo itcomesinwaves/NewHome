@@ -54,42 +54,19 @@ function AdoptionFeed() {
   };
 
   return (
-    <CssBaseline>
-      <Container fixed>
-        <Box
-          sx={{
-					  bgcolor: '#DAF7A6',
-					  height: '985vh',
-          }}
-        >
-          <Box
-            sx={{
-						  maxWidth: 700,
-						  maxHeight: 1200,
-						  '& .MuiTextField-root': { width: '280px' },
-						  diplay: 'inline-block',
-						  m: 'auto',
-            }}
-          >
-            <h1
-              style={{
-							  color: 'black',
-							  border: '5px solid black',
-							  letterSpacing: '5px',
-							  padding: '10px',
-							  textAlign: 'center',
-              }}
-            >
-              Welcome to NewHome
-              <Typography color="#228B22" sx={{ variant: 'subtitle1' }}>
-                Where you can give those little sonsofguns a new dang ole home
-              </Typography>
-            </h1>
-            {loadingFeed()}
-          </Box>
-        </Box>
-      </Container>
-    </CssBaseline>
+    <Box>
+      <h1
+        style={{
+				  textAlign: 'center',
+        }}
+      >
+        Welcome to NewHome
+        <Typography color="#228B22" sx={{ variant: 'subtitle1' }}>
+          Where you can give those little sonsofguns a new dang ole home
+        </Typography>
+      </h1>
+      {loadingFeed()}
+    </Box>
   );
 }
 export default AdoptionFeed;

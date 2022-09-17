@@ -43,7 +43,7 @@ function Search() {
   const submit = (event) => {
     event.preventDefault();
     const searchBy = {
-      breed: breed.toLocaleLowerCase(),
+      breed,
       hairLength,
       species,
       age,
@@ -65,6 +65,7 @@ function Search() {
         setPets(response.data.animals);
       })
       .catch((error) => {
+        console.log(error);
         alert(`${error.response.data} / Invalid Breed`);
       });
   };
@@ -74,7 +75,6 @@ function Search() {
 			  borderRadius: '10px',
 			  width: 900,
 			  '& .MuiTextField-root': { width: '280px' },
-			  display: 'inline-block',
 			  m: 'auto',
 			  backgroundColor: 'primary.main',
       }}
@@ -83,7 +83,6 @@ function Search() {
         sx={{
 				  maxWidth: 700,
 				  '& .MuiTextField-root': { width: '280px' },
-				  diplay: 'inline-block',
 				  m: 'auto',
         }}
       >
@@ -114,143 +113,95 @@ function Search() {
 
   // what renders the component
   return (
-    <div>
-      <ThemeProvider theme={theme}>
-        <Grid
-          component="form"
-          onSubmit={submit}
-          container
-          rowSpacing={1}
-          columnSpacing={3}
-					// Styling
-          sx={{
-					  borderStyle: 'solid',
-					  borderWidth: '1px',
-					  borderRadius: '10px',
-					  width: 600,
-					  height: 280,
-					  maxWidth: 600,
-					  maxHeight: 400,
-					  m: 'auto',
-					  '& .MuiTextField-root': { width: '280px' },
-					  display: 'inline-block',
-					  backgroundColor: 'white',
-          }}
-        >
-          <Grid item>
-            <TextField
-              label="breed"
-              type="text"
-              value={breed}
-              onChange={breedUpdate}
-              InputLabelProps={{
-							  style: { color: 'primary.contrastText' },
-              }}
-            />
-          </Grid>
-          <Grid item>
-            <InputLabel id="Hair-Length">Hair Length</InputLabel>
-            <Select
-              labelId="Hair-Length"
-              label="Hair length"
-              value={hairLength}
-              onChange={hairUpdate}
-              sx={{
-							  width: 125,
-							  maxWidth: 200,
-              }}
-            >
-              <MenuItem value="short">Short</MenuItem>
-              <MenuItem value="medium">Medium</MenuItem>
-              <MenuItem value="long">Long</MenuItem>
-            </Select>
-          </Grid>
-          <Grid item>
-            <InputLabel id="Species">Species</InputLabel>
-            <Select
-              labelId="Species"
-              label="Species"
-              value={species}
-              onChange={speciesUpdate}
-              sx={{
-							  width: 125,
-							  maxWidth: 200,
-              }}
-            >
-              <MenuItem value="cat">Cat</MenuItem>
-              <MenuItem value="dog">Dog</MenuItem>
-            </Select>
-          </Grid>
-          <Grid item>
-            <InputLabel id="Age">Age</InputLabel>
-            <Select
-              labelId="Age"
-              label="Age"
-              value={age}
-              onChange={ageUpdate}
-              sx={{
-							  width: 125,
-							  maxWidth: 200,
-              }}
-            >
-              <MenuItem value="baby">Baby</MenuItem>
-              <MenuItem value="young">Young</MenuItem>
-              <MenuItem value="adult">Adult</MenuItem>
-              <MenuItem value="senior">Senior</MenuItem>
-            </Select>
-          </Grid>
-          <Grid item>
-            <InputLabel id="Gender">Gender</InputLabel>
-            <Select
-              labelId="Gender"
-              label="Gender"
-              value={gender}
-              onChange={genderUpdate}
-              sx={{
-							  width: 125,
-							  maxWidth: 200,
-              }}
-            >
-              <MenuItem value="male">Male</MenuItem>
-              <MenuItem value="female">Female</MenuItem>
-            </Select>
-          </Grid>
-          <Grid item>
-            <InputLabel id="Size">Size</InputLabel>
-            <Select
-              labelId="Size"
-              label="Size"
-              value={size}
-              onChange={sizeUpdate}
-              sx={{
-							  width: 125,
-							  maxWidth: 200,
-              }}
-            >
-              <MenuItem value="small">Small</MenuItem>
-              <MenuItem value="medium">Medium</MenuItem>
-              <MenuItem value="large">Large</MenuItem>
-              <MenuItem value="xlarge">X-Large</MenuItem>
-            </Select>
-          </Grid>
-          <Grid item>
-            <Button
-              variant="contained"
-              type="submit"
-              sx={{
-							  maxWidth: 100,
-							  maxHeight: 100,
-							  backgroundColor: 'primary.light',
-              }}
-            >
-              Submit
-            </Button>
-          </Grid>
+    <ThemeProvider theme={theme}>
+      <Grid
+        component="form"
+        onSubmit={submit}
+        container
+        rowSpacing={1}
+        columnSpacing={3}
+				// Styling
+        sx={styles}
+      >
+        <Grid item>
+          <TextField
+            label="breed"
+            type="text"
+            value={breed}
+            onChange={breedUpdate}
+            InputLabelProps={{
+						  style: { color: 'primary.contrastText' },
+            }}
+          />
         </Grid>
-
-        {submitted ? renderPets() : <div />}
-      </ThemeProvider>
-    </div>
+        <Grid item>
+          <InputLabel id="Hair-Length">Hair Length</InputLabel>
+          <Select
+            labelId="Hair-Length"
+            label="Hair length"
+            value={hairLength}
+            onChange={hairUpdate}
+          >
+            <MenuItem value="short">Short</MenuItem>
+            <MenuItem value="medium">Medium</MenuItem>
+            <MenuItem value="long">Long</MenuItem>
+          </Select>
+        </Grid>
+        <Grid item>
+          <InputLabel id="Species">Species</InputLabel>
+          <Select
+            labelId="Species"
+            label="Species"
+            value={species}
+            onChange={speciesUpdate}
+          >
+            <MenuItem value="cat">Cat</MenuItem>
+            <MenuItem value="dog">Dog</MenuItem>
+          </Select>
+        </Grid>
+        <Grid item>
+          <InputLabel id="Age">Age</InputLabel>
+          <Select labelId="Age" label="Age" value={age} onChange={ageUpdate}>
+            <MenuItem value="baby">Baby</MenuItem>
+            <MenuItem value="young">Young</MenuItem>
+            <MenuItem value="adult">Adult</MenuItem>
+            <MenuItem value="senior">Senior</MenuItem>
+          </Select>
+        </Grid>
+        <Grid item>
+          <InputLabel id="Gender">Gender</InputLabel>
+          <Select
+            labelId="Gender"
+            label="Gender"
+            value={gender}
+            onChange={genderUpdate}
+          >
+            <MenuItem value="male">Male</MenuItem>
+            <MenuItem value="female">Female</MenuItem>
+          </Select>
+        </Grid>
+        <Grid item>
+          <InputLabel id="Size">Size</InputLabel>
+          <Select
+            labelId="Size"
+            label="Size"
+            value={size}
+            onChange={sizeUpdate}
+          >
+            <MenuItem value="small">Small</MenuItem>
+            <MenuItem value="medium">Medium</MenuItem>
+            <MenuItem value="large">Large</MenuItem>
+            <MenuItem value="xlarge">X-Large</MenuItem>
+          </Select>
+        </Grid>
+        <Grid item>
+          <Button variant="contained" type="submit">
+            Submit
+          </Button>
+        </Grid>
+      </Grid>
+      {submitted ? renderPets() : <div />}
+    </ThemeProvider>
   );
 }
 export default Search;

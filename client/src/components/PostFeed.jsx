@@ -4,6 +4,7 @@ import { Box, Typography } from '@mui/material';
 import Post from './Post.jsx';
 import Loading from './Loading.jsx';
 import App from './App.jsx';
+import styles from '../styles.jsx';
 
 function PostFeed() {
   const [posts, setPosts] = useState([]);
@@ -51,15 +52,7 @@ function PostFeed() {
   };
 
   return (
-    <Box
-      sx={{
-			  maxWidth: 700,
-			  maxHeight: 700,
-			  '& .MuiTextField-root': { width: '280px' },
-			  diplay: 'inline-block',
-			  m: 'auto',
-      }}
-    >
+    <Box>
       <Typography gutterBottom variant="h1" component="div">
         Welcome to NewHome
       </Typography>
