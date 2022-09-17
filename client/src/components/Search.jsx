@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import {
   Button,
@@ -10,9 +10,12 @@ import {
   ThemeProvider,
   createTheme,
   Grid,
+  Autocomplete,
 } from '@mui/material';
 import Adoption from './Adoption.jsx';
-import { styles } from '../styles.jsx';
+import styles from '../styles.jsx';
+import { UserContext } from '../UserContext.jsx';
+import { breeds } from '../breeds.js';
 
 const theme = createTheme({
   palette: {
@@ -29,17 +32,16 @@ const theme = createTheme({
 });
 
 function Search() {
-  const [breed, setVal] = useState(() => '');
-  const [hairLength, setHairLength] = useState(() => '');
-  const [species, setSpecies] = useState(() => '');
-  const [age, setAge] = useState(() => '');
-  const [gender, setGender] = useState(() => '');
-  const [size, setSize] = useState(() => '');
+  const { search, setSearch } = useContext(UserContext);
+  const [breed, setVal] = useState(() => (search ? search.breed : ''));
+  const [hairLength, setHairLength] = useState(() => (search ? search.hairLength : ''));
+  const [species, setSpecies] = useState(() => (search ? search.species : ''));
+  const [age, setAge] = useState(() => (search ? search.age : ''));
+  const [gender, setGender] = useState(() => (search ? search.gender : ''));
+  const [size, setSize] = useState(() => (search ? search.size : ''));
   const [submitted, setSubmit] = useState(() => false);
-  const [pets, setPets] = useState(() => []);
-  const breedUpdate = (event) => {
-    setVal(event.target.value);
-  };
+  const [pets, setPets] = useState([]);
+
   const submit = (event) => {
     event.preventDefault();
     const searchBy = {
@@ -50,6 +52,8 @@ function Search() {
       gender,
       size,
     };
+    setSearch(searchBy);
+    console.log(search);
     const config = {
       method: 'post',
       url: 'http://localhost:8080/feed/api/search',
@@ -92,6 +96,9 @@ function Search() {
       </Box>
     </Box>
   );
+  const breedUpdate = (event, value) => {
+    setVal(value);
+  };
   const submitUpdate = () => {
     setSubmit(!submitted);
   };
@@ -124,14 +131,20 @@ function Search() {
         sx={styles}
       >
         <Grid item>
-          <TextField
-            label="breed"
-            type="text"
+          <Autocomplete
             value={breed}
             onChange={breedUpdate}
-            InputLabelProps={{
-						  style: { color: 'primary.contrastText' },
-            }}
+            options={breeds}
+            renderInput={(breeds) => (
+              <TextField
+                {...breeds}
+                label="breed"
+                type="text"
+                InputLabelProps={{
+									  style: { color: 'primary.contrastText' },
+                }}
+              />
+            )}
           />
         </Grid>
         <Grid item>
