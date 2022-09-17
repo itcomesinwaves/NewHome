@@ -92,8 +92,24 @@ const styles = {
   '& .MuiLinearProgress-root': {},
   '& .MuiTextField-root': {},
   '& .MuiGrid-root': {},
+  '& .MuiGrid-container': {
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    borderRadius: '10px',
+    width: 600,
+    height: 280,
+    maxWidth: 600,
+    maxHeight: 400,
+    '& .MuiTextField-root': { width: '280px' },
+    m: 'auto',
+    backgroundColor: theme.palette.secondary.main,
+  },
+  '& .MuiGrid-item': {},
   '& .MuiInputLabel-root': {},
-  '& .MuiSelect-select-root': {},
+  '& .MuiSelect-select': {
+    width: 100,
+    maxWidth: 200,
+  },
   '& .MuiMenuItem-root': {},
 
   // & .Mui-selected styles the currently selected tab of a tabs group
@@ -120,7 +136,14 @@ const styles = {
       color: theme.palette.primary.contrastText,
     },
   },
-  '.MuiBox-root': {},
+  '.MuiBox-root': {
+    borderRadius: '10px',
+    padding: '5px',
+    maxWidth: 700,
+    '& .MuiTextField-root': { width: '280px' },
+    m: 'auto',
+    backgroundColor: theme.palette.secondary.main,
+  },
 };
 
 export default styles;
