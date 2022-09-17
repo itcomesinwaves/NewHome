@@ -15,7 +15,7 @@ function Profile() {
     axios
       .get('/proAuth')
       .then(({ data }) => {
-        console.log('data from proAuth', data);
+        // console.log('data from proAuth', data);
         setUser(data);
         return data;
       })
@@ -30,7 +30,7 @@ function Profile() {
         });
       })
       .then(({ data }) => {
-        console.log('inside data response from db', data);
+        // console.log('inside data response from db', data);
       })
       .catch((err) => {
         console.error(err);
