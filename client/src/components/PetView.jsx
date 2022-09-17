@@ -46,7 +46,7 @@ function PetView(props) {
       window.alert('Please sign up/login');
     } else if (e.target.id === 'save') {
       // axios request for favoriting a pet
-      console.log('the animal object to save', animal);
+      // console.log('the animal object to save', animal);
       axios
         .post('/pet/savePet', {
           pet: {

@@ -3,7 +3,10 @@ import React, { useEffect, useState } from 'react';
 import {
   Link, useNavigate, Outlet, useLocation,
 } from 'react-router-dom';
-import { Box, Tabs, Tab } from '@mui/material';
+import {
+  Box, Tabs, Tab, Container,
+} from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
 import styles from '../styles.jsx';
 
 // axios get to get the authenticated page from the
@@ -25,6 +28,10 @@ function App() {
     }
   };
   return (
+  // <>
+  // <CssBaseline />
+  // <Container fixed>
+  //   <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }} />
     <Box sx={styles}>
       <Tabs
         value={value}
@@ -62,6 +69,8 @@ function App() {
       <br />
       <Outlet />
     </Box>
+  // </Container>
+  // </>
   );
 }
 
