@@ -1,8 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import { Box } from '@mui/material';
 import { UserContext } from '../UserContext.jsx';
-
+import styles from '../styles.jsx';
 // example pet object to render for mvp
 // const pet = {
 //   species: 'Cat',
@@ -132,7 +133,7 @@ function PetView(props) {
     }
   }, [loggedIn]);
   return (
-    <div>
+    <Box sx={styles}>
       <h1>{`${animal.name} would like to say hello!`}</h1>
       <img src={hasPhoto()} alt="img here" />
       <p>{`Species: ${animal.species}`}</p>
@@ -143,7 +144,7 @@ function PetView(props) {
       <p>{animal.description}</p>
       {hasTags()}
       {onAdoptionStatus()}
-    </div>
+    </Box>
   );
 }
 

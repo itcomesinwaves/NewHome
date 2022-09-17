@@ -92,15 +92,32 @@ const styles = {
   '& .MuiLinearProgress-root': {},
   '& .MuiTextField-root': {},
   '& .MuiGrid-root': {},
+  '& .MuiGrid-container': {
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    borderRadius: '10px',
+    width: 600,
+    height: 280,
+    maxWidth: 600,
+    maxHeight: 400,
+    '& .MuiTextField-root': { width: '280px' },
+    m: 'auto',
+    backgroundColor: theme.palette.secondary.main,
+  },
+  '& .MuiGrid-item': {},
   '& .MuiInputLabel-root': {},
-  '& .MuiSelect-select-root': {},
+  '& .MuiSelect-select': {
+    width: 100,
+    maxWidth: 200,
+  },
   '& .MuiMenuItem-root': {},
 
   // & .Mui-selected styles the currently selected tab of a tabs group
   '& .MuiTabs-root': {
-    '& .Mui-selected': {
-      color: 'red',
-    },
+    bgcolor: theme.palette.secondary.dark,
+    'border-radius': '5px',
+    ml: '20px',
+    mr: '20px',
   },
 
   // color is for text color
@@ -108,7 +125,7 @@ const styles = {
   // backgroundColor is for background color
   '& .MuiTab-root': {
     color: 'black',
-    bgcolor: 'green',
+    bgcolor: theme.palette.primary.light,
     border: '2px solid black',
     borderRadius: '10px',
     ml: '20px',
@@ -116,13 +133,17 @@ const styles = {
     mt: '10px',
     mb: '20px',
     '&:hover': {
-      color: 'yellow',
-    },
-    '&:active': {
-      color: 'orange',
+      color: theme.palette.primary.contrastText,
     },
   },
-  '.MuiBox-root': {},
+  '.MuiBox-root': {
+    borderRadius: '10px',
+    padding: '5px',
+    maxWidth: 700,
+    '& .MuiTextField-root': { width: '280px' },
+    m: 'auto',
+    backgroundColor: theme.palette.secondary.main,
+  },
 };
 
 export default styles;

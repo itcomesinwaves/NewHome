@@ -3,6 +3,7 @@ import {
   Box, TextField, Button, Card, CardMedia,
 } from '@mui/material';
 import axios from 'axios';
+import styles from '../styles.jsx';
 
 function PostForms() {
   const [message, setMessage] = useState('');
@@ -15,14 +16,6 @@ function PostForms() {
     <Box
       component="form"
       id="post-form"
-      sx={{
-			  '& .MuiTextField-root': { width: '280px' },
-			  display: 'inline-block',
-			  m: 2,
-			  ml: 4,
-			  // border: '2px solid',
-			  maxWidth: '280px',
-      }}
       onSubmit={(e) => {
 			  e.preventDefault();
 			  return image.name
