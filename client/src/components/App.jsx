@@ -3,11 +3,8 @@ import React, { useEffect, useState } from 'react';
 import {
   Link, useNavigate, Outlet, useLocation,
 } from 'react-router-dom';
-import {
-  Box, Tabs, Tab, Container,
-} from '@mui/material';
-import CssBaseline from '@mui/material/CssBaseline';
-import styles from '../styles.jsx';
+import { Box, Tabs, Tab } from '@mui/material';
+import { styles } from '../styles.jsx';
 
 // axios get to get the authenticated page from the
 // isAuthenticated route in the server then navigates to the react page 'profile'

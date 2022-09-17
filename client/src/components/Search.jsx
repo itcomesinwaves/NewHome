@@ -12,7 +12,7 @@ import {
   Grid,
 } from '@mui/material';
 import Adoption from './Adoption.jsx';
-import styles from '../styles.jsx';
+import { styles } from '../styles.jsx';
 
 const theme = createTheme({
   palette: {

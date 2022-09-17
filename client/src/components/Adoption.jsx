@@ -70,21 +70,25 @@ function Adoption({ animalsData }) {
     }
   };
 
-  useEffect(() => (user !== null ? setLoggedIn(true) : setLoggedIn(false)), [loggedIn]);
+  useEffect(
+    () => (user !== null ? setLoggedIn(true) : setLoggedIn(false)),
+    [loggedIn],
+  );
 
   return (
-    <Card>
-      <CardMedia
-        component="img"
-        height="400"
-        width="400"
-        image={
-					animalsData.photos.length
-					  ? animalsData.photos[0].medium
-					  : 'https://st3.depositphotos.com/1322515/35964/v/600/depositphotos_359648638-stock-illustration-image-available-icon.jpg'
-				}
-        alt="card image"
-      />
+    <Card raised sx={{ width: '40vw' }}>
+      {(() => {
+			  if (animalsData.photos.length) {
+			    return (
+  <CardMedia
+    component="img"
+    image={animalsData.photos[0].medium}
+    alt=""
+  />
+			    );
+			  }
+      })()}
+
       <CardContent style={{ backgroundColor: '#E3C770' }}>
         <Typography gutterBottom variant="h5" component="div">
           {animalsData.name}

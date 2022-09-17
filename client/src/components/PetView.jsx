@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { UserContext } from '../UserContext.jsx';
-import styles from '../styles.jsx';
+import { styles } from '../styles.jsx';
 // example pet object to render for mvp
 // const pet = {
 //   species: 'Cat',

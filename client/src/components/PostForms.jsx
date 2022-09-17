@@ -3,7 +3,7 @@ import {
   Box, TextField, Button, Card, CardMedia,
 } from '@mui/material';
 import axios from 'axios';
-import styles from '../styles.jsx';
+import { styles } from '../styles.jsx';
 
 function PostForms() {
   const [message, setMessage] = useState('');

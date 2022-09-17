@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {
-  Box, CssBaseline, Container, Typography,
-} from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 // import CssBaseline from '@mui/material/CssBaseline';
 // import Container from '@mui/material/Container';
 import Adoption from './Adoption.jsx';
@@ -32,6 +30,7 @@ function AdoptionFeed() {
         .get('/feed/api')
         .then(({ data }) => {
           setAnimals(data.animals);
+          updateAnimals();
         })
         .catch((err) => {
           console.error(err);
@@ -40,35 +39,35 @@ function AdoptionFeed() {
   };
   updateAnimals();
 
-  // loading feed
-  const loadingFeed = () => {
-    if (animals.length) {
-      // console.log('single animal obj', animals[0]);
-      return animals.map((animal) => (
-        <div key={JSON.stringify(animal)}>
-          <Adoption animalsData={animal} />
-          <br />
-        </div>
-      ));
-    }
-    return <Loading />;
-  };
-
-  return (
-    <Box>
-      <h1
-        style={{
-				  textAlign: 'center',
-        }}
-      >
-        Welcome to NewHome
-        <Typography color="#228B22" sx={{ variant: 'subtitle1' }}>
-          Where you can give those little sonsofguns a new dang ole home
+  if (animals.length) {
+    // console.log('single animal obj', animals[0]);
+    return (
+      <Box>
+        <Typography variant="h3">
+          Welcome to NewHome
+          <Typography color="#228B22" variant="subtitle1">
+            Where you can give those little sonsofguns a new dang ole home
+          </Typography>
         </Typography>
-      </h1>
-      {loadingFeed()}
-    </Box>
-  );
+        <Grid
+          container
+          xs={8}
+          xl={8}
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+          rowSpacing={8}
+        >
+          {animals.map((animal) => (
+            <Grid item key={JSON.stringify(animal)} xs={6} xl={6}>
+              <Adoption animalsData={animal} />
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    );
+  }
+  return <Loading />;
 }
 export default AdoptionFeed;
 
