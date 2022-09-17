@@ -11,6 +11,7 @@ function Profile() {
   const [haveUser, setHaveUser] = useState(false);
 
   const navigate = useNavigate();
+
   useEffect(() => {
     axios
       .get('/proAuth')
@@ -61,14 +62,22 @@ function Profile() {
 			  },
       }}
     >
+      <Button
+        variant="contained"
+        mt={2}
+        sx={{ display: 'inline-block', margin: 'auto' }}
+        href="/login"
+        onClick={Logout}
+      >
+        Logout
+      </Button>
       <h1>{`Welcome back...${user.given_name}`}</h1>
       <p>
         <img src={user.picture} width={350} height={350} alt="am-broke" />
       </p>
-
-      <Button size="small" href="/login" onClick={Logout}>
-        logout
-      </Button>
+      <div>
+        <h3>fav list</h3>
+      </div>
     </Box>
   );
 }
