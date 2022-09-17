@@ -22,9 +22,9 @@ const petSchema = new Schema({
   gender: String,
   name: String,
   age: String,
-  temperament: Schema.Types.Mixed,
+  tags: Schema.Types.Mixed,
   shelterInfo: Schema.Types.Mixed,
-  adopted: Boolean,
+  adopted: String,
   userId: String,
 });
 
