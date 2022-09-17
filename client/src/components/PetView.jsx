@@ -48,19 +48,22 @@ function PetView(props) {
       console.log('the animal object to save', animal);
       axios
         .post('/pet/savePet', {
-          species: animal.species,
-          breed: animal.breeds.primary,
-          gender: animal.gender,
-          name: animal.name,
-          age: animal.age,
-          tags: animal.tags,
-          shelterInfo: {
-            address: animal.contact.address,
-            email: animal.contact.email,
-            phone: animal.contact.phone,
+          pet: {
+            petId: animal.id,
+            species: animal.species,
+            breed: animal.breeds.primary,
+            gender: animal.gender,
+            name: animal.name,
+            age: animal.age,
+            tags: animal.tags,
+            shelterInfo: {
+              address: animal.contact.address,
+              email: animal.contact.email,
+              phone: animal.contact.phone,
+            },
+            adopted: animal.status,
+            userId: user.id,
           },
-          adopted: animal.status,
-          userId: null,
         })
         .then((data) => {
           console.log('data from pet/savePet', data);
