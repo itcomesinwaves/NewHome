@@ -17,7 +17,10 @@ const userSchema = new Schema({
 });
 
 const petSchema = new Schema({
-  petId: Number,
+  petId: {
+    type: Number,
+    unique: true,
+  },
   species: String,
   breed: String,
   gender: String,
