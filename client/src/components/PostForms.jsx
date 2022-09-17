@@ -12,8 +12,8 @@ function PostForms() {
   const [image, setImage] = useState({});
   const [imageUrl, setImageUrl] = useState('');
   // state from feed component
-  const { state } = useLocation();
-  const animal = state.adoptedAnimal;
+  // const { state } = useLocation();
+  // const animal = state.adoptedAnimal;
   let signedUrl = '';
 
   return (
@@ -45,7 +45,7 @@ function PostForms() {
 			            message,
 			            image: image.name,
 			            imageType: image.type,
-			            petId: animal._id,
+			            // petId: animal._id,
 			          },
 			        }))
 			      .then(() => {
@@ -64,7 +64,7 @@ function PostForms() {
 			          message,
 			          image: image.name,
 			          imageType: image.type,
-			          petId: animal._id,
+			          // petId: animal._id,
 			        },
 			      })
 			      .then(() => {
