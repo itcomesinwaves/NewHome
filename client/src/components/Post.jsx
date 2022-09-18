@@ -73,9 +73,7 @@ function Post({ post }) {
         <Typography gutterBottom variant="h5" component="div">
           {post.title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {post.message}
-        </Typography>
+        <Typography variant="body2">{post.message}</Typography>
       </CardContent>
       <CardActions style={{ backgroundColor: '#A64B2A' }}>
         <Button

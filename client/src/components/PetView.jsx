@@ -29,7 +29,7 @@ import { styles } from '../styles.jsx';
 
 const image =	'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/57334144/1/?bust=1663026743&width=300';
 
-function PetView(props) {
+function PetView() {
   // isloggedin
   const { user } = useContext(UserContext);
   const [loggedIn, setLoggedIn] = useState(false);

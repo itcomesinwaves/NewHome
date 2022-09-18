@@ -30,39 +30,50 @@ function App() {
   // <Container fixed>
   //   <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }} />
     <Box sx={styles}>
-      <Tabs
-        value={value}
-        onChange={handleChange}
-        aria-label="secondary tabs example"
-        centered
+      <Box
+        sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}
       >
-        <Tab
-          value="/profile"
-          label="Profile"
-          onClick={handleClick}
-          id="/profile"
-        />
-        <Tab
-          value="/search"
-          label="Search"
-          onClick={handleClick}
-          id="/search"
-        />
-        <Tab value="/home" label="Home" onClick={handleClick} id="/home" />
-        <Tab value="/login" label="Login" onClick={handleClick} id="/login" />
-        <Tab
-          value="/postForms"
-          label="PostForms"
-          onClick={handleClick}
-          id="/postForms"
-        />
-        <Tab
-          value="/postFeed"
-          label="PostFeed"
-          onClick={handleClick}
-          id="/postFeed"
-        />
-      </Tabs>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="secondary tabs example"
+          centered
+        >
+          <Tab
+            value="/profile"
+            label="Profile"
+            onClick={handleClick}
+            id="/profile"
+          />
+          <Tab
+            value="/search"
+            label="Search"
+            onClick={handleClick}
+            id="/search"
+          />
+          <Tab
+            value="/home"
+            label="Adoptions"
+            onClick={handleClick}
+            id="/home"
+          />
+          <Tab value="/login" label="Login" onClick={handleClick} id="/login" />
+
+          {/* postforms tab is not going to exist later, currently here for testing purposes */}
+          <Tab
+            value="/postForms"
+            label="PostForms"
+            onClick={handleClick}
+            id="/postForms"
+          />
+          <Tab
+            value="/postFeed"
+            label="Stories"
+            onClick={handleClick}
+            id="/postFeed"
+          />
+        </Tabs>
+      </Box>
       <br />
       <Outlet />
     </Box>
