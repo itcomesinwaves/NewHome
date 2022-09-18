@@ -4,34 +4,13 @@ import { useLocation } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { UserContext } from '../UserContext.jsx';
 import { styles } from '../styles.jsx';
-// example pet object to render for mvp
-// const pet = {
-//   species: 'Cat',
-//   breed: 'Calico',
-//   gender: 'Female',
-//   size: 'Medium',
-//   coat: 'short',
-//   name: 'Bonnie',
-//   age: 'Adult',
-//   temperament: ['Friendly', 'Gentle', 'Affectionate'],
-//   shelterInfo: {
-//     email: 'adoptions@centralfallsanimals.org',
-//     address: {
-//       city: 'Central Falls',
-//       state: 'RI',
-//       postcode: '02863',
-//     },
-//   },
-//   adopted: false,
-//   image:
-// 		'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/57334144/1/?bust=1663026743&width=300',
-// };
 
+// default image, remove later
 const image =	'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/57334144/1/?bust=1663026743&width=300';
 
 function PetView() {
   // isloggedin
-  const { user, savedList } = useContext(UserContext);
+  const { user, savedList, setSavedList } = useContext(UserContext);
   const [loggedIn, setLoggedIn] = useState(false);
 
   // state from feed component
@@ -72,6 +51,15 @@ function PetView() {
         })
         .then((data) => {
           console.log('data from pet/savePet', data);
+          axios
+            .get(`/pet/savePet/${user.id}`)
+            .then(({ data }) => {
+              console.log('updated savedList from petview\n', data);
+              setSavedList(data);
+            })
+            .catch((err) => {
+              console.error('error updating pet list\n', err);
+            });
         })
         .catch((err) => {
           console.error('error on /pet/savePet req', err);
