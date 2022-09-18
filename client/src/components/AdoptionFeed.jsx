@@ -5,6 +5,7 @@ import { Box, Grid, Typography } from '@mui/material';
 // import Container from '@mui/material/Container';
 import Adoption from './Adoption.jsx';
 import Loading from './Loading.jsx';
+import styles from '../styles.jsx';
 
 function AdoptionFeed() {
   const [animals, setAnimals] = useState([]);

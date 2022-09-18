@@ -165,4 +165,20 @@ pet.get('/api/:petId', (req, res) => {
     });
 });
 
+pet.delete('/savePet', (req, res) => {
+  console.log('request.body ◙', req.body);
+  return SavedPet.findOneAndDelete(req.body)
+    .then((data) => {
+      if (!data) {
+        res.sendStatus(401);
+      }
+      console.log('liked status deleted', data);
+      res.status(200).send(data);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = pet;
