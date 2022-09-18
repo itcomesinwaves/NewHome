@@ -25,7 +25,6 @@ function PetView() {
       window.alert('Please sign up/login');
     } else if (e.target.id === 'save') {
       // axios request for favoriting a pet
-      console.log('the animal object to save', animal);
       const photo = animal.primary_photo_cropped
         ? animal.primary_photo_cropped.small
         : null;
@@ -50,11 +49,9 @@ function PetView() {
           },
         })
         .then((data) => {
-          console.log('data from pet/savePet', data);
           axios
             .get(`/pet/savePet/${user.id}`)
             .then(({ data }) => {
-              console.log('updated savedList from petview\n', data);
               setSavedList(data);
             })
             .catch((err) => {
@@ -66,7 +63,6 @@ function PetView() {
         });
     } else {
       // axios request for following a pet story
-      console.log('testing follow request');
     }
   };
 
@@ -146,9 +142,7 @@ function PetView() {
           adopted: 'adopted',
         },
       })
-      .then((data) => {
-        console.log('response from server\n', data);
-      })
+      .then((data) => {})
       .catch((err) => {
         console.error('error updating pet from client req\n', err);
       });
