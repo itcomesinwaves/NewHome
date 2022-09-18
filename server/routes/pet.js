@@ -11,7 +11,7 @@ pet.post('/savePet', (req, res) => {
   // log body provided by client
   const { pet } = req.body;
   const { userId } = pet;
-  delete pet.userId;
+  pet.userId = 'none';
 
   // check if pet is in database
   Pet.find({ petId: pet.petId })
@@ -100,6 +100,69 @@ pet.get('/savePet/:userId', (req, res) => {
 
   // query the database for each pet id, store in array
   // return array of animal objects back
+});
+
+// update pet status to adopted
+pet.put('/:petId', (req, res) => {
+  // take in userId and petId
+  const { pet } = req.body;
+  let { petId } = req.params;
+  petId = Number(petId);
+  console.log('update data\n', pet, '\n\npet id\n', petId);
+
+  // Pet model method to findOneandUpdate
+  return Pet.findOneAndUpdate({ petId }, pet, {
+    returnDocument: 'after',
+  })
+    .then((data) => {
+      // if not found, send 404
+      console.log('on successful update\n', data);
+      // send data back to page
+      res.status(201).send(data);
+    })
+    .catch((err) => {
+      console.error('error updating pet\n\n', err);
+      res.sendStatus(500);
+    });
+});
+
+pet.get('/:petId', (req, res) => {
+  // find One pet
+  // return it's information
+  const { petId } = req.params;
+  Pet.findOne(petId)
+    .then((data) => {
+      if (data) {
+        console.log('data from get/pet\n\n', data);
+        res.status(201).send(data);
+      }
+      res.sendStatus(401);
+    })
+    .catch((err) => {
+      console.error('error finding pet in get/pet\n\n'.err);
+      res.sendStatus(500);
+    });
+});
+
+pet.get('/api/:petId', (req, res) => {
+  let { petId } = req.params;
+  console.log('petId', petId);
+  petId = Number(petId);
+  console.log('petId as a number?', petId);
+
+  return axios
+    .get(`https://api.petfinder.com/v2/animals/${petId}`)
+    .then((data) => {
+      console.log('pet from api\n', data);
+      if (data) {
+        res.status(200).send(data);
+      }
+      res.sendStatus(401);
+    })
+    .catch((err) => {
+      console.error('error getting pet from api... ofCourse\n', err);
+      res.sendStatus(500);
+    });
 });
 
 module.exports = pet;
