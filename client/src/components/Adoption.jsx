@@ -19,10 +19,12 @@ function Adoption({ animalsData }) {
   // get rid of conditional rendering here and create a single card instance with dynamic data
   // this won't render until animals data is defined
   // navigate hook to render petview
-  const { user, savedList } = useContext(UserContext);
+  const {
+    user, savedList, isClicked, setClick,
+  } = useContext(UserContext);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isThere, setThere] = useState(false);
   const navigate = useNavigate();
-  const [isLiked, setLiked] = useState(false);
 
   // on click render individual petview
   const handleEntryClick = () => {
@@ -30,17 +32,52 @@ function Adoption({ animalsData }) {
     // navigate tag to render petview
     return navigate('/petview', { state: { animalsData } });
   };
-  const handleSavePet = (e) => {
-    console.log(e.target.id);
 
+  const handleUnsave = (e) => {
+    console.log('inside handleUnsave', e);
+
+    // setClick(() => {
+    //   const afterClicked = isClicked;
+    //   afterClicked.unshift(animalsData.id);
+    //   return afterClicked;
+    // })
+    setThere(false);
+
+    axios
+      .delete('/pet/savePet', {
+        data: {
+          userId: user.id,
+          petId: animalsData.id,
+        },
+      })
+      .then((data) => {
+        console.log('inside unsave lol', data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const handleSavePet = (e) => {
+    console.log('inside handleSavePet', animalsData.id);
+    setClick(() => {
+      const afterClicked = isClicked;
+      afterClicked.push(animalsData.id);
+      return afterClicked;
+    });
+
+    setThere(true);
     // check if user is logged in, and button id;
     if (!loggedIn) {
       // direct a user to log in to save/follow pets
       window.alert('Please sign up/login');
-    } else if (e.target.id === 'save') {
+    } else {
       console.log(user);
       // axios request for favoriting a pet
-      // console.log('the animal object to save', animal);
+
+      const photo = animalsData.primary_photo_cropped
+        ? animalsData.primary_photo_cropped.small
+        : null;
       axios
         .post('/pet/savePet', {
           pet: {
@@ -57,55 +94,26 @@ function Adoption({ animalsData }) {
               phone: animalsData.contact.phone,
             },
             adopted: animalsData.status,
+            photo,
             userId: user.id,
           },
         })
         .then((data) => {
-          setLiked(true);
           console.log('data from pet/savePet', data);
         })
         .catch((err) => {
           console.error('error on /pet/savePet req', err);
         });
-    } else {
-      console.log('testing follow request');
     }
   };
 
   useEffect(
     () => (user !== null ? setLoggedIn(true) : setLoggedIn(false)),
-    [loggedIn],
+    // if (isClicked.indexof(petId) !== -1) {
+    //     setThere(true);
+    // }
+    [loggedIn, isThere],
   );
-
-  // const likeChanger = () => {
-  //   const isLiked = savedList.map((ele) => ele.petId);
-  //   if (isLiked.includes(animalsData.id)) {
-  //     return (
-  //       <IconButton
-  //         id="save"
-  //         aria-label="add to favorites"
-  //         onClick={(e) => {
-  // 				  handleSavePet(e);
-  //         }}
-  //       >
-  //         <FavoriteIcon style={{ color: '#DEA057' }} size="small" />
-  //       </IconButton>
-  //     );
-  //   } else {
-  //     return (
-  //       <IconButton
-  //         id="save"
-  //         aria-label="add to favorites"
-  //         onClick={(e) => {
-  //             handleSavePet(e);
-  //         }}
-  //       >
-  //         <FavoriteIcon style={{ color: 'purple' }} size="small" />
-  //       </IconButton>
-  //     );
-
-  //   }
-  // };
 
   return (
     <Card raised sx={{ width: '40vw' }}>
@@ -138,27 +146,69 @@ function Adoption({ animalsData }) {
         >
           view more
         </Button>
-        <IconButton
-          id="save"
-          aria-label="add to favorites"
-          onClick={(e) => {
-					  handleSavePet(e);
-          }}
-        >
-          <FavoriteIcon style={{ color: '#DEA057' }} size="small" />
-        </IconButton>
-        {/* {likeChanger()} */}
+        {isThere ? (
+          <IconButton
+            id="save"
+            aria-label="add to favorites"
+            onClick={(e) => {
+						  handleUnsave(e);
+            }}
+          >
+            <FavoriteIcon style={{ color: 'purple' }} size="small" />
+          </IconButton>
+        ) : (
+          <IconButton
+            id="save"
+            aria-label="add to favorites"
+            onClick={(e) => {
+						  // handleUnsave();
+						  handleSavePet(e);
+            }}
+          >
+            <FavoriteIcon style={{ color: '#DEA057' }} size="small" />
+          </IconButton>
+        )}
       </CardActions>
     </Card>
   );
-  // }
 }
 Adoption.propTypes = {
   animalsData: PropTypes.object.isRequired,
 };
 export default Adoption;
 /* <IconButton aria-label="add to favorites"
-style={{backgroundColor: "#FCFFE7", color: "#DEA057" }}
+  style={{backgroundColor: "#FCFFE7", color: "#DEA057" }}
 size="small" id="savepet"
 onClick={handleSaveClick}>save for later</IconButton>
 */
+//   const likeChanger = () => {
+//       //const isLiked = isClicked.map((ele) => ele);
+//      console.log('inside LikeChanger', isClicked)
+//       if (isThere) {
+//         return (
+//           <IconButton
+//           id="save"
+//           aria-label="add to favorites"
+//           onClick={(e) => {
+//                // handleUnsave lol
+//            handleSavePet(e);
+//           }}
+//           >
+//           <FavoriteIcon style={{ color: '#DEA057' }} size="small" />
+//         </IconButton>
+//       );
+//     } else {
+//       return (
+//         <IconButton
+//         id="save"
+//         aria-label="add to favorites"
+//         onClick={(e) => {
+//           setThere(false);
+//           //handleSavePet(e);
+//         }}
+//         >
+//           <FavoriteIcon style={{ color: 'purple' }} size="small" />
+//         </IconButton>
+//       );
+//     }
+// };
