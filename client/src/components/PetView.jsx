@@ -31,7 +31,7 @@ const image =	'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/57334144/1/?bust
 
 function PetView() {
   // isloggedin
-  const { user } = useContext(UserContext);
+  const { user, savedList } = useContext(UserContext);
   const [loggedIn, setLoggedIn] = useState(false);
 
   // state from feed component
@@ -47,6 +47,9 @@ function PetView() {
     } else if (e.target.id === 'save') {
       // axios request for favoriting a pet
       console.log('the animal object to save', animal);
+      const photo = animal.primary_photo_cropped
+        ? animal.primary_photo_cropped.small
+        : null;
       axios
         .post('/pet/savePet', {
           pet: {
@@ -63,6 +66,7 @@ function PetView() {
               phone: animal.contact.phone,
             },
             adopted: animal.status,
+            photo,
             userId: user.id,
           },
         })
