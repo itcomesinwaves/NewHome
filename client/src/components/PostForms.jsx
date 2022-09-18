@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
-  Box, TextField, Button, Card, CardMedia,
+  Box, TextField, Button, Card, CardMedia, Grid,
 } from '@mui/material';
 import axios from 'axios';
 import { styles } from '../styles.jsx';
@@ -17,7 +17,11 @@ function PostForms() {
   let signedUrl = '';
 
   return (
-    <Box
+    <Grid
+      spacing={2}
+      xs={6}
+      sx={{ mb: '20px' }}
+      container
       component="form"
       id="post-form"
       onSubmit={(e) => {
@@ -79,52 +83,51 @@ function PostForms() {
 			      });
       }}
     >
-      <TextField
-        label="Title"
-        variant="standard"
-        multiline
-        maxRows={2}
-        id="Title"
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <br />
-      <br />
-      <TextField
-        id="message"
-        label="Message"
-        variant="standard"
-        multiline
-        maxRows={5}
-        minRows={3}
-        mb={2}
-        onChange={(e) => setMessage(e.target.value)}
-      />
-      <br />
-      <br />
-      <label htmlFor="image-upload">
-        <input
-          accept="image/*"
-          id="image-upload"
-          multiple={false}
-          type="file"
-          style={{ display: 'none' }}
-          onChange={(e) => {
-					  setImageUrl(URL.createObjectURL(e.target.files[0]));
-					  setImage(e.target.files[0]);
-          }}
+      <Grid item xs={12}>
+        <TextField
+          label="Title"
+          variant="standard"
+          multiline
+          maxRows={2}
+          id="Title"
+          onChange={(e) => setTitle(e.target.value)}
         />
-        <Button variant="outlined" component="span">
-          Upload Image
-        </Button>
-      </label>
-      <br />
-      <br />
+      </Grid>
+
+      <Grid item xs={12}>
+        <TextField
+          id="message"
+          label="Message"
+          variant="standard"
+          multiline
+          maxRows={5}
+          minRows={3}
+          mb={2}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <label htmlFor="image-upload">
+          <input
+            accept="image/*"
+            id="image-upload"
+            multiple={false}
+            type="file"
+            style={{ display: 'none' }}
+            onChange={(e) => {
+						  setImageUrl(URL.createObjectURL(e.target.files[0]));
+						  setImage(e.target.files[0]);
+            }}
+          />
+          <Button variant="outlined" component="span">
+            Upload Image
+          </Button>
+        </label>
+      </Grid>
       <Card>
         <CardMedia component="img" image={imageUrl} alt="" />
       </Card>
-      <br />
-      <br />
-      <br />
+
       <Button
         variant="contained"
         mt={2}
@@ -133,7 +136,7 @@ function PostForms() {
       >
         Submit
       </Button>
-    </Box>
+    </Grid>
   );
 }
 
