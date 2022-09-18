@@ -16,7 +16,6 @@ pet.post('/savePet', (req, res) => {
   // check if pet is in database
   Pet.find({ petId: pet.petId })
     .then((data) => {
-      console.log('length of data', data.length);
       // save pet to db Pet collection
       if (!data.length) {
         return Pet.create(pet);
@@ -37,7 +36,6 @@ pet.post('/savePet', (req, res) => {
     })
     .then((data) => {
       // then check saved pet documents for previous save
-      console.log('data length from SavedPet.find\n', data.length);
       if (!data.length) {
         // create user/pet SavedPet
         return SavedPet.create({
@@ -108,7 +106,6 @@ pet.put('/:petId', (req, res) => {
   const { pet } = req.body;
   let { petId } = req.params;
   petId = Number(petId);
-  console.log('update data\n', pet, '\n\npet id\n', petId);
 
   // Pet model method to findOneandUpdate
   return Pet.findOneAndUpdate({ petId }, pet, {
@@ -116,7 +113,6 @@ pet.put('/:petId', (req, res) => {
   })
     .then((data) => {
       // if not found, send 404
-      console.log('on successful update\n', data);
       // send data back to page
       res.status(201).send(data);
     })
@@ -133,7 +129,6 @@ pet.get('/:petId', (req, res) => {
   Pet.findOne(petId)
     .then((data) => {
       if (data) {
-        console.log('data from get/pet\n\n', data);
         res.status(201).send(data);
       }
       res.sendStatus(401);
@@ -146,14 +141,11 @@ pet.get('/:petId', (req, res) => {
 
 pet.get('/api/:petId', (req, res) => {
   let { petId } = req.params;
-  console.log('petId', petId);
   petId = Number(petId);
-  console.log('petId as a number?', petId);
 
   return axios
     .get(`https://api.petfinder.com/v2/animals/${petId}`)
     .then((data) => {
-      console.log('pet from api\n', data);
       if (data) {
         res.status(200).send(data);
       }
@@ -165,20 +157,16 @@ pet.get('/api/:petId', (req, res) => {
     });
 });
 
-pet.delete('/savePet', (req, res) => {
-  console.log('request.body ◙', req.body);
-  return SavedPet.findOneAndDelete(req.body)
-    .then((data) => {
-      if (!data) {
-        res.sendStatus(401);
-      }
-      console.log('liked status deleted', data);
-      res.status(200).send(data);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-});
+pet.delete('/savePet', (req, res) => SavedPet.findOneAndDelete(req.body)
+  .then((data) => {
+    if (!data) {
+      res.sendStatus(401);
+    }
+    res.status(200).send(data);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.sendStatus(500);
+  }));
 
 module.exports = pet;

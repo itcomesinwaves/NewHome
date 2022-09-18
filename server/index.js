@@ -52,7 +52,7 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  console.log('\n--------> Serialize User:');
+  // console.log('\n--------> Serialize User:');
   // console.log(user);
   // The USER object is the "authenticated user" from the done() in authUser function.
   // serializeUser() will attach this user to "req.session.passport.user.{user}", so that
@@ -62,7 +62,7 @@ passport.serializeUser((user, done) => {
 });
 // deserialize user keeps running, in the console, should probably do something about it
 passport.deserializeUser((user, done) => {
-  console.log('\n--------- Deserialized User:');
+  // console.log('\n--------- Deserialized User:');
   // console.log(user);
   // This is the {user} that was saved in req.session.passport.user.{user} in the
   // serializationUser()
@@ -81,7 +81,7 @@ app.get('/', (req, res) => {
 app.post('/AdoptionMessage', (req, res) => {
   // console.log(req.body);
   Post.create(req.body.post)
-    .then(() => console.log('success'))
+    .then()
     .catch((err) => console.error(err));
 
   res.sendStatus(200);
@@ -143,7 +143,6 @@ app.get(
 );
 // this is the page that gets called up on browser refresh with the google button for auth
 app.get('/login', (req, res) => {
-  console.log(req.user);
   res.sendFile(
     path.resolve(__dirname, '..', 'client', 'dist', 'index.html'),
     (data, err) => {
@@ -164,10 +163,7 @@ const checkAuthenticated = (req, res, next) => {
 };
 
 // this also keeps running/getting called in the console. check on it
-app.get('/proAuth', checkAuthenticated, (req, res) => {
-  console.log('hi profile');
-  return res.json(req.user);
-});
+app.get('/proAuth', checkAuthenticated, (req, res) => res.json(req.user));
 
 app.post('/imageUrl', (req, res) => {
   const { filename, filetype } = req.body;
@@ -182,10 +178,9 @@ app.post('/imageUrl', (req, res) => {
 
   s3.getSignedUrl('putObject', params, (err, data) => {
     if (err) {
-      console.log(err);
+      console.error(err);
       res.sendStatus(400);
     } else {
-      console.log(data);
       res.status(200).send(data);
     }
   });
@@ -193,7 +188,6 @@ app.post('/imageUrl', (req, res) => {
 // create /isAuthenticated path for logged in status and data to pass to react side
 app.get('/isAuthenticated', (req, res) => {
   if (req.isAuthenticated()) {
-    console.log('testing hereeeeeeeee', req.isAuthenticated());
     return res.sendStatus(200);
   }
   return res.sendStatus(401);
@@ -211,12 +205,10 @@ app.get('/logout', (req, res) => {
       if (err) {
         res.status(400).send('Unable to log out');
       } else {
-        console.log('am i logged out here????');
         res.status(200).send('logged out worked');
       }
     });
   } else {
-    console.log('whats going on here???');
     res.end();
   }
 });
