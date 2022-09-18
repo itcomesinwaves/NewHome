@@ -1,8 +1,11 @@
 const express = require('express');
+const axios = require('axios');
 
 const pet = express.Router();
 const Pet = require('../db/models/Pet.js');
 const SavedPet = require('../db/models/SavedPet.js');
+
+const { API_KEY, API_SECRET } = process.env;
 
 pet.post('/savePet', (req, res) => {
   // log body provided by client
@@ -57,6 +60,46 @@ pet.post('/savePet', (req, res) => {
       console.error('error on create savedpet\n', err);
       res.sendStatus(500);
     });
+});
+
+// get user savedPet list from database
+pet.get('/savePet/:userId', (req, res) => {
+  const { userId } = req.params;
+  // get list by user id
+  SavedPet.find({ userId })
+    .then((savedList) => {
+      if (!savedList.length) {
+        res.sendStatus(404);
+      }
+      // if no list respond with 404
+      return savedList;
+    })
+    .then((savedList) => {
+      const pets = savedList.map(async ({ petId }) => {
+        try {
+          return await Pet.findOne({ petId });
+        } catch (err) {
+          console.error('error 1 here\n', err);
+        }
+      });
+
+      return pets;
+    })
+    .then(async (pets) => {
+      try {
+        const results = await Promise.resolve(Promise.all(pets));
+
+        res.status(200).send(results);
+      } catch (err) {
+        console.error('my dreams are now nightmares\n', err);
+      }
+    })
+    .catch((err) => {
+      console.error(' error on finding savedPets\n', err);
+    });
+
+  // query the database for each pet id, store in array
+  // return array of animal objects back
 });
 
 module.exports = pet;

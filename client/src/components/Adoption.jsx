@@ -77,33 +77,35 @@ function Adoption({ animalsData }) {
     [loggedIn],
   );
 
-  const likeChanger = () => {
-    const isLiked = savedList.map((ele) => ele.petId);
-    if (isLiked.includes(animalsData.id)) {
-      return (
-        <IconButton
-          id="save"
-          aria-label="add to favorites"
-          onClick={(e) => {
-					  handleSavePet(e);
-          }}
-        >
-          <FavoriteIcon style={{ color: '#DEA057' }} size="small" />
-        </IconButton>
-      );
-    }
-    return (
-      <IconButton
-        id="save"
-        aria-label="add to favorites"
-        onClick={(e) => {
-					  handleSavePet(e);
-        }}
-      >
-        <FavoriteIcon style={{ color: 'purple' }} size="small" />
-      </IconButton>
-    );
-  };
+  // const likeChanger = () => {
+  //   const isLiked = savedList.map((ele) => ele.petId);
+  //   if (isLiked.includes(animalsData.id)) {
+  //     return (
+  //       <IconButton
+  //         id="save"
+  //         aria-label="add to favorites"
+  //         onClick={(e) => {
+  // 				  handleSavePet(e);
+  //         }}
+  //       >
+  //         <FavoriteIcon style={{ color: '#DEA057' }} size="small" />
+  //       </IconButton>
+  //     );
+  //   } else {
+  //     return (
+  //       <IconButton
+  //         id="save"
+  //         aria-label="add to favorites"
+  //         onClick={(e) => {
+  //             handleSavePet(e);
+  //         }}
+  //       >
+  //         <FavoriteIcon style={{ color: 'purple' }} size="small" />
+  //       </IconButton>
+  //     );
+
+  //   }
+  // };
 
   return (
     <Card raised sx={{ width: '40vw' }}>
@@ -136,7 +138,16 @@ function Adoption({ animalsData }) {
         >
           view more
         </Button>
-        {likeChanger()}
+        <IconButton
+          id="save"
+          aria-label="add to favorites"
+          onClick={(e) => {
+					  handleSavePet(e);
+          }}
+        >
+          <FavoriteIcon style={{ color: '#DEA057' }} size="small" />
+        </IconButton>
+        {/* {likeChanger()} */}
       </CardActions>
     </Card>
   );

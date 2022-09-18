@@ -29,6 +29,7 @@ const petSchema = new Schema({
   tags: Schema.Types.Mixed,
   shelterInfo: Schema.Types.Mixed,
   adopted: String,
+  photo: String,
   userId: String,
 });
 
@@ -48,7 +49,7 @@ const followersSchema = new Schema({
 
 const savedPetSchema = new Schema({
   userId: String,
-  petId: String,
+  petId: Number,
 });
 
 module.exports = {
