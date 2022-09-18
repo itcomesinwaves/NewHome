@@ -19,9 +19,10 @@ function Adoption({ animalsData }) {
   // get rid of conditional rendering here and create a single card instance with dynamic data
   // this won't render until animals data is defined
   // navigate hook to render petview
-  const { user } = useContext(UserContext);
+  const { user, savedList } = useContext(UserContext);
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const [isLiked, setLiked] = useState(false);
 
   // on click render individual petview
   const handleEntryClick = () => {
@@ -36,7 +37,7 @@ function Adoption({ animalsData }) {
     if (!loggedIn) {
       // direct a user to log in to save/follow pets
       window.alert('Please sign up/login');
-    } else if (e.target.id === 'save' || 'outersave') {
+    } else if (e.target.id === 'save') {
       console.log(user);
       // axios request for favoriting a pet
       // console.log('the animal object to save', animal);
@@ -60,6 +61,7 @@ function Adoption({ animalsData }) {
           },
         })
         .then((data) => {
+          setLiked(true);
           console.log('data from pet/savePet', data);
         })
         .catch((err) => {
@@ -74,6 +76,34 @@ function Adoption({ animalsData }) {
     () => (user !== null ? setLoggedIn(true) : setLoggedIn(false)),
     [loggedIn],
   );
+
+  const likeChanger = () => {
+    const isLiked = savedList.map((ele) => ele.petId);
+    if (isLiked.includes(animalsData.id)) {
+      return (
+        <IconButton
+          id="save"
+          aria-label="add to favorites"
+          onClick={(e) => {
+					  handleSavePet(e);
+          }}
+        >
+          <FavoriteIcon style={{ color: '#DEA057' }} size="small" />
+        </IconButton>
+      );
+    }
+    return (
+      <IconButton
+        id="save"
+        aria-label="add to favorites"
+        onClick={(e) => {
+					  handleSavePet(e);
+        }}
+      >
+        <FavoriteIcon style={{ color: 'purple' }} size="small" />
+      </IconButton>
+    );
+  };
 
   return (
     <Card raised sx={{ width: '40vw' }}>
@@ -106,15 +136,7 @@ function Adoption({ animalsData }) {
         >
           view more
         </Button>
-        <IconButton
-          id="save"
-          aria-label="add to favorites"
-          onClick={(e) => {
-					  handleSavePet(e);
-          }}
-        >
-          <FavoriteIcon style={{ color: '#DEA057' }} size="small" />
-        </IconButton>
+        {likeChanger()}
       </CardActions>
     </Card>
   );
