@@ -7,7 +7,9 @@ import { UserContext } from '../UserContext.jsx';
 // this page as a restricted page
 // err takes user to login page
 function Profile() {
-  const { user, setUser } = useContext(UserContext);
+  const {
+    user, setUser, savedList, setSavedList,
+  } = useContext(UserContext);
   const [haveUser, setHaveUser] = useState(false);
 
   const navigate = useNavigate();
@@ -37,20 +39,29 @@ function Profile() {
         console.error(err);
         return navigate('/login');
       });
+    if (user !== null) {
+      axios
+        .get(`/pet/savePet/${user.id}`)
+        .then(({ data }) => {
+          setSavedList(data);
+        })
+        .catch((err) => {
+          console.error('error on get/pet/savePet\n', err);
+        });
+    }
   }, [haveUser, navigate]); // return data stringified and stored in state as 'profile'-
 
   const Logout = () => {
     setUser(null);
     axios
       .get('/logout')
-      .then((data) => {
-        console.log('this is data from logout req', data);
-      })
+      .then((data) => {})
       .then(() => navigate('/login'))
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
+
   if (user === null) {
     return <h3>Must Sign In</h3>;
   }

@@ -25,6 +25,10 @@ function App() {
     }
   };
   return (
+  // <>
+  // <CssBaseline />
+  // <Container fixed>
+  //   <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }} />
     <Box sx={styles}>
       <Box
         sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}
@@ -73,6 +77,8 @@ function App() {
       <br />
       <Outlet />
     </Box>
+  // </Container>
+  // </>
   );
 }
 

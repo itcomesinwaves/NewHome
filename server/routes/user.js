@@ -5,7 +5,6 @@ const User = require('../db/models/User.js');
 const user = express.Router();
 
 user.post('/', (req, res) => {
-  console.log('testing user server', req.body);
   const saveUser = async () => {
     try {
       // find the user in our database
@@ -17,7 +16,6 @@ user.post('/', (req, res) => {
       } else {
         // if user is not preset in our database save user data to database.
         user = await User.create(req.body);
-        console.log('userCreate', user);
         res.sendStatus(201);
       }
     } catch (err) {

@@ -1,42 +1,21 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import { Box } from '@mui/material';
+import { Box, Button, Container } from '@mui/material';
 import { UserContext } from '../UserContext.jsx';
 import { styles } from '../styles.jsx';
-// example pet object to render for mvp
-// const pet = {
-//   species: 'Cat',
-//   breed: 'Calico',
-//   gender: 'Female',
-//   size: 'Medium',
-//   coat: 'short',
-//   name: 'Bonnie',
-//   age: 'Adult',
-//   temperament: ['Friendly', 'Gentle', 'Affectionate'],
-//   shelterInfo: {
-//     email: 'adoptions@centralfallsanimals.org',
-//     address: {
-//       city: 'Central Falls',
-//       state: 'RI',
-//       postcode: '02863',
-//     },
-//   },
-//   adopted: false,
-//   image:
-// 		'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/57334144/1/?bust=1663026743&width=300',
-// };
 
+// default image, remove later
 const image =	'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/57334144/1/?bust=1663026743&width=300';
 
 function PetView() {
-  // isloggedin
-  const { user } = useContext(UserContext);
+  const { user, savedList, setSavedList } = useContext(UserContext);
   const [loggedIn, setLoggedIn] = useState(false);
 
   // state from feed component
   const { state } = useLocation();
   const animal = state.animalsData;
+  const [status, setStatus] = useState(animal.status);
 
   // function to save/follow a pet
   const handleSavePet = (e) => {
@@ -46,7 +25,9 @@ function PetView() {
       window.alert('Please sign up/login');
     } else if (e.target.id === 'save') {
       // axios request for favoriting a pet
-      console.log('the animal object to save', animal);
+      const photo = animal.primary_photo_cropped
+        ? animal.primary_photo_cropped.small
+        : null;
       axios
         .post('/pet/savePet', {
           pet: {
@@ -63,44 +44,63 @@ function PetView() {
               phone: animal.contact.phone,
             },
             adopted: animal.status,
+            photo,
             userId: user.id,
           },
         })
         .then((data) => {
-          console.log('data from pet/savePet', data);
+          axios
+            .get(`/pet/savePet/${user.id}`)
+            .then(({ data }) => {
+              setSavedList(data);
+            })
+            .catch((err) => {
+              console.error('error updating pet list\n', err);
+            });
         })
         .catch((err) => {
           console.error('error on /pet/savePet req', err);
         });
     } else {
       // axios request for following a pet story
-      console.log('testing follow request');
     }
   };
-
-  // if user is an object re-render as logged in
 
   // conditional rendering based on pet adoption status
   const onAdoptionStatus = () => {
     // if pet === adopted render follow button, render adoption stories
-    if (animal.status === 'adoptable') {
+    if (status === 'adoptable') {
       // render follow button and pet stories
       return (
-        <input
-          type="button"
-          id="save"
-          value="save"
-          onClick={(e) => handleSavePet(e)}
-        />
+        <Container>
+          <Button
+            id="save"
+            value="save"
+            variant="contained"
+            onClick={(e) => handleSavePet(e)}
+          >
+            Save
+          </Button>
+          <Button onClick={handleAdoption} variant="contained">
+            Adopt Me!
+          </Button>
+        </Container>
       );
     }
     return (
-      <input
-        type="button"
-        id="follow"
-        value="follow"
-        onClick={(e) => handleSavePet(e)}
-      />
+      <Container>
+        <Button
+          id="follow"
+          value="follow"
+          variant="contained"
+          onClick={(e) => handleSavePet(e)}
+        >
+          follow
+        </Button>
+        <Button variant="contained" disabled="true">
+          Adopted
+        </Button>
+      </Container>
     );
     // render save button
   };
@@ -127,13 +127,41 @@ function PetView() {
     return <p>I&apos;m looking for a new crib with chill people</p>;
   };
 
+  // function to preview adopt functionality
+  const handleAdoption = () => {
+    // axios put req
+    if (user === null) {
+      window.alert('sign in to take them to their new Home');
+      return;
+    }
+    setStatus('adopted');
+    axios
+      .put(`/pet/${animal.id}`, {
+        pet: {
+          userId: user.id,
+          adopted: 'adopted',
+        },
+      })
+      .then((data) => {})
+      .catch((err) => {
+        console.error('error updating pet from client req\n', err);
+      });
+
+    // use state to overide adoption status?
+  };
+
+  const renderAdopt = () => {};
+
   useEffect(() => {
     if (user !== null) {
       setLoggedIn(true);
     }
   }, [loggedIn]);
+
+  useEffect(() => {}, [status]);
+
   return (
-    <Box sx={styles}>
+    <Box>
       <h1>{`${animal.name} would like to say hello!`}</h1>
       <img src={hasPhoto()} alt="img here" />
       <p>{`Species: ${animal.species}`}</p>
