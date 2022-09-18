@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   Box, TextField, Button, Card, CardMedia,
 } from '@mui/material';
 import axios from 'axios';
-import styles from '../styles.jsx';
+import { styles } from '../styles.jsx';
 
 function PostForms() {
   const [message, setMessage] = useState('');
   const [title, setTitle] = useState('');
   const [image, setImage] = useState({});
   const [imageUrl, setImageUrl] = useState('');
+  // state from feed component
+  // const { state } = useLocation();
+  // const animal = state.adoptedAnimal;
   let signedUrl = '';
 
   return (
@@ -41,6 +45,7 @@ function PostForms() {
 			            message,
 			            image: image.name,
 			            imageType: image.type,
+			            // petId: animal._id,
 			          },
 			        }))
 			      .then(() => {
@@ -59,6 +64,7 @@ function PostForms() {
 			          message,
 			          image: image.name,
 			          imageType: image.type,
+			          // petId: animal._id,
 			        },
 			      })
 			      .then(() => {

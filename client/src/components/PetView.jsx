@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { UserContext } from '../UserContext.jsx';
-import styles from '../styles.jsx';
+import { styles } from '../styles.jsx';
 // example pet object to render for mvp
 // const pet = {
 //   species: 'Cat',
@@ -29,7 +29,7 @@ import styles from '../styles.jsx';
 
 const image =	'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/57334144/1/?bust=1663026743&width=300';
 
-function PetView(props) {
+function PetView() {
   // isloggedin
   const { user, savedList } = useContext(UserContext);
   const [loggedIn, setLoggedIn] = useState(false);
