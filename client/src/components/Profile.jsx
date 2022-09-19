@@ -43,7 +43,6 @@ function Profile() {
       axios
         .get(`/pet/savePet/${user.id}`)
         .then(({ data }) => {
-          console.log('savedlist from db\n', data);
           setSavedList(data);
         })
         .catch((err) => {
@@ -56,12 +55,10 @@ function Profile() {
     setUser(null);
     axios
       .get('/logout')
-      .then((data) => {
-        console.log('this is data from logout req', data);
-      })
+      .then((data) => {})
       .then(() => navigate('/login'))
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
 
