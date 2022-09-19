@@ -25,7 +25,7 @@ feed.get('/api', (req, res) => {
             res.send(page);
           })
           .catch((err) => {
-            console.log(err);
+            console.error(err);
             res.sendStatus(404);
           });
       } else {
@@ -44,9 +44,7 @@ feed.get('/posts', (req, res) => {
     });
 });
 
-feed.post('/post/pet', (req, res) => {
-  console.log(req.body);
-});
+feed.post('/post/pet', (req, res) => {});
 
 // Handle Search
 feed.post('/api/search', (req, res) => {

@@ -1,7 +1,18 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import { Box, Button, Container } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  Card,
+  CardMedia,
+  CardActions,
+  CardContent,
+  Typography,
+  ListItem,
+  ListItemEntry,
+} from '@mui/material';
 import { UserContext } from '../UserContext.jsx';
 import { styles } from '../styles.jsx';
 
@@ -25,7 +36,6 @@ function PetView() {
       window.alert('Please sign up/login');
     } else if (e.target.id === 'save') {
       // axios request for favoriting a pet
-      console.log('the animal object to save', animal);
       const photo = animal.primary_photo_cropped
         ? animal.primary_photo_cropped.small
         : null;
@@ -50,11 +60,9 @@ function PetView() {
           },
         })
         .then((data) => {
-          console.log('data from pet/savePet', data);
           axios
             .get(`/pet/savePet/${user.id}`)
             .then(({ data }) => {
-              console.log('updated savedList from petview\n', data);
               setSavedList(data);
             })
             .catch((err) => {
@@ -66,7 +74,6 @@ function PetView() {
         });
     } else {
       // axios request for following a pet story
-      console.log('testing follow request');
     }
   };
 
@@ -76,35 +83,25 @@ function PetView() {
     if (status === 'adoptable') {
       // render follow button and pet stories
       return (
-        <Container>
-          <Button
-            id="save"
-            value="save"
-            variant="contained"
-            onClick={(e) => handleSavePet(e)}
-          >
-            Save
-          </Button>
-          <Button onClick={handleAdoption} variant="contained">
-            Adopt Me!
-          </Button>
-        </Container>
-      );
-    }
-    return (
-      <Container>
         <Button
-          id="follow"
-          value="follow"
+          id="save"
+          value="save"
           variant="contained"
           onClick={(e) => handleSavePet(e)}
         >
-          follow
+          Save
         </Button>
-        <Button variant="contained" disabled="true">
-          Adopted
-        </Button>
-      </Container>
+      );
+    }
+    return (
+      <Button
+        id="follow"
+        value="follow"
+        variant="contained"
+        onClick={(e) => handleSavePet(e)}
+      >
+        follow
+      </Button>
     );
     // render save button
   };
@@ -120,13 +117,11 @@ function PetView() {
   // render pet tags, or generic statement
   const hasTags = () => {
     if (animal.tags.length) {
-      return (
-        <ul>
-          {animal.tags.map((tag) => (
-            <li key={`${tag}${animal.name}`}>{tag}</li>
-          ))}
-        </ul>
-      );
+      return animal.tags.map((tag) => (
+        <Typography variant="body2" gutterBottom sx={{ color: '#5D473D' }}>
+          {tag}
+        </Typography>
+      ));
     }
     return <p>I&apos;m looking for a new crib with chill people</p>;
   };
@@ -146,9 +141,7 @@ function PetView() {
           adopted: 'adopted',
         },
       })
-      .then((data) => {
-        console.log('response from server\n', data);
-      })
+      .then((data) => {})
       .catch((err) => {
         console.error('error updating pet from client req\n', err);
       });
@@ -167,17 +160,56 @@ function PetView() {
   useEffect(() => {}, [status]);
 
   return (
-    <Box>
-      <h1>{`${animal.name} would like to say hello!`}</h1>
-      <img src={hasPhoto()} alt="img here" />
-      <p>{`Species: ${animal.species}`}</p>
-      <p>{`Breed: ${animal.breeds.primary}`}</p>
-      <p>{`Age: ${animal.age}`}</p>
-      <p>{`Gender: ${animal.gender}`}</p>
-      <h3>About me:</h3>
-      <p>{animal.description}</p>
-      {hasTags()}
-      {onAdoptionStatus()}
+    <Box
+      sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}
+    >
+      <Card raised sx={{ width: '40vw', bgcolor: '#EEE3CB' }}>
+        <CardContent sx={{ bgcolor: '#EEE3CB' }}>
+          <Typography variant="h4" gutterBottom sx={{ color: '#5D473D' }}>
+            {`${animal.name} would like to say hello!`}
+          </Typography>
+          <CardMedia
+            component="img"
+            image={hasPhoto()}
+            alt=""
+            sx={{ width: '20vw', height: '150' }}
+          />
+          <Typography variant="body2" gutterBottom sx={{ color: '#5D473D' }}>
+            {`Species: ${animal.species}`}
+          </Typography>
+          <Typography variant="body2" gutterBottom sx={{ color: '#5D473D' }}>
+            {`Breed: ${animal.breeds.primary}`}
+          </Typography>
+          <Typography variant="body2" gutterBottom sx={{ color: '#5D473D' }}>
+            {`Age: ${animal.age}`}
+          </Typography>
+          <Typography variant="body2" gutterBottom sx={{ color: '#5D473D' }}>
+            {`Gender: ${animal.gender}`}
+          </Typography>
+          <Typography variant="body2" gutterBottom sx={{ color: '#5D473D' }}>
+            About me:
+          </Typography>
+          <Typography variant="body1" gutterBottom sx={{ color: '#5D473D' }}>
+            {animal.description}
+          </Typography>
+          {hasTags()}
+        </CardContent>
+        <CardActions
+          disableSpacing
+          sx={{ display: 'flex', justifyContent: 'space-between' }}
+        >
+          {onAdoptionStatus()}
+          {status === 'adoptable' ? (
+            <Button onClick={handleAdoption} variant="contained">
+              Adopt Me!
+            </Button>
+          ) : (
+            <Button variant="contained" disabled="true">
+              Adopted
+            </Button>
+          )}
+        </CardActions>
+      </Card>
     </Box>
   );
 }

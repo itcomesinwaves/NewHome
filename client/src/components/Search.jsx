@@ -53,7 +53,6 @@ function Search() {
       size,
     };
     setSearch(searchBy);
-    console.log(search);
     const config = {
       method: 'post',
       url: 'http://localhost:8080/feed/api/search',
@@ -64,12 +63,11 @@ function Search() {
     };
     axios(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
         submitUpdate();
         setPets(response.data.animals);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
         alert(`${error.response.data} / Invalid Breed`);
       });
   };

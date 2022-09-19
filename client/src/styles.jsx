@@ -66,7 +66,9 @@ const theme = createTheme({
 
 const styles = {
   '& .MuiCard-root': {},
-  '& .MuiCardActions-root': {},
+  '& .MuiCardActions-root': {
+    bgcolor: '#A64B2A',
+  },
   '& .MuiCardContent-root': {},
   '& .MuiCardMedia-root': {},
   '& .MuiButton-root': {
@@ -150,6 +152,18 @@ const styles = {
     // '& .MuiTextField-root': { width: '280px' },
     // m: 'auto',
     // backgroundColor: theme.palette.secondary.main,
+  },
+  '& .MuiList-root': {
+    bgcolor: '#5D473D',
+    color: theme.palette.secondary.main,
+  },
+  '& .MuiListItem-root': {
+    bgcolor: '#5D473D',
+    color: theme.palette.secondary.main,
+  },
+  '& .MuiListItemText-root': {
+    bgcolor: '#5D473D',
+    color: theme.palette.secondary.main,
   },
 };
 

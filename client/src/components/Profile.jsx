@@ -1,8 +1,17 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate, Navigate } from 'react-router-dom';
-import { Box, Card, Button } from '@mui/material';
+import {
+  Card,
+  Button,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Typography,
+  Grid,
+} from '@mui/material';
 import { UserContext } from '../UserContext.jsx';
+import PetList from './SavedList.jsx';
 // get user data using axios from google and display it on
 // this page as a restricted page
 // err takes user to login page
@@ -13,6 +22,7 @@ function Profile() {
   const [haveUser, setHaveUser] = useState(false);
 
   const navigate = useNavigate();
+
   useEffect(() => {
     axios
       .get('/proAuth')
@@ -42,7 +52,6 @@ function Profile() {
       axios
         .get(`/pet/savePet/${user.id}`)
         .then(({ data }) => {
-          console.log('savedlist from db\n', data);
           setSavedList(data);
         })
         .catch((err) => {
@@ -55,12 +64,10 @@ function Profile() {
     setUser(null);
     axios
       .get('/logout')
-      .then((data) => {
-        console.log('this is data from logout req', data);
-      })
+      .then((data) => {})
       .then(() => navigate('/login'))
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
 
@@ -68,50 +75,38 @@ function Profile() {
     return <h3>Must Sign In</h3>;
   }
   return (
-    <Box
-      sx={{
-			  '&:hover': {
-			    opacity: [0.9, 0.8, 0.7],
-			  },
-      }}
-    >
-      <h1>{`Welcome back...${user.given_name}`}</h1>
-      <p>
-        <img src={user.picture} width={350} height={350} alt="am-broke" />
-      </p>
-
-      <Button size="small" href="/login" onClick={Logout}>
-        logout
-      </Button>
-    </Box>
+    <Grid container spacing={2}>
+      <Grid item>
+        <Card raised sx={{ width: '15vw' }}>
+          <CardMedia component="img" src={user.picture} alt="" />
+          <CardContent sx={{ bgcolor: '#E3C770' }}>
+            <Typography gutterBottom variant="h5" component="div">
+              {user.given_name}
+            </Typography>
+            <CardActions>
+              <Button
+                variant="contained"
+                mt={2}
+                sx={{ display: 'inline-block', margin: 'auto' }}
+                href="/login"
+                onClick={Logout}
+              >
+                Logout
+              </Button>
+            </CardActions>
+          </CardContent>
+        </Card>
+      </Grid>
+      <Grid item>
+        <PetList list={savedList} />
+      </Grid>
+      {/* <Grid>
+				<PetList list={followedList} />
+			</Grid>
+			<Grid>
+				<PetList list={adoptedList} />
+			</Grid> */}
+    </Grid>
   );
 }
-// JSON.stringify(profile, null, 2)
 export default Profile;
-// async (accessToken, refreshToken, profile, done) => {
-//   //get the user data from google
-//   const newUser = {
-//     googleId: profile.id,
-//     displayName: profile.displayName,
-//     firstName: profile.name.givenName,
-//     lastName: profile.name.familyName,
-//     image: profile.photos[0].value,
-//     email: profile.emails[0].value
-//   }
-
-//   try {
-//     //find the user in our database
-//     let user = await User.findOne({ googleId: profile.id })
-
-//     if (user) {
-//       //If user present in our database.
-//       done(null, user)
-//     } else {
-//       // if user is not preset in our database save user data to database.
-//       user = await User.create(newUser)
-//       done(null, user)
-//     }
-//   } catch (err) {
-//     console.error(err)
-//   }
-// }
