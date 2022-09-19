@@ -83,35 +83,25 @@ function PetView() {
     if (status === 'adoptable') {
       // render follow button and pet stories
       return (
-        <Container>
-          <Button
-            id="save"
-            value="save"
-            variant="contained"
-            onClick={(e) => handleSavePet(e)}
-          >
-            Save
-          </Button>
-          <Button onClick={handleAdoption} variant="contained">
-            Adopt Me!
-          </Button>
-        </Container>
-      );
-    }
-    return (
-      <Container>
         <Button
-          id="follow"
-          value="follow"
+          id="save"
+          value="save"
           variant="contained"
           onClick={(e) => handleSavePet(e)}
         >
-          follow
+          Save
         </Button>
-        <Button variant="contained" disabled="true">
-          Adopted
-        </Button>
-      </Container>
+      );
+    }
+    return (
+      <Button
+        id="follow"
+        value="follow"
+        variant="contained"
+        onClick={(e) => handleSavePet(e)}
+      >
+        follow
+      </Button>
     );
     // render save button
   };
@@ -128,7 +118,7 @@ function PetView() {
   const hasTags = () => {
     if (animal.tags.length) {
       return animal.tags.map((tag) => (
-        <Typography variant="h3" gutterBottom>
+        <Typography variant="body2" gutterBottom sx={{ color: '#5D473D' }}>
           {tag}
         </Typography>
       ));
@@ -174,11 +164,8 @@ function PetView() {
       sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}
     >
       <Card raised sx={{ width: '40vw', bgcolor: '#EEE3CB' }}>
-        <CardContent>
-          <Typography
-            variant="h4"
-            gutterBottom
-          >
+        <CardContent sx={{ bgcolor: '#EEE3CB' }}>
+          <Typography variant="h4" gutterBottom sx={{ color: '#5D473D' }}>
             {`${animal.name} would like to say hello!`}
           </Typography>
           <CardMedia
@@ -187,40 +174,40 @@ function PetView() {
             alt=""
             sx={{ width: '20vw', height: '150' }}
           />
-          <Typography
-            variant="body2"
-            gutterBottom
-          >
+          <Typography variant="body2" gutterBottom sx={{ color: '#5D473D' }}>
             {`Species: ${animal.species}`}
           </Typography>
-          <Typography
-            variant="body2"
-            gutterBottom
-          >
+          <Typography variant="body2" gutterBottom sx={{ color: '#5D473D' }}>
             {`Breed: ${animal.breeds.primary}`}
           </Typography>
-          <Typography
-            variant="body2"
-            gutterBottom
-          >
+          <Typography variant="body2" gutterBottom sx={{ color: '#5D473D' }}>
             {`Age: ${animal.age}`}
           </Typography>
-          <Typography
-            variant="body2"
-            gutterBottom
-          >
+          <Typography variant="body2" gutterBottom sx={{ color: '#5D473D' }}>
             {`Gender: ${animal.gender}`}
           </Typography>
-          <Typography variant="body2" gutterBottom>
+          <Typography variant="body2" gutterBottom sx={{ color: '#5D473D' }}>
             About me:
           </Typography>
-          <Typography variant="body1" gutterBottom>
+          <Typography variant="body1" gutterBottom sx={{ color: '#5D473D' }}>
             {animal.description}
           </Typography>
-        </CardContent>
-        <CardActions>
           {hasTags()}
+        </CardContent>
+        <CardActions
+          disableSpacing
+          sx={{ display: 'flex', justifyContent: 'space-between' }}
+        >
           {onAdoptionStatus()}
+          {status === 'adoptable' ? (
+            <Button onClick={handleAdoption} variant="contained">
+              Adopt Me!
+            </Button>
+          ) : (
+            <Button variant="contained" disabled="true">
+              Adopted
+            </Button>
+          )}
         </CardActions>
       </Card>
     </Box>
