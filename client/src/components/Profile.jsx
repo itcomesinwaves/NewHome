@@ -1,8 +1,17 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate, Navigate } from 'react-router-dom';
-import { Box, Card, Button } from '@mui/material';
+import {
+  Card,
+  Button,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Typography,
+  Grid,
+} from '@mui/material';
 import { UserContext } from '../UserContext.jsx';
+import PetList from './SavedList.jsx';
 // get user data using axios from google and display it on
 // this page as a restricted page
 // err takes user to login page
@@ -66,24 +75,38 @@ function Profile() {
     return <h3>Must Sign In</h3>;
   }
   return (
-    <Box>
-      <Button
-        variant="contained"
-        mt={2}
-        sx={{ display: 'inline-block', margin: 'auto' }}
-        href="/login"
-        onClick={Logout}
-      >
-        Logout
-      </Button>
-      <h1>{`Welcome back...${user.given_name}`}</h1>
-      <p>
-        <img src={user.picture} width={350} height={350} alt="am-broke" />
-      </p>
-      <div>
-        <h3>fav list</h3>
-      </div>
-    </Box>
+    <Grid container>
+      <Grid item>
+        <Card raised sx={{ width: '40vw' }}>
+          <CardMedia component="img" src={user.picture} alt="" />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {user.given_name}
+            </Typography>
+            <CardActions>
+              <Button
+                variant="contained"
+                mt={2}
+                sx={{ display: 'inline-block', margin: 'auto' }}
+                href="/login"
+                onClick={Logout}
+              >
+                Logout
+              </Button>
+            </CardActions>
+          </CardContent>
+        </Card>
+      </Grid>
+      <Grid>
+        <PetList list={savedList} />
+      </Grid>
+      {/* <Grid>
+				<PetList list={followedList} />
+			</Grid>
+			<Grid>
+				<PetList list={adoptedList} />
+			</Grid> */}
+    </Grid>
   );
 }
 export default Profile;
