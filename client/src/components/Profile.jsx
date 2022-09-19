@@ -66,13 +66,7 @@ function Profile() {
     return <h3>Must Sign In</h3>;
   }
   return (
-    <Box
-      sx={{
-			  '&:hover': {
-			    opacity: [0.9, 0.8, 0.7],
-			  },
-      }}
-    >
+    <Box>
       <Button
         variant="contained"
         mt={2}
